@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
 import hk.com.csci4140.culife.fragment.MessageFragment;
 import hk.com.csci4140.culife.fragment.OtherMissionFragment;
@@ -196,7 +197,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new PostMissionStepOneFragment();
                 break;
             case 3:
-                fragment = new MessageFragment();
+                fragment = new HabitDetailFragment();
                 break;
             case 4:
                 fragment = new OtherMissionFragment();
