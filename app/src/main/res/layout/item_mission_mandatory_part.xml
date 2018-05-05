@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:padding="@dimen/spacing_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/card_mission_icon"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:src="@mipmap/ic_profile_image_placeholder"/>
+
+        <LinearLayout
+            android:paddingStart="@dimen/spacing_small"
+            android:paddingEnd="@dimen/spacing_small"
+            android:layout_weight="14"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:padding="@dimen/spacing_small"
+                android:id="@+id/card_mission_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_large"
+                tools:text="飲whisky 500ml一打"
+                />
+
+            <TextView
+                android:padding="@dimen/spacing_small"
+                android:id="@+id/card_mission_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="$1000"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/card_mission_like_elapsed_container"
+            android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/card_mission_like_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_star_unlike"/>
+
+            <TextView
+                android:padding="@dimen/spacing_small"
+                android:id="@+id/card_mission_elapsed_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                tools:text="11小时前"
+                />
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:background="@android:color/darker_gray"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/spacing_small">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:src="@drawable/ic_star_unlike"/>
+
+                    <TextView
+                        android:id="@+id/card_mission_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center_vertical"
+                        tools:text="無特定地點"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_margin="@dimen/spacing_small"
+                        android:src="@drawable/ic_star_unlike"/>
+
+                    <TextView
+                        android:id="@+id/card_mission_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="start|center_vertical"
+                        tools:text="無特定時間"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/card_mission_video_photo_container"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="@dimen/spacing_small"
+                    android:src="@drawable/ic_star_unlike" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/card_mission_support_video"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/mission_item_has_video_proof"
+                        />
+
+                    <TextView
+                        android:id="@+id/card_mission_support_photo"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/mission_item_has_photo_proof"
+                        />
+
+                    <TextView
+                        android:id="@+id/card_mission_disclose_media"
+                        android:layout_width="match_parent"
+                        android:layout_height="35dp"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/mission_item_disclose_media"
+                        />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>

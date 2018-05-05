@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_post_round_todo"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/greyDark"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_post_round_selected"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@color/greyDark"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_post_round_todo"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/step_one_image_text_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/step_view_first_text"/>
+
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:background="@color/greyDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/step_view_second_text"/>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="2dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:visibility="invisible"
+                    android:background="@color/greyDark"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/step_view_third_text"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/spacing_large"
+            >
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:background="@color/greyDark"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/post_mission_two_confirm_content"
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:background="@color/greyDark"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:orientation="vertical">
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/greyDark"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_large"
+                >
+
+                <TextView
+                    android:id="@+id/post_mission_two_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_large"
+                    tools:text="飲Whisky 500ml一打"/>
+
+                <TextView
+                    android:id="@+id/post_mission_two_salary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_size_large"
+                    tools:text="$1,000"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_large"
+                    android:layout_marginBottom="@dimen/spacing_large">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_margin="@dimen/spacing_small"
+                                android:src="@drawable/ic_alert_circle"/>
+
+                            <TextView
+                                android:id="@+id/post_mission_two_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="start|center_vertical"
+                                tools:text="無特定地點"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_margin="@dimen/spacing_small"
+                                android:src="@drawable/ic_alert_circle"/>
+
+                            <TextView
+                                android:id="@+id/post_mission_two_mission_date_with_icon"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="start|center_vertical"
+                                tools:text="無特定時間"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/post_mission_two_switch_container"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_margin="@dimen/spacing_small"
+                            android:src="@drawable/ic_alert_circle" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/post_mission_two_video_needed"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/post_mission_two_need_video"
+                                 />
+
+                            <TextView
+                                android:id="@+id/post_mission_two_photo_needed"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/post_mission_two_need_photo"
+                                 />
+
+                            <TextView
+                                android:id="@+id/post_mission_two_disclose_media"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/post_mission_two_disclose_media"
+                                 />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/greyDark"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_size_large"
+                    android:layout_marginBottom="@dimen/spacing_large"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="start|center_vertical"
+                                android:textSize="@dimen/text_size_large"
+                                android:text="@string/post_mission_two_date_title"
+                                />
+
+                            <TextView
+                                android:id="@+id/post_mission_two_mission_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="2017年11月20日"/>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="40dp"
+                                android:gravity="start|center_vertical"
+                                android:text="@string/post_mission_two_time_title"
+                                tools:text="時段"/>
+
+                            <TextView
+                                android:id="@+id/post_mission_two_time"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="9:30 - 11:30"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="start|center_vertical"
+                            android:textSize="@dimen/text_size_large"
+                            android:text="@string/post_mission_two_content_title"
+                            />
+
+                        <TextView
+                            android:id="@+id/post_mission_two_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/post_mission_two_no_content"
+                            tools:text="在1小時內飲whisky500ml一打。"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="start|center_vertical"
+                            android:textSize="@dimen/text_size_large"
+                            android:text="@string/post_mission_two_requirement_title"
+                            />
+
+                        <TextView
+                            android:id="@+id/post_mission_two_requirement"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/mission_detail_no_requirement"
+                            tools:text="無特定要求"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="start|center_vertical"
+                            android:textSize="@dimen/text_size_large"
+                            android:text="@string/post_mission_two_others_title"
+                            />
+
+                        <TextView
+                            android:id="@+id/post_mission_two_others"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@string/post_mission_two_no_others"
+                            tools:text="無其他要求"/>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/greyDark"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/spacing_large"
+            >
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/spacing_large"
+                android:background="@color/greyDark"/>
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/post_mission_two_confirm_payment"
+                />
+
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_large"
+                android:background="@color/greyDark"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_large"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:textSize="@dimen/text_size_large"
+                    android:text="@string/post_mission_two_post_date_title"/>
+
+                <TextView
+                    android:id="@+id/post_mission_two_post_date_start"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="start|center_vertical"
+                    tools:text="2018年9月20日"/>
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="start|center_vertical"
+                    android:text="@string/post_mission_time_from"/>
+
+                <TextView
+                    android:id="@+id/post_mission_two_post_date_end"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="5"
+                    android:gravity="center"
+                    tools:text="2018年12月20日"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:layout_marginBottom="@dimen/spacing_normal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="4"
+                    android:textSize="@dimen/text_size_large"
+                    android:text="@string/post_mission_two_post_period_title"/>
+
+                <TextView
+                    android:id="@+id/post_mission_two_post_period"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="11"
+                    android:gravity="start|center_vertical"
+                    tools:text="共 三個月"/>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/spacing_large"
+                android:paddingBottom="@dimen/spacing_large"
+                android:background="@android:drawable/edit_text">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:text="@string/post_mission_two_charge_title"
+                        />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/post_mission_two_charge_num_title"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/post_mission_two_salary_title"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/post_mission_two_charge_salary"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/post_mission_two_charge_num_title"
+                        tools:text="$100,000.00"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/post_mission_two_num_needed_title"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/post_mission_two_num_needed"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_normal"
+                        tools:text="1 名"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyDark"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/post_mission_two_post_fee_title"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/post_mission_two_post_fee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_normal"
+                        tools:text="$1,000"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/post_mission_two_service_fee_title"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/post_mission_two_service_fee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_normal"
+                        tools:text="$30"
+                        />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/greyDark"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/spacing_normal"
+                    android:layout_marginTop="@dimen/spacing_normal"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:layout_weight="7"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold"
+                        android:text="@string/post_mission_two_total_fee_title"
+                        />
+
+
+                    <TextView
+                        android:id="@+id/post_mission_two_total_fee"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold"
+                        tools:text="$1,030"
+                        />
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                >
+
+                <ImageView
+                    android:id="@+id/post_mission_two_tips_alert"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:src="@drawable/ic_alert_circle"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/post_mission_two_tips_alert"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingEnd="@dimen/spacing_normal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/post_mission_two_tips_1"/>
+
+                    <TextView
+                        android:layout_marginTop="@dimen/spacing_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/post_mission_two_tips_2"/>
+
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:id="@+id/post_mission_two_continue_button"
+            android:layout_height="@dimen/button_height_normal"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/spacing_large"
+            android:text="@string/post_mission_two_continue"
+            android:textColor="@color/white"
+            android:background="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+
+
+</ScrollView>

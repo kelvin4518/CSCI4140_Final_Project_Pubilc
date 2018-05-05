@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <!-- Common String -->
+    <string name="app_name">CULife</string>
+    <string name="action_settings">Settings</string>
+    <string name="date_format">%1$d-%2$d-%3$d</string>
+    <string name="default_value">---</string>
+    <string name="exit_app_warning">Press the return button again to exit</string>
+    <string name="http_loading_text">Loading&#8230;</string>
+    <string name="network_connect_disable">Lost the internet connection</string>
+    <string name="network_connect_errors">Error to connet to internet</string>
+    <string name="server_connect_errors">Error to connet to server</string>
+    <string name="success_title">Success</string>
+    <string name="success_confirm">Comfirm</string>
+    <string name="search_result">Search result</string>
+    <string name="selection_title">Selection</string>
+    <string name="time_format">%1$d:%2$d</string>
+    <string name="time_format_period">%1$s&#032;to&#032;%2$s</string>
+    <string name="time_format_chinese">%1$d:%2$d (h:m)</string>
+    <string name="date_format_chinese">%1$d/%2$d/%3$d (yyyy/mm/dd)</string>
+    <string name="warning_title">Warning</string>
+    <string name="warning_confirm">Comfirm</string>
+    <string name="warning_cancel">Cancel</string>
+    <string name="should_login">Please login first</string>
+
+
+    <!-- Tool Bar -->
+    <string name="menu_search">Advanced search</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_range">Leaderboard</string>
+    <string name="nav_add">Post</string>
+    <string name="nav_message">Message</string>
+    <string name="nav_other_mission">Other mission</string>
+
+    <!-- Welcome Activity -->
+    <string name="permission_require">Need some permissions to execute the application</string>
+    <string name="permission_check">Check the permission</string>
+    <string name="permission_reject">The programe will be end in 2 second</string>
+
+    <!-- Login Fragment -->
+    <string name="login_normal">Login</string>
+    <string name="login_wechat">Login through wechat</string>
+    <string name="login_register">New commer？Click here to register</string>
+    <string name="login_remember_me">Remember me</string>
+    <string name="login_forget_password">Forget your password？</string>
+    <string name="login_phone_hint">Phone number</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_warning_input_phone_num">Please input your phone number</string>
+    <string name="login_warning_valid_phone_num">Please input the correct phone number</string>
+    <string name="login_warning_input_password">Please input your password</string>
+    <string name="login_warning_wrong_password">Wrong password</string>
+    
+    <!-- Register Fragment -->
+    <string name="register_phone">Register with phone number</string>
+    <string name="register_wechat">Register with wechat</string>
+    <string name="register_login">Already register？Click here to login</string>
+
+    <!-- Register Phone Fragment -->
+    <string name="register_phone_title">Register with phone number</string>
+    <string name="register_phone_hint">Phone number</string>
+    <string name="register_password_hint">Password</string>
+    <string name="register_retype_password_hint">Input the password again</string>
+    <string name="register_district_hint">District</string>
+    <string-array name="register_region_array">
+        <item>---</item>
+        <item>Hong Kong, China</item>
+        <item>Mainland, China</item>
+    </string-array>
+    <string name="register_agree_agreement">I understand and agree&#032;&#032;</string>
+    <string name="register_agreement">Agreement</string>
+    <string name="register_register_button_text">Register</string>
+    <string name="register_warning_input_phone_num">Please input the phone number</string>
+    <string name="register_warning_valid_phone_num">Please input the correct phone number</string>
+    <string name="register_warning_input_password">Please input the password</string>
+    <string name="register_warning_retype_password">Please input the password again</string>
+    <string name="register_warning_not_the_same">The password is not the same</string>
+    <string name="register_warning_contains_character">The password should contain at least one English character</string>
+    <string name="register_warning_select_region">Please choose the select region</string>
+    <string name="register_warning_check_agreement">Please agree the agreement</string>
+
+    <!-- Register Verify Phone Fragment -->
+    <string name="register_verify_phone_title">Verify the Phone</string>
+    <string name="register_verify_phone_format">The verifying code has been send to &#032;%1$s&#032;%2$s</string>
+    <string name="register_verify_please_input_verify_code">Please input the verifying code to verify the phone</string>
+    <string name="register_verify_count_format">The verifying code will become invalid in &#032;&#032;%1$s second</string>
+    <string name="register_verify_count_resend">Can not receive the verifying code？Click here to resend the code</string>
+    <string name="register_verify_verify_code">Verifying code</string>
+    <string name="register_verify_confirm">Confirm</string>
+    <string name="register_verify_resend">Resend the verifying code again</string>
+    <string name="register_verify_warning_input_verify_code">Please input the verifying code</string>
+
+    <!-- Register Finished Fragment -->
+    <string name="register_finished_title">Register complete</string>
+    <string name="register_finished_text_1">Your register procedure is completed！\n</string>
+    <string name="register_finished_text_2">Fill in your personal information now，</string>
+    <string name="register_finished_text_3">begin to do your first mission！</string>
+    <string name="register_finished_continue">Continue</string>
+
+    <!-- Edit Profile Fragment -->
+    <string name="edit_profile_title">Set up the profile</string>
+    <string name="edit_profile_image_text">Edit</string>
+    <string name="edit_profile_name_title">Name</string>
+    <string name="edit_profile_phone_title">Telephone</string>
+    <string name="edit_profile_age_title">Age</string>
+    <string name="edit_profile_email_title">Email</string>
+    <string name="edit_profile_introduction_title">Personal introduction</string>
+    <string name="edit_profile_activity_added">The activity added</string>
+    <string name="edit_profile_tips">A complete profile will rise the credibility of yourself.</string>
+    <string name="edit_profile_continue">Continue</string>
+    <string name="edit_profile_crop">Crop</string>
+    <string name="edit_profile_input_name">Input the name</string>
+    <string name="edit_profile_input_phone">Input the phone number</string>
+    <string name="edit_profile_input_correct_phone">Please input the correct phone number</string>
+
+    <!-- Industry List Fragment -->
+    <string name="industry_list_title">Industry list</string>
+
+    <!-- Forget Password Fragment -->
+    <string name="forget_password_title">Forget the password</string>
+    <string name="forget_password_tips">Please input the phone number for verifying to reset the password</string>
+    <string name="forget_password_phone_hint">Phone number</string>
+    <string name="forget_password_continue">Next</string>
+    <string name="forget_password_warning_text">Please input the phone number</string>
+    <string name="forget_password_wrong_phone">Please input the correct phone number</string>
+    <string name="forget_password_can_not_find_phone">Can not find the phone</string>
+
+    <!-- Reset Password Fragment -->
+    <string name="reset_password_title">Reset the password</string>
+    <string name="reset_password_password_hint">New password</string>
+    <string name="reset_password_retype_hint">Input the password again</string>
+    <string name="reset_password_continue">Next</string>
+    <string name="reset_password_warning_input_password">Please input the new password</string>
+    <string name="reset_password_warning_retype_password">Please input the new password again</string>
+    <string name="reset_password_warning_not_the_same">The password input is not same</string>
+
+    <!-- Reset Password Finished Fragment -->
+    <string name="reset_password_finished_title">Reset the password successful！</string>
+    <string name="reset_password_finished_text_1">Your password has been changed!\n\n</string>
+    <string name="reset_password_finished_text_2">Please login with the new password.</string>
+    <string name="reset_password_finished_continue">Complete</string>
+
+    <!-- Policy Fragment -->
+    <string name="policy_fragment_title">Policy</string>
+    <string name="policy_agree">Agree</string>
+
+    <!-- Home Fragment -->
+    <string name="home_fragment_title">CULife</string>
+    <string name="home_login">Login</string>
+    <string name="home_show_all">Show all</string>
+    <string name="home_show_mission">Display the mission</string>
+    <string name="home_show_taker">Display the taker(what)</string>
+    <string name="home_shift_text">Shift</string>
+    <string name="home_card_mission_no_date">No specific mission</string>
+    <string name="home_card_mission_no_location">No specific location</string>
+    <string name="home_card_mission_pass_date_format">Before %1$s</string>
+    <string name="home_card_taker_evaluate_title">Evaluate</string>
+    <string name="home_card_taker_commission_title">Mission</string>
+    <string name="home_card_taker_commission_times_format">Been give&#032;%1$d(what)</string>
+
+
+    <!-- Home Shift Fragment -->
+    <string name="home_shift_title">Shift</string>
+    <string name="home_shift_type_title">Mission type</string>
+    <string name="home_shift_type_default">All the position</string>
+    <string name="home_shift_salary_title">Salary(Hour)</string>
+    <string name="home_shift_salary_default">All the salary range</string>
+    <string name="home_shift_date_title">Mission date</string>
+    <string-array name="home_shift_date_array">
+        <item>All the date</item>
+        <item>Select the date</item>
+    </string-array>
+    <string name="home_shift_date_format">%1$s&#032; to &#032;%2$s</string>
+    <string name="home_shift_pick_start_date_title">Select the beginning date</string>
+    <string name="home_shift_pick_end_date_title">Select the ending date</string>
+    <string name="home_shift_date_start_after_end">The beginning date must earlier than the ending date</string>
+    <string name="home_shift_date_before_today_warning">The date selected should earlier than today</string>
+    <string name="home_shift_date_default">All the date</string>
+    <string name="home_shift_confirm">Confirm</string>
+
+    <!-- Search Management Fragment -->
+    <string name="search_management_title">Advanced search</string>
+    <string name="search_management_tab_1_title">Normal search</string>
+    <string name="search_management_tab_2_title">Mission nearby</string>
+    <string name="search_management_tab_3_title">Save the mission</string>
+
+    <!-- Search Normal Fragment -->
+    <string name="search_normal_for_mission">Search the mission</string>
+    <string name="search_normal_for_taker">Search the 委托人(what)</string>
+    <string name="search_normal_mission_key_word_hint">Input the keyword</string>
+    <string name="search_normal_category_title">Kinds of mission</string>
+    <string name="search_normal_category_default">Challenge</string>
+    <string name="search_normal_date_title">Date of mission</string>
+    <string name="search_normal_date_default">All the date</string>
+    <string-array name="search_normal_date_array">
+        <item>All the date</item>
+        <item>Select the date</item>
+    </string-array>
+    <string name="search_normal_date_format">%1$s&#032; to &#032;%2$s</string>
+    <string name="search_normal_pick_start_date_title">Select the beginning date</string>
+    <string name="search_normal_pick_end_date_title">Select the endding date</string>
+    <string name="search_normal_date_start_after_end">The beginning date must earlier than the ending date</string>
+    <string name="search_normal_date_before_today_warning">The date selected should earlier than today</string>
+    <string name="search_normal_salary_title">Range of the salary</string>
+    <string name="search_normal_salary_default">$100 - $150</string>
+    <string name="search_normal_location_title">Location</string>
+    <string name="search_normal_continue">Search</string>
+    <string name="search_normal_industry_title">Industry</string>
+    <string name="search_normal_industry_default">CS</string>
+    <string name="search_normal_others_title">Others</string>
+    <string name="search_normal_others_hint">Please input</string>
+    <string name="search_normal_introduction_title">Introduction</string>
+    <string name="search_normal_key_word_hint">Keyword</string>
+    <string name="search_normal_ability_title">Ability</string>
+
+    <!-- Range Fragment -->
+    <string name="range_fragment_title">Leaderboard</string>
+
+    <!-- Post Mission Step One Fragment -->
+    <string name="post_mission_step_one_title">Release the mission</string>
+    <string name="step_view_first_text">Fill in the data</string>
+    <string name="step_view_second_text">Prepayments</string>
+    <string name="step_view_third_text">Complete</string>
+    <string name="post_mission_name_title">Mission name</string>
+    <string name="post_mission_type_title">Types of mission</string>
+    <string name="post_mission_date_title">Date of mission</string>
+    <string name="post_mission_date_default">No limit of date</string>
+    <string-array name="post_mission_date_array">
+        <item>No limit date</item>
+        <item>Select the date</item>
+    </string-array>
+    <string name="post_mission_time_title">Time of mission</string>
+    <string name="post_mission_time_from">to</string>
+    <string name="post_mission_start_after_end">The beginning date must earlier than the ending date</string>
+    <string name="post_mission_num_title">Number of member</string>
+    <string name="post_mission_num_unit">Name</string>
+    <string name="post_mission_method_title">Release method</string>
+    <string-array name="post_mission_method_array">
+        <item>Date</item>
+        <item>Time</item>
+    </string-array>
+    <string name="post_mission_period_title">Time limit</string>
+    <string name="post_mission_period_start_after_end">The beginning date must earlier than the ending date</string>
+    <string name="post_mission_date_before_today_warning">The date selected should earlier than today</string>
+    <string name="post_mission_detail_hint">Detail of the job</string>
+    <string name="post_mission_interview_title">Interview needed</string>
+    <string name="post_mission_salary_title">Salary</string>
+    <string name="post_mission_salary_format">%1$,.2f</string>
+    <string name="post_mission_salary_hkd">HKD</string>
+    <string name="post_mission_pick_location_title">Pick a mission location</string>
+    <string name="post_mission_address_title">Location of the mission</string>
+    <string name="post_mission_address_no_result">Can not find the location information of this place.</string>
+    <string name="post_mission_address_default">No specific address</string>
+    <string name="post_mission_address_hint">The mission address can be changed customized.</string>
+    <string name="post_mission_upload_video_title">Need to upload a video to prove</string>
+    <string name="post_mission_upload_photo_title">Need to upload a photo to prove</string>
+    <string name="post_mission_disclose_media_title">Release the photo/video of the mission</string>
+    <string name="post_mission_content_title">Mission content</string>
+    <string name="post_mission_requirement_title">Request</string>
+    <string name="post_mission_step_one_post">Apply</string>
+    <!-- Warning Text -->
+    <string name="post_mission_input_name">Please input the name of the mission</string>
+    <string name="post_mission_input_time">Please select the date/time of the mission</string>
+    <string name="post_mission_input_num">Please input the number of members for the mission </string>
+    <string name="post_mission_input_period_date">Please choose the realse date</string>
+    <string name="post_mission_input_salary">Please in put the salary</string>
+    <string name="post_mission_input_address">请输入任务地址</string>
+    <string name="post_mission_input_content">请输入任务内容</string>
+    <string name="post_mission_input_requirement">请输入任务要求</string>
+
+    <!-- Post Mission Step Two Fragment -->
+    <string name="post_mission_two_salary_format">$%1$,.2f</string>
+    <string name="post_mission_two_confirm_content">确认招聘内容</string>
+    <string name="post_mission_two_no_location">无特定地点</string>
+    <string name="post_mission_two_no_date">无特定时间</string>
+    <string name="post_mission_two_need_video">提供影片证明</string>
+    <string name="post_mission_two_need_photo">提供相片证明</string>
+    <string name="post_mission_two_disclose_media">相片／影片证明会被公开</string>
+    <string name="post_mission_two_date_title">任务日期</string>
+    <string name="post_mission_two_time_title">時段</string>
+    <string name="post_mission_two_default_time">---</string>
+    <string name="post_mission_two_content_title">任务内容</string>
+    <string name="post_mission_two_no_content">无任务内容</string>
+    <string name="post_mission_two_requirement_title">要求</string>
+    <string name="post_mission_two_no_requirement">无特定要求</string>
+    <string name="post_mission_two_others_title">其他</string>
+    <string name="post_mission_two_no_others">无其它要求</string>
+    <string name="post_mission_two_need_interview">需要双方会面</string>
+    <string name="post_mission_two_confirm_payment">确认付款</string>
+    <string name="post_mission_two_post_date_title">发布日期</string>
+    <string name="post_mission_two_post_period_title">发布期限</string>
+    <string name="post_mission_two_post_period_format">共&#032;%1$s</string>
+    <string name="post_mission_two_post_period_days_format">共&#032;%1$d天</string>
+    <string name="post_mission_two_charge_title">收费项目</string>
+    <string name="post_mission_two_charge_num_title">款项</string>
+    <string name="post_mission_two_salary_title">要求报酬</string>
+    <string name="post_mission_two_num_needed_title">委托人数</string>
+    <string name="post_mission_two_num_needed_format">%1$d&#032;名</string>
+    <string name="post_mission_two_post_fee_title">发布费用</string>
+    <string name="post_mission_two_service_fee_title">程式手续费(3%)</string>
+    <string name="post_mission_two_total_fee_title">总费用</string>
+    <string name="post_mission_two_fee_format">$%1$,.2f</string>
+    <string name="post_mission_two_tips_1">程式手续费只会于任务完成后才收取，现阶段只是预付。</string>
+    <string name="post_mission_two_tips_2">如在未委托任何人情况下结束任务委托将会退回程式手续费。</string>
+    <string name="post_mission_two_continue">预付款</string>
+
+    <!-- Post Mission Finished Fragment -->
+    <string name="post_mission_finished_title">付款完成</string>
+    <string name="post_mission_finished_total_fee_format">成功付款&#032;$%1$,.2f&#032;!</string>
+    <string name="post_mission_finished_end_date_format">你的任务将会发布，并会在%1$s结束。</string>
+    <string name="post_mission_finished_num_and_service_fee_format">如你在委托结束前未完成%1$d位员工的招募，每个未被招募的名额将退回程式手续费$%2$,.2f</string>
+    <string name="post_mission_finished_continue">确认</string>
+
+    <!-- Mission Detail Fragment -->
+    <string name="mission_detail_title">职位详情</string>
+    <string name="mission_detail_pass_date_format">%1$s前</string>
+    <string name="mission_detail_no_address">无特定地点</string>
+    <string name="mission_detail_no_date">无特定时间</string>
+    <string name="mission_detail_mission_title">任务日期</string>
+    <string name="mission_detail_time_title">时段</string>
+    <string name="mission_detail_time_format">%1$s&#032;至&#032;%2$s</string>
+    <string name="mission_detail_content_title">任务内容</string>
+    <string name="mission_detail_no_content">无其它内容</string>
+    <string name="mission_detail_requirement_title">要求</string>
+    <string name="mission_detail_no_requirement">无特定要求</string>
+    <string name="mission_detail_others_title">其他</string>
+    <string name="mission_detail_no_others">无其他要求</string>
+    <string name="mission_detail_need_interview">需要双方会面</string>
+    <string name="mission_detail_about_publisher">关于委托人</string>
+    <string name="mission_detail_publisher_evaluate_title">评价</string>
+    <string name="mission_detail_publisher_joined_time_format">已加入&#032;%1$s</string>
+    <string name="mission_detail_publisher_recruit_num_format">%1$d份招聘</string>
+    <string name="mission_detail_message">私信</string>
+    <string name="mission_detail_apply">申请</string>
+    <string name="mission_detail_like_title">收藏职位</string>
+    <string name="mission_detail_setting_title">影片／相片证明设定</string>
+    <string name="mission_detail_setting_content">公开影片／相片证明</string>
+
+    <!-- User Profile Fragment -->
+    <string name="user_profile_fragment_title"> </string>
+    <string name="user_profile_taker_collection_title">收藏的受托人</string>
+    <string name="user_profile_wallet_title">钱包</string>
+    <string name="user_profile_setting_title">设定</string>
+
+    <!-- Message Fragment -->
+    <string name="message_fragment_title">讯息</string>
+
+    <!-- Other Mission -->
+    <string name="other_mission_fragment_title">他人任务</string>
+
+    <!-- Mission Item -->
+    <string name="mission_item_already_prepaid">已预付 $$%1$,d</string>
+    <string name="mission_item_already_applied">已收到申请 %1$,d人</string>
+    <string name="mission_item_already_commissioned">已委托 %1$,d人</string>
+    <string name="mission_item_days_ago">%1$,d天前</string>
+    <string name="mission_item_non_specific_location">无特定地点</string>
+    <string name="mission_item_has_video_proof">提供影片证明</string>
+    <string name="mission_item_has_photo_proof">提供相片证明</string>
+    <string name="mission_item_disclose_media">影片／相片证明会被公开</string>
+    <string name="mission_item_non_specific_time">无特定时间</string>
+    <string name="mission_item_mission_time_title">任务时间</string>
+    <string name="mission_item_non_mission_time">不适用</string>
+    <string name="mission_item_photo_proof">证明(相片/影片)</string>
+    <string name="mission_item_add_photo_proof">补加上载证明(相片/影片)</string>
+    <string name="mission_item_salary_paid_status_title">报酬状况</string>
+    <string name="mission_item_salary_paid">已支付</string>
+    <string name="mission_item_salary_unpaid">未支付</string>
+    <string name="mission_item_evaluate_title">评价委托人</string>
+    <string name="mission_item_cancel">取消应征</string>
+    <string name="mission_item_finish">完成</string>
+
+    <!-- Taker Item -->
+    <string name="taker_item_evaluate_title">评价</string>
+    <string name="taker_item_commissioned">委托</string>
+    <string name="taker_item_commissioned_times">受委托: %1$,d次</string>
+    <string name="taker_item_maximum_salary">最高报酬: $$%1$,d</string>
+    <string name="taker_item_accumulated_salary">累积报酬: $$%1$,d</string>
+    <string name="taker_item_accumulated_missions">委托职位: %1$,d个</string>
+    <string name="taker_item_maximum_payment">最高支付: $$%1$,d</string>
+    <string name="taker_item_accumulated_payment">累积支付报酬: $$%1$,d</string>
+
+    <!-- Setting Fragment-->
+    <string name="setting_title">设定</string>
+    <string name="setting_show_location">在地图上显示个人位置</string>
+    <string name="setting_region">地区</string>
+    <string-array name="setting_region_array">
+        <item>中国香港</item>
+        <item>中国大陆</item>
+    </string-array>
+    <string name="setting_language">Language</string>
+    <string-array name="setting_language_array">
+        <item>繁體中文</item>
+        <item>简体中文</item>
+        <item>English</item>
+    </string-array>
+    <string name="setting_return_record">反馈记录</string>
+    <string name="setting_options">选项</string>
+    <string name="setting_notification">推送通知设定</string>
+    <string name="setting_change_password">更改密码</string>
+    <string name="setting_change_phone">更改电话号码</string>
+    <string name="setting_about">关于</string>
+    <string name="setting_common_problem">常见问题</string>
+    <string name="setting_privacy_policy">私隐条款</string>
+    <string name="setting_usage_policy">使用条款</string>
+    <string name="setting_contact_us">联络我们</string>
+    <string name="setting_log_out">Log out</string>
+    <string name="setting_log_out_warning">Are you sure to log out？</string>
+
+
+</resources>

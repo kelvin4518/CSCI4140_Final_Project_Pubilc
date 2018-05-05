@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/spacing_large"
+        android:paddingBottom="@dimen/spacing_normal"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/item_mission_mandatory_part"
+            android:padding="@dimen/spacing_normal"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="start|center_vertical"
+                        android:textSize="@dimen/text_size_large"
+                        android:text="@string/mission_detail_mission_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/mission_detail_mission_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="2017年11月20日"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/mission_detail_time_title"
+                        tools:text="時段"/>
+
+                    <TextView
+                        android:id="@+id/mission_detail_two_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="9:30 - 11:30"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/text_size_large"
+                    android:text="@string/mission_detail_content_title"
+                    />
+
+                <TextView
+                    android:id="@+id/mission_detail_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mission_detail_no_content"
+                    tools:text="在1小時內飲whisky500ml一打。"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/text_size_large"
+                    android:text="@string/mission_detail_requirement_title"
+                    />
+
+                <TextView
+                    android:id="@+id/mission_detail_requirement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mission_detail_no_requirement"
+                    tools:text="無特定要求"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_normal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="start|center_vertical"
+                    android:textSize="@dimen/text_size_large"
+                    android:text="@string/mission_detail_others_title"
+                    />
+
+                <TextView
+                    android:id="@+id/mission_detail_others"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mission_detail_no_others"
+                    tools:text="無其他要求"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyDark"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/spacing_large"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_normal"
+                android:text="@string/mission_detail_about_publisher"
+                android:layout_marginBottom="@dimen/spacing_normal"
+                tools:text="关于委托人"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/mission_detail_publisher_icon"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@mipmap/ic_profile_image_placeholder"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/mission_detail_publisher_icon"
+                    android:paddingStart="@dimen/spacing_normal"
+                    android:paddingEnd="0dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/mission_detail_publisher_name"
+                            android:textSize="@dimen/text_size_large"
+                            android:layout_margin="@dimen/spacing_small"
+                            tools:text="Jims Chan"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/spacing_small">
+
+                            <TextView
+                                android:id="@+id/mission_detail_evaluate_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginEnd="@dimen/spacing_small"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:text="@string/mission_detail_publisher_evaluate_title"/>
+
+                            <RatingBar
+                                android:id="@+id/mission_detail_publisher_evaluate_rating_bar"
+                                style="?android:attr/ratingBarStyleSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/mission_detail_evaluate_title"
+                                android:numStars="5"
+                                android:max="5"
+                                android:rating="5"
+                                android:stepSize="1"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/mission_detail_publisher_joined_time"
+                            android:layout_margin="@dimen/spacing_small"
+                            tools:text="已加入三个月"/>
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/greyDark"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/mission_detail_publisher_recruit_num"
+                            android:layout_margin="@dimen/spacing_small"
+                            tools:text="25份招聘"/>
+
+
+
+
+                    </LinearLayout>
+
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/mission_detail_publisher_like_icon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/ic_publisher_unlike"/>
+
+
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/greyDark"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_margin="@dimen/spacing_large"
+            android:paddingTop="@dimen/spacing_normal">
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/mission_detail_message_button"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/mission_detail_message"
+                fancy:fb_defaultColor="@color/colorPrimaryDark"
+                fancy:fb_radius="5dp"
+                fancy:fb_textColor="@color/white"
+                />
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/mission_detail_apply_button"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/spacing_small"
+                android:text="@string/mission_detail_apply"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_radius="5dp"
+                fancy:fb_textColor="@color/white"
+                />
+
+        </LinearLayout>
+
+
+
+
+    </LinearLayout>
+
+
+</ScrollView>

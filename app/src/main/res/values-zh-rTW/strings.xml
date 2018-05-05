@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+      <!-- Common String -->
+    <string name="app_name_chinese">賞金寶</string>
+     <string name="app_name">Running Gold</string>
+    <string name="action_settings">Settings</string>
+    <string name="date_format">%1$d-%2$d-%3$d</string>
+    <string name="default_value">---</string>
+     <string name="exit_app_warning">再按一次返回鍵退出</string>
+     <string name="http_loading_text">正在加載中&#8230;</string>
+    <string name="network_connect_disable">網絡連接已斷開</string>
+    <string name="network_connect_errors">網絡連接錯誤</string>
+    <string name="server_connect_errors">服務端連接錯誤</string>
+    <string name="success_title">成功</string>
+    <string name="success_confirm">確定</string>
+    <string name="search_result">搜尋結果</string>
+    <string name="selection_title">選項</string>
+    <string name="time_format">%1$d:%2$d</string>
+    <string name="time_format_period">%1$s&#032;至&#032;%2$s</string>
+    <string name="time_format_chinese">%1$d時%2$d分</string>
+    <string name="date_format_chinese">%1$d年%2$d月%3$d日</string>
+    <string name="warning_title">警告</string>
+    <string name="warning_confirm">確定</string>
+    <string name="warning_cancel">取消</string>
+    <string name="should_login">請先登入</string>
+
+
+    <!-- Tool Bar -->
+    <string name="menu_search">進階搜尋</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">首頁</string>
+    <string name="nav_range">排行榜</string>
+    <string name="nav_add">發布</string>
+    <string name="nav_message">訊息</string>
+    <string name="nav_other_mission">他人任務</string>
+
+    <!-- Welcome Activity -->
+    <string name="permission_require">需要通過某些權限才能使用本軟件</string>
+    <string name="permission_check">查看</string>
+    <string name="permission_reject">程序將會在兩秒後結束</string>
+
+    <!-- Login Fragment -->
+    <string name="login_normal">登入</string>
+    <string name="login_wechat">微信登入</string>
+    <string name="login_register">新用戶？按此註冊帳號</string>
+    <string name="login_remember_me">記住我</string>
+    <string name="login_forget_password">忘記密碼？</string>
+    <string name="login_phone_hint">電話號碼</string>
+    <string name="login_password_hint">密碼</string>
+    <string name="login_warning_input_phone_num">請輸入電話號碼</string>
+    <string name="login_warning_valid_phone_num">請輸入正確的電話號碼</string>
+    <string name="login_warning_input_password">請輸入密碼</string>
+    <string name="login_warning_wrong_password">密碼錯誤</string>
+
+    <!-- Register Fragment -->
+    <string name="register_phone">電話註冊</string>
+    <string name="register_wechat">微信註冊</string>
+    <string name="register_login">舊用戶？按此登入</string>
+
+    <!-- Register Phone Fragment -->
+    <string name="register_phone_title">電話註冊</string>
+    <string name="register_phone_hint">電話號碼</string>
+    <string name="register_password_hint">密碼</string>
+    <string name="register_retype_password_hint">重新輸入密碼</string>
+    <string name="register_district_hint">地區</string>
+    <string-array name="register_region_array">
+        <item>---</item>
+        <item>中國香港</item>
+        <item>中國大陸</item>
+    </string-array>
+    <string name="register_agree_agreement">我明白及同意&#032;&#032;</string>
+    <string name="register_agreement">條款及細則</string>
+    <string name="register_register_button_text">註冊</string>
+    <string name="register_warning_input_phone_num">請輸入電話號碼</string>
+    <string name="register_warning_valid_phone_num">請輸入正確的電話號碼</string>
+    <string name="register_warning_input_password">請輸入密碼</string>
+    <string name="register_warning_retype_password">請再次輸入密碼</string>
+    <string name="register_warning_not_the_same">兩次輸入的密碼不同</string>
+    <string name="register_warning_contains_character">密碼至少包含一個字母</string>
+    <string name="register_warning_select_region">請選擇地區</string>
+    <string name="register_warning_check_agreement">請同意條款及細則</string>
+
+    <!-- Register Verify Phone Fragment -->
+    <string name="register_verify_phone_title">驗證電話</string>
+    <string name="register_verify_phone_format">驗證碼已發送到&#032;%1$s&#032;%2$s</string>
+    <string name="register_verify_please_input_verify_code">請輸入驗證碼以完成認證</string>
+    <string name="register_verify_count_format">驗證碼將會在&#032;&#032;%1$s秒後失效</string>
+    <string name="register_verify_count_resend">收不到驗證碼？請按再次發送</string>
+    <string name="register_verify_verify_code">驗證碼</string>
+    <string name="register_verify_confirm">確認</string>
+    <string name="register_verify_resend">再次發送驗證碼</string>
+    <string name="register_verify_warning_input_verify_code">請輸入驗證碼</string>
+
+    <!-- Register Finished Fragment -->
+    <string name="register_finished_title">完成註冊</string>
+    <string name="register_finished_text_1">你的註冊已成功!\n\n</string>
+    <string name="register_finished_text_2">立即填妥個人資料，</string>
+    <string name="register_finished_text_3">開始你的首個任務！</string>
+    <string name="register_finished_continue">繼續</string>
+
+    <!-- Edit Profile Fragment -->
+    <string name="edit_profile_title">建立個人檔案</string>
+    <string name="edit_profile_image_text">編輯</string>
+    <string name="edit_profile_name_title">個人名稱</string>
+    <string name="edit_profile_phone_title">電話</string>
+    <string name="edit_profile_age_title">歲數</string>
+    <string name="edit_profile_email_title">電郵</string>
+    <string name="edit_profile_introduction_title">自我介紹</string>
+    <string name="edit_profile_industry_title">行業範疇</string>
+    <string name="edit_profile_others_title">其他</string>
+    <string name="edit_profile_ability_title">能力及本領</string>
+    <string name="edit_profile_tips">完整的資訊能提高你被聘請的機會。</string>
+    <string name="edit_profile_continue">繼續</string>
+    <string name="edit_profile_crop">裁剪</string>
+    <string name="edit_profile_input_name">請輸入個人名稱</string>
+    <string name="edit_profile_input_phone">請輸入電話號碼</string>
+    <string name="edit_profile_input_correct_phone">請輸入正確的電話號碼</string>
+
+    <!-- Industry List Fragment -->
+    <string name="industry_list_title">行業範疇</string>
+    
+    <!-- Forget Password Fragment -->
+    <string name="forget_password_title">忘記密碼</string>
+    <string name="forget_password_tips">請輸入電話號碼通過驗證及進行重設</string>
+    <string name="forget_password_phone_hint">電話號碼</string>
+    <string name="forget_password_continue">下一步</string>
+    <string name="forget_password_warning_text">請輸入電話號碼</string>
+    <string name="forget_password_wrong_phone">請輸入正確的電話號碼</string>
+    <string name="forget_password_can_not_find_phone">找不到對應的電話號碼</string>
+
+    <!-- Reset Password Fragment -->
+    <string name="reset_password_title">重設密碼</string>
+    <string name="reset_password_password_hint">新密碼</string>
+    <string name="reset_password_retype_hint">重複輸入密碼</string>
+    <string name="reset_password_continue">下一步</string>
+    <string name="reset_password_warning_input_password">請輸入新密碼</string>
+    <string name="reset_password_warning_retype_password">請重複輸入新密碼</string>
+    <string name="reset_password_warning_not_the_same">兩次輸入的密碼不同</string>
+
+    <!-- Reset Password Finished Fragment -->
+    <string name="reset_password_finished_title">密碼設定已完成！</string>
+    <string name="reset_password_finished_text_1">你的密碼已更改！\n\n</string>
+    <string name="reset_password_finished_text_2">請使用新密碼登入。</string>
+    <string name="reset_password_finished_continue">完成</string>
+
+    <!-- Policy Fragment -->
+    <string name="policy_fragment_title">同意書</string>
+    <string name="policy_agree">同意</string>
+
+    <!-- Home Fragment -->
+    <string name="home_fragment_title">Running Gold</string>
+    <string name="home_login">登入</string>
+    <string name="home_show_all">顯示全部</string>
+    <string name="home_show_mission">顯示任務</string>
+    <string name="home_show_taker">顯示委託人</string>
+    <string name="home_shift_text">篩選</string>
+    <string name="home_card_mission_no_date">無特定時間</string>
+    <string name="home_card_mission_no_location">無特定地點</string>
+    <string name="home_card_mission_pass_date_format">%1$s前</string>
+    <string name="home_card_taker_evaluate_title">評價</string>
+    <string name="home_card_taker_commission_title">委託任務</string>
+    <string name="home_card_taker_commission_times_format">受委託&#032;%1$d份</string>
+
+    <!-- Home Shift Fragment -->
+    <string name="home_shift_title">篩選</string>
+    <string name="home_shift_type_title">任務種類</string>
+    <string name="home_shift_type_default">所有職業</string>
+    <string name="home_shift_salary_title">報酬範圍(時薪)</string>
+    <string name="home_shift_salary_default">所有報酬範圍</string>
+    <string name="home_shift_date_title">任務日期</string>
+    <string-array name="home_shift_date_array">
+        <item>所有日期</item>
+        <item>選擇日期</item>
+    </string-array>
+    <string name="home_shift_date_format">%1$s&#032;至&#032;%2$s</string>
+    <string name="home_shift_pick_start_date_title">選擇開始日期</string>
+    <string name="home_shift_pick_end_date_title">選擇結束日期</string>
+    <string name="home_shift_date_start_after_end">開始日期必須早於結束日期</string>
+    <string name="home_shift_date_before_today_warning">選擇的日期不能早於今日</string>
+    <string name="home_shift_date_default">所有日期</string>
+    <string name="home_shift_confirm">確認篩選</string>
+
+    <!-- Search Management Fragment -->
+    <string name="search_management_title">進階搜尋</string>
+    <string name="search_management_tab_1_title">一般搜尋</string>
+    <string name="search_management_tab_2_title">附近任務</string>
+    <string name="search_management_tab_3_title">收藏任務</string>
+
+    <!-- Search Normal Fragment -->
+    <string name="search_normal_for_mission">搜尋任務</string>
+    <string name="search_normal_for_taker">搜尋受託人</string>
+    <string name="search_normal_mission_key_word_hint">輸入任務關鍵詞</string>
+    <string name="search_normal_category_title">任務種類</string>
+    <string name="search_normal_category_default">挑戰</string>
+    <string name="search_normal_date_title">任務日期</string>
+    <string name="search_normal_date_default">所有日期</string>
+    <string-array name="search_normal_date_array">
+        <item>所有日期</item>
+        <item>選擇日期</item>
+    </string-array>
+    <string name="search_normal_date_format">%1$s&#032;至&#032;%2$s</string>
+    <string name="search_normal_pick_start_date_title">選擇開始日期</string>
+    <string name="search_normal_pick_end_date_title">選擇結束日期</string>
+    <string name="search_normal_date_start_after_end">開始日期必須早於結束日期</string>
+    <string name="search_normal_date_before_today_warning">選擇的日期不能早於今日</string>
+    <string name="search_normal_salary_title">報酬範圍</string>
+    <string name="search_normal_salary_default">$100 - $150</string>
+    <string name="search_normal_location_title">任務地點</string>
+    <string name="search_normal_continue">搜尋</string>
+    <string name="search_normal_industry_title">行業範疇</string>
+    <string name="search_normal_industry_default">會計，設計</string>
+    <string name="search_normal_others_title">其他</string>
+    <string name="search_normal_others_hint">請註明</string>
+    <string name="search_normal_introduction_title">自我介紹</string>
+    <string name="search_normal_key_word_hint">輸入關鍵詞</string>
+    <string name="search_normal_ability_title">能力及本領</string>
+
+    <!-- Range Fragment -->
+    <string name="range_fragment_title">排行榜</string>
+    
+    <!-- Post Mission Step One Fragment -->
+    <string name="post_mission_step_one_title">發佈招聘</string>
+    <string name="step_view_first_text">填寫資料</string>
+    <string name="step_view_second_text">預付款</string>
+    <string name="step_view_third_text">完成發佈</string>
+    <string name="post_mission_name_title">任務名稱</string>
+    <string name="post_mission_type_title">任務種類</string>
+    <string name="post_mission_date_title">任務日期</string>
+    <string name="post_mission_date_default">無指定日期</string>
+    <string-array name="post_mission_date_array">
+        <item>無指定日期</item>
+        <item>選擇日期</item>
+    </string-array>
+    <string name="post_mission_time_title">任務時間</string>
+    <string name="post_mission_time_from">至</string>
+    <string name="post_mission_start_after_end">開始時間必須早於結束時間</string>
+    <string name="post_mission_num_title">任務人數</string>
+    <string name="post_mission_num_unit">名</string>
+    <string name="post_mission_method_title">發佈方式</string>
+    <string-array name="post_mission_method_array">
+        <item>按日期</item>
+        <item>按時段</item>
+    </string-array>
+    <string name="post_mission_period_title">發佈期限</string>
+    <string name="post_mission_period_start_after_end">開始日期必須早於結束日期</string>
+    <string name="post_mission_date_before_today_warning">選擇的日期不能早於今日</string>
+    <string name="post_mission_detail_hint">工作詳情</string>
+    <string name="post_mission_interview_title">需要會面</string>
+    <string name="post_mission_salary_title">報酬</string>
+    <string name="post_mission_salary_format">%1$,.2f</string>
+    <string name="post_mission_salary_hkd">HKD</string>
+    <string name="post_mission_pick_location_title">選取任務地址</string>
+    <string name="post_mission_address_title">任務地址</string>
+    <string name="post_mission_address_no_result">找不到此地點的位置信息</string>
+    <string name="post_mission_address_default">無特定</string>
+    <string name="post_mission_address_hint">任務地址可按需要自行更改。</string>
+    <string name="post_mission_upload_video_title">需要上載影片證明</string>
+    <string name="post_mission_upload_photo_title">需要上載照片證明</string>
+    <string name="post_mission_disclose_media_title">公開任務相片／影片證明</string>
+    <string name="post_mission_content_title">任務內容</string>
+    <string name="post_mission_requirement_title">要求</string>
+    <string name="post_mission_step_one_post">申請</string>
+    <!-- Warning Text -->
+    <string name="post_mission_input_name">請輸入任務名稱</string>
+    <string name="post_mission_input_time">請選擇任務時間</string>
+    <string name="post_mission_input_num">請輸入任務人數</string>
+    <string name="post_mission_input_period_date">請選擇發布期限</string>
+    <string name="post_mission_input_salary">請輸入報酬</string>
+    <string name="post_mission_input_address">請輸入任務地址</string>
+    <string name="post_mission_input_content">請輸入任務內容</string>
+    <string name="post_mission_input_requirement">請輸入任務要求</string>
+
+    <!-- Post Mission Step Two Fragment -->
+    <string name="post_mission_two_salary_format">$%1$,.2f</string>
+    <string name="post_mission_two_confirm_content">確認招聘內容</string>
+    <string name="post_mission_two_no_location">無特定地點</string>
+    <string name="post_mission_two_no_date">無特定時間</string>
+    <string name="post_mission_two_need_video">提供影片證明</string>
+    <string name="post_mission_two_need_photo">提供相片證明</string>
+    <string name="post_mission_two_disclose_media">相片／影片證明會被公開</string>
+    <string name="post_mission_two_date_title">任務日期</string>
+    <string name="post_mission_two_time_title">時段</string>
+    <string name="post_mission_two_default_time">---</string>
+    <string name="post_mission_two_content_title">任務內容</string>
+    <string name="post_mission_two_no_content">無任務內容</string>
+    <string name="post_mission_two_requirement_title">要求</string>
+    <string name="post_mission_two_no_requirement">無特定要求</string>
+    <string name="post_mission_two_others_title">其他</string>
+    <string name="post_mission_two_no_others">無其他要求</string>
+    <string name="post_mission_two_need_interview">需要雙方會面</string>
+    <string name="post_mission_two_confirm_payment">確認付款</string>
+    <string name="post_mission_two_post_date_title">發佈日期</string>
+    <string name="post_mission_two_post_period_title">發佈期限</string>
+    <string name="post_mission_two_post_period_format">共&#032;%1$s</string>
+    <string name="post_mission_two_post_period_days_format">共&#032;%1$d天</string>
+    <string name="post_mission_two_charge_title">收費項目</string>
+    <string name="post_mission_two_charge_num_title">款項</string>
+    <string name="post_mission_two_salary_title">要求報酬</string>
+    <string name="post_mission_two_num_needed_title">委託人數</string>
+    <string name="post_mission_two_num_needed_format">%1$d&#032;名</string>
+    <string name="post_mission_two_post_fee_title">發佈費用</string>
+    <string name="post_mission_two_service_fee_title">程式手續費(3%)</string>
+    <string name="post_mission_two_total_fee_title">總費用</string>
+    <string name="post_mission_two_fee_format">$%1$,.2f</string>
+    <string name="post_mission_two_tips_1">程式手續費只會於任務完成後才收取, 現階段只是預付。</string>
+    <string name="post_mission_two_tips_2">如在未委託任何人情況下結束任務委託將會退回程式手續費。</string>
+    <string name="post_mission_two_continue">預付款</string>
+
+    <!-- Post Mission Finished Fragment -->
+    <string name="post_mission_finished_title">付款完成</string>
+    <string name="post_mission_finished_total_fee_format">成功付款&#032;$%1$,.2f&#032;!</string>
+    <string name="post_mission_finished_end_date_format">你的任務將會發佈，並將會在%1$s結束。</string>
+    <string name="post_mission_finished_num_and_service_fee_format">如你在委託結束前未完成%1$d位員工的招募，每個未被招募的名額將退回程式手續費$%2$,.2f。</string>
+    <string name="post_mission_finished_continue">確認</string>
+
+    <!-- Mission Detail Fragment -->
+    <string name="mission_detail_title">職位詳情</string>
+    <string name="mission_detail_pass_date_format">%1$s前</string>
+    <string name="mission_detail_no_address">無特定地點</string>
+    <string name="mission_detail_no_date">無特定時間</string>
+    <string name="mission_detail_mission_title">任務日期</string>
+    <string name="mission_detail_time_title">時段</string>
+    <string name="mission_detail_time_format">%1$s&#032;至&#032;%2$s</string>
+    <string name="mission_detail_content_title">任務內容</string>
+    <string name="mission_detail_no_content">無其他內容</string>
+    <string name="mission_detail_requirement_title">要求</string>
+    <string name="mission_detail_no_requirement">無特定要求</string>
+    <string name="mission_detail_others_title">其他</string>
+    <string name="mission_detail_no_others">無其他要求</string>
+    <string name="mission_detail_need_interview">需要雙方會面</string>
+    <string name="mission_detail_about_publisher">關於委託人</string>
+    <string name="mission_detail_publisher_evaluate_title">評價</string>
+    <string name="mission_detail_publisher_joined_time_format">已加入%1$s</string>
+    <string name="mission_detail_publisher_recruit_num_format">%1$d份招聘</string>
+    <string name="mission_detail_message">私信</string>
+    <string name="mission_detail_apply">申請</string>
+    <string name="mission_detail_like_title">收藏職位</string>
+    <string name="mission_detail_setting_title">影片／相片證明設定</string>
+    <string name="mission_detail_setting_content">公開影片／照片證明</string>
+
+    <!-- User Profile Fragment -->
+    <string name="user_profile_fragment_title"> </string>
+    <string name="user_profile_taker_collection_title">收藏的受託人</string>
+    <string name="user_profile_wallet_title">錢包</string>
+    <string name="user_profile_setting_title">設定</string>
+
+    <!-- Message Fragment -->
+    <string name="message_fragment_title">訊息</string>
+
+    <!-- Other Mission -->
+    <string name="other_mission_fragment_title">他人任務</string>
+
+    <!-- Mission Item -->
+    <string name="mission_item_already_prepaid">已預付 $$%1$,d</string>
+    <string name="mission_item_already_applied">已收到申請 %1$,d人</string>
+    <string name="mission_item_already_commissioned">已委託 %1$,d人</string>
+    <string name="mission_item_days_ago">%1$,d天前</string>
+    <string name="mission_item_non_specific_location">無特定地點</string>
+    <string name="mission_item_has_video_proof">提供影片證明</string>
+    <string name="mission_item_has_photo_proof">提供相片證明</string>
+    <string name="mission_item_disclose_media">影片／相片證明會被公開</string>
+    <string name="mission_item_non_specific_time">無特定時間</string>
+    <string name="mission_item_mission_time_title">任務時間</string>
+    <string name="mission_item_non_mission_time">不適用</string>
+    <string name="mission_item_photo_proof">證明(相片/影片)</string>
+    <string name="mission_item_add_photo_proof">補加上載證明(相片/影片)</string>
+    <string name="mission_item_salary_paid_status_title">報酬狀況</string>
+    <string name="mission_item_salary_paid">已支付</string>
+    <string name="mission_item_salary_unpaid">未支付</string>
+    <string name="mission_item_evaluate_title">評價委託人</string>
+    <string name="mission_item_cancel">取消應徵</string>
+    <string name="mission_item_finish">完成</string>
+
+    <!-- Taker Item -->
+    <string name="taker_item_evaluate_title">評價</string>
+    <string name="taker_item_commissioned">委託</string>
+    <string name="taker_item_commissioned_times">受委託: %1$,d次</string>
+    <string name="taker_item_maximum_salary">最高報酬: $$%1$,d</string>
+    <string name="taker_item_accumulated_salary">累積報酬: $$%1$,d</string>
+    <string name="taker_item_accumulated_missions">委託職位: %1$,d個</string>
+    <string name="taker_item_maximum_payment">最高支付: $$%1$,d</string>
+    <string name="taker_item_accumulated_payment">累積支付報酬: $$%1$,d</string>
+
+    <!-- Setting -->
+    <string name="setting_title">設定</string>
+    <string name="setting_show_location">在地圖顯示個人位置</string>
+    <string name="setting_region">地區</string>
+    <string-array name="setting_region_array">
+        <item>中國香港</item>
+        <item>中國大陸</item>
+    </string-array>
+    <string name="setting_language">語言</string>
+    <string-array name="setting_language_array">
+        <item>繁體中文</item>
+        <item>简体中文</item>
+    </string-array>
+    <string name="setting_return_record">反饋記錄</string>
+    <string name="setting_options">選項</string>
+    <string name="setting_notification">推送通知設定</string>
+    <string name="setting_change_password">更改密碼</string>
+    <string name="setting_change_phone">更改電話號碼</string>
+    <string name="setting_about">關於</string>
+    <string name="setting_common_problem">常見問題</string>
+    <string name="setting_privacy_policy">私隱條款</string>
+    <string name="setting_usage_policy">使用條款</string>
+    <string name="setting_contact_us">聯絡我們</string>
+    <string name="setting_log_out">登出</string>
+    <string name="setting_log_out_warning">你確定要登出嗎？</string>
+
+</resources>

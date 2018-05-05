@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginBottom="@dimen/spacing_small"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="@string/search_normal_industry_title"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <Spinner
+                android:id="@+id/search_normal_taker_industry_spinner"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:textAlignment="textEnd"
+                />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:paddingStart="@dimen/spacing_large"
+            android:paddingEnd="@dimen/spacing_large"
+            />
+
+        <LinearLayout
+            android:paddingTop="@dimen/spacing_normal"
+            android:paddingBottom="@dimen/spacing_normal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="@string/search_normal_others_title"
+                android:textSize="@dimen/text_size_normal"/>
+
+            <EditText
+                android:id="@+id/search_normal_taker_others"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:inputType="text"
+                android:hint="@string/search_normal_others_hint"
+                android:gravity="start|center_vertical"
+                android:background="@android:color/white"
+                android:textSize="@dimen/text_size_normal"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@string/search_normal_introduction_title"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <EditText
+            android:id="@+id/search_normal_taker_introduction"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:inputType="text"
+            android:hint="@string/search_normal_key_word_hint"
+            android:gravity="start|center_vertical"
+            android:background="@android:color/white"
+            android:textSize="@dimen/text_size_normal"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@string/search_normal_ability_title"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <EditText
+            android:id="@+id/search_normal_taker_ability"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:inputType="text"
+            android:hint="@string/search_normal_key_word_hint"
+            android:gravity="start|center_vertical"
+            android:background="@android:color/white"
+            android:textSize="@dimen/text_size_normal"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:paddingBottom="@dimen/spacing_large"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textSize="25sp"
+                android:text="@string/app_name_chinese"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:textSize="35sp"
+                android:text="@string/app_name"/>
+
+        </LinearLayout>
+
+
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/login_wechat_button"
+            android:layout_height="@dimen/button_height_normal"
+            android:layout_width="match_parent"
+            android:layout_margin="@dimen/spacing_large"
+            android:text="@string/login_wechat"
+            fancy:fb_defaultColor="@color/wechatGreen"
+            fancy:fb_radius="5dp"
+            fancy:fb_textColor="@color/white"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_marginTop="@dimen/spacing_normal"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_large">
+
+            <EditText
+                android:id="@+id/login_phone_num"
+                android:inputType="phone"
+                android:background="@android:drawable/edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_phone_hint"/>
+
+
+            <EditText
+                android:id="@+id/login_password"
+                android:inputType="textPassword"
+                android:background="@android:drawable/edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/login_password_hint"/>
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/login_normal_button"
+                android:layout_height="@dimen/button_height_normal"
+                android:layout_width="match_parent"
+                android:text="@string/login_normal"
+                fancy:fb_defaultColor="@color/colorPrimary"
+                fancy:fb_radius="5dp"
+                fancy:fb_textColor="@color/white"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                >
+                <CheckBox
+                    android:id="@+id/login_remember_me"
+                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:theme="@style/MyCheckBoxStyle"
+                    android:textColor="@color/textColor"
+                    android:text="@string/login_remember_me"/>
+
+                <TextView
+                    android:id="@+id/login_forget_password"
+                    android:gravity="center_vertical"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/login_forget_password"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:layout_marginTop="5dp"
+        android:id="@+id/login_register_button"
+        android:layout_height="@dimen/button_height_normal"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:text="@string/login_register"
+        android:textColor="@android:color/white"
+        android:background="@drawable/selector_color_primary"/>
+
+</RelativeLayout>

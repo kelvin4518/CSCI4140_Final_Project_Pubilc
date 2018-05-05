@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/spacing_large"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/edit_profile_image"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:src="@mipmap/ic_profile_image_placeholder"
+                    android:layout_gravity="center_horizontal"
+                    app:civ_border_width="1dp"
+                    app:civ_border_color="@color/colorBorder"/>
+
+
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/edit_profile_image_button"
+                    android:layout_width="40dp"
+                    android:layout_height="@dimen/button_height_small"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginStart="35dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/edit_profile_image_text"
+                    android:padding="1dp"
+                    fancy:fb_defaultColor="@color/white"
+                    fancy:fb_borderColor="@color/greyDark"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_radius="1dp"
+                    fancy:fb_textColor="@color/textColor"
+                    />
+
+
+
+
+
+
+                <!--<TextView
+                    android:id="@+id/edit_profile_image_tv"
+                    android:layout_width="50dp"
+                    android:layout_height="30dp"
+                    android:background="@android:drawable/editbox_background"
+                    android:textColor="@android:color/darker_gray"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="55dp"
+                    android:layout_marginStart="35dp"
+                    android:text="@string/edit_profile_image_text"/>-->
+
+            </FrameLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="@dimen/spacing_normal">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/edit_profile_name_title"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                    <EditText
+                        android:id="@+id/edit_profile_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:inputType="text"
+                        android:background="@android:color/white"
+                        android:gravity="end|center_vertical"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/edit_profile_phone_title"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                    <EditText
+                        android:id="@+id/edit_profile_phone"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:inputType="phone"
+                        android:background="@android:color/white"
+                        android:gravity="end|center_vertical"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:background="@android:drawable/edit_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/edit_profile_age_title"
+                        android:gravity="start|center_vertical"
+                        />
+
+
+                    <Spinner
+                        android:id="@+id/edit_profile_age_range_spinner"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="end|center_vertical"
+                        />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/edit_profile_email_title"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                    <EditText
+                        android:id="@+id/edit_profile_email"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:inputType="textEmailAddress"
+                        android:background="@android:color/white"
+                        android:gravity="end|center_vertical"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/edit_profile_introduction_title"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                    <EditText
+                        android:id="@+id/edit_profile_introduction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="4"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|start"
+                        android:scrollHorizontally="false"
+                        android:background="@android:color/white"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="@dimen/spacing_small"
+                        android:paddingBottom="@dimen/spacing_small"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_size_normal"
+                            android:text="@string/edit_profile_industry_title"
+                            android:gravity="start|center_vertical"
+                            />
+
+
+                        <TextView
+                            android:id="@+id/edit_profile_industry_list"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:textSize="@dimen/text_size_normal"
+                            android:text="@string/default_value"
+                            android:drawableEnd="@drawable/ic_arrow_right"
+                            android:gravity="end|center_vertical"
+                            />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@android:color/darker_gray"
+                        android:paddingStart="@dimen/spacing_large"
+                        android:paddingEnd="@dimen/spacing_large"
+                        />
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/spacing_normal"
+                        android:paddingBottom="@dimen/spacing_normal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="start|center_vertical"
+                            android:text="@string/edit_profile_others_title"
+                            android:textSize="@dimen/text_size_normal"/>
+
+                        <EditText
+                            android:id="@+id/edit_profile_others_industry"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:inputType="text"
+                            android:background="@android:color/white"
+                            android:gravity="end|center_vertical"
+                            android:textSize="@dimen/text_size_normal"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="@android:drawable/edit_text"
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/edit_profile_ability_title"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                    <EditText
+                        android:id="@+id/edit_profile_ability"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lines="4"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|start"
+                        android:scrollHorizontally="false"
+                        android:background="@android:color/white"
+                        android:textSize="@dimen/text_size_normal"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingStart="@dimen/spacing_large"
+                    android:paddingTop="@dimen/spacing_small"
+                    android:paddingEnd="@dimen/spacing_large"
+                    >
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/ic_alert_circle"
+                        />
+
+                    <TextView
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/text_size_normal"
+                        android:text="@string/edit_profile_tips"
+                        android:gravity="center_vertical"/>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_marginTop="5dp"
+            android:id="@+id/edit_profile_continue_button"
+            android:layout_height="@dimen/button_height_normal"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:text="@string/edit_profile_continue"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white" />
+
+    </RelativeLayout>
+
+
+</ScrollView>

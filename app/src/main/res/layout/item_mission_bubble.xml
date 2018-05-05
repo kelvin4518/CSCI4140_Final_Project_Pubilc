@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="80dp"
+    android:layout_height="50dp"
+    android:id="@+id/layout_container"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.daasuu.bl.BubbleLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="80dp"
+        android:layout_height="50dp"
+        android:padding="0dp"
+        app:bl_bubbleColor="@color/colorBorder"
+        app:bl_arrowDirection="bottom"
+        app:bl_arrowHeight="8dp"
+        app:bl_arrowPosition="35dp"
+        app:bl_arrowWidth="10dp"
+        app:bl_cornersRadius="10dp"
+        app:bl_strokeWidth="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/bubble_mission_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/bubble_mission_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:lines="1"
+                android:ellipsize="end"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/white"
+                />
+
+
+        </LinearLayout>
+
+
+    </com.daasuu.bl.BubbleLayout>
+
+</LinearLayout>

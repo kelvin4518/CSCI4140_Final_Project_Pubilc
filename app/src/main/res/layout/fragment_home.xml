@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/bmapView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <ImageButton
+            android:id="@+id/home_location_button"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/circle_white_background"
+            android:src="@drawable/ic_my_location"
+            />
+
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/home_mission_card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="50dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                >
+
+                <RelativeLayout
+                    android:padding="@dimen/spacing_small"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/home_mission_card_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_profile_image_placeholder"/>
+
+                    <LinearLayout
+                        android:paddingStart="@dimen/spacing_small"
+                        android:paddingEnd="@dimen/spacing_small"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/home_mission_card_icon"
+                        android:layout_toStartOf="@+id/home_mission_card_elapsed_time"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:padding="@dimen/spacing_small"
+                            android:id="@+id/home_mission_card_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:textSize="@dimen/text_size_large"
+                            tools:text="飲whisky 500ml一打"
+                            />
+
+                        <TextView
+                            android:padding="@dimen/spacing_small"
+                            android:id="@+id/home_mission_card_salary"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="$1000"
+                            />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:padding="@dimen/spacing_small"
+                        android:id="@+id/home_mission_card_elapsed_time"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/text_size_smaller"
+                        tools:text="1天前"
+                        />
+
+
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/spacing_small"
+                    android:layout_marginEnd="@dimen/spacing_small"
+                    android:background="@android:color/darker_gray"/>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_small">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_margin="@dimen/spacing_small"
+                                android:src="@drawable/ic_star_unlike"/>
+
+                            <TextView
+                                android:id="@+id/home_mission_card_location"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="start|center_vertical"
+                                tools:text="無特定地點"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_margin="@dimen/spacing_small"
+                                android:src="@drawable/ic_star_unlike"/>
+
+                            <TextView
+                                android:id="@+id/home_mission_card_date"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="start|center_vertical"
+                                tools:text="無特定時間"/>
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:visibility="gone"
+            android:id="@+id/home_taker_card_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="55dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="@dimen/spacing_normal"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:padding="@dimen/spacing_normal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <ImageView
+                        android:id="@+id/home_taker_card_icon"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_centerVertical="true"
+                        android:src="@mipmap/ic_profile_image_placeholder"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/home_taker_card_icon"
+                        android:layout_toStartOf="@+id/home_taker_card_button_container"
+                        android:paddingStart="@dimen/spacing_normal"
+                        android:paddingEnd="0dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/home_taker_card_name"
+                            android:textSize="@dimen/text_size_large"
+                            android:layout_margin="@dimen/spacing_small"
+                            tools:text="Jims Chan"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/spacing_small">
+
+                            <TextView
+                                android:id="@+id/home_taker_card_evaluate_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="0dp"
+                                android:layout_marginEnd="@dimen/spacing_small"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:text="@string/home_card_taker_evaluate_title"/>
+
+                            <RatingBar
+                                android:id="@+id/home_taker_card_evaluate_rating_bar"
+                                style="?android:attr/ratingBarStyleSmall"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toEndOf="@id/home_taker_card_evaluate_title"
+                                android:numStars="5"
+                                android:max="5"
+                                android:rating="5"
+                                android:stepSize="1"
+                                />
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/home_taker_card_button_container"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true">
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/home_taker_card_commissioned_button"
+                            android:layout_width="75dp"
+                            android:layout_height="@dimen/button_height_small"
+                            android:layout_marginBottom="@dimen/spacing_normal"
+                            android:padding="1dp"
+                            android:text="@string/home_card_taker_commission_title"
+                            android:layout_centerHorizontal="true"
+                            fancy:fb_defaultColor="@color/white"
+                            fancy:fb_borderColor="@color/greyDark"
+                            fancy:fb_borderWidth="1dp"
+                            fancy:fb_radius="1dp"
+                            fancy:fb_textColor="@color/greyDark"
+                            />
+
+                        <TextView
+                            android:id="@+id/home_taker_card_take_times"
+                            android:layout_below="@id/home_taker_card_commissioned_button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="受委托： 45次"/>
+
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    android:layout_marginEnd="@dimen/spacing_normal"
+                    android:background="@color/greyDark"/>
+
+                <LinearLayout
+                    android:id="@+id/home_taker_card_content_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_small"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/home_taker_card_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/spacing_normal"
+                        android:layout_marginEnd="@dimen/spacing_normal"
+                        tools:text="工作努力，願意擔任不同工作，十分準時，非常滿意，唯 一可以改善的是希望能和同事多些溝通。"/>
+                </LinearLayout>
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </RelativeLayout>
+
+
+    <LinearLayout
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:layout_marginStart="50dp"
+        android:orientation="horizontal">
+
+
+        <co.ceryle.radiorealbutton.RadioRealButtonGroup
+            android:id="@+id/home_radio_group"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            app:rrbg_selectorFullSize="true"
+            app:rrbg_animateTexts_enter="overshoot"
+            app:rrbg_dividerColor="@color/black"
+            app:rrbg_dividerSize="1dp"
+            app:rrbg_radius="10dp"
+            app:rrbg_dividerPadding="0dp"
+            app:rrbg_selectorDividerPadding="0dp"
+            app:rrbg_selectorColor="@color/colorPrimary"
+            >
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:rrb_textFillSpace="true"
+                app:rrb_textSize="@dimen/text_size_small"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="@string/home_show_all"
+                app:rrb_checked="true"
+                app:rrb_textColor="@color/black"/>
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:rrb_textFillSpace="true"
+                app:rrb_textSize="@dimen/text_size_small"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="@string/home_show_mission"
+                app:rrb_textColor="@color/black"/>
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:rrb_textFillSpace="true"
+                app:rrb_textSize="@dimen/text_size_small"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="@string/home_show_taker"
+                app:rrb_textColor="@color/black"/>
+        </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/home_shift_button"
+            android:layout_width="60dp"
+            android:layout_height="@dimen/button_height_small"
+            android:layout_marginStart="@dimen/spacing_normal"
+            android:layout_marginEnd="@dimen/spacing_normal"
+            android:layout_gravity="center_vertical"
+            android:text="@string/home_shift_text"
+            android:padding="1dp"
+            fancy:fb_defaultColor="@color/white"
+            fancy:fb_borderColor="@color/greyDark"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_radius="11dp"
+            fancy:fb_textColor="@color/black"
+            />
+
+
+    </LinearLayout>
+
+</FrameLayout>

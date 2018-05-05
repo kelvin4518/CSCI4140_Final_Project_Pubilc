@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:padding="@dimen/spacing_large"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <co.ceryle.radiorealbutton.RadioRealButtonGroup
+            android:id="@+id/search_normal_radio_group"
+            android:layout_marginStart="@dimen/spacing_large"
+            android:layout_marginEnd="@dimen/spacing_large"
+            android:layout_marginBottom="@dimen/spacing_large"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            app:rrbg_selectorFullSize="true"
+            app:rrbg_animateTexts_enter="overshoot"
+            app:rrbg_dividerColor="@color/black"
+            app:rrbg_dividerSize="1dp"
+            app:rrbg_radius="10dp"
+            app:rrbg_dividerPadding="0dp"
+            app:rrbg_selectorDividerPadding="0dp"
+            app:rrbg_selectorColor="@color/colorPrimary"
+            >
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:rrb_textFillSpace="true"
+                app:rrb_textSize="@dimen/text_size_small"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="@string/search_normal_for_mission"
+                app:rrb_checked="true"
+                app:rrb_textColor="@color/black"/>
+
+            <co.ceryle.radiorealbutton.RadioRealButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:rrb_textFillSpace="true"
+                app:rrb_textSize="@dimen/text_size_small"
+                app:rrb_ripple="true"
+                app:rrb_rippleColor="@color/black"
+                app:rrb_text="@string/search_normal_for_taker"
+                app:rrb_textColor="@color/black"/>
+        </co.ceryle.radiorealbutton.RadioRealButtonGroup>
+
+
+
+        <include
+            android:id="@+id/search_normal_mission_layout"
+            layout="@layout/fragment_search_normal_mission"/>
+
+        <include
+            android:visibility="gone"
+            android:id="@+id/search_normal_taker_layout"
+            layout="@layout/fragment_search_normal_taker"/>
+
+    </LinearLayout>
+
+
+
+    <Button
+        android:layout_margin="@dimen/spacing_normal"
+        android:id="@+id/search_normal_continue_button"
+        android:layout_height="@dimen/button_height_normal"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:text="@string/search_normal_continue"
+        android:textColor="@android:color/white"
+        android:background="@drawable/selector_color_primary"/>
+
+
+</RelativeLayout>

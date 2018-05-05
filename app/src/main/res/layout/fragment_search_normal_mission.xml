@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_action_search_dark"
+            android:gravity="start|center_vertical"
+            />
+
+        <EditText
+            android:id="@+id/search_normal_mission_key_word"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="text"
+            android:background="@android:color/white"
+            android:gravity="start|center_vertical"
+            android:hint="@string/search_normal_mission_key_word_hint"
+            android:textSize="@dimen/text_size_normal"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@string/search_normal_category_title"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <Spinner
+            android:id="@+id/search_normal_mission_type_spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textAlignment="textEnd"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/search_normal_date_title"
+            android:textSize="@dimen/text_size_normal"
+            android:gravity="start|center_vertical"
+            />
+
+
+        <TextView
+            android:id="@+id/search_normal_mission_date"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:textSize="@dimen/text_size_normal"
+            android:text="@string/search_normal_date_default"
+            android:gravity="end|center_vertical"
+            android:drawableEnd="@drawable/ic_calendar"
+            android:drawablePadding="5dp"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@string/search_normal_salary_title"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <Spinner
+            android:id="@+id/search_normal_mission_salary_spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textAlignment="textEnd"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@android:drawable/edit_text"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="start|center_vertical"
+            android:text="@string/search_normal_location_title"
+            android:textSize="@dimen/text_size_normal"/>
+
+        <Spinner
+            android:id="@+id/search_normal_mission_location_spinner"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="end|center_vertical"
+            android:textAlignment="textEnd"
+            />
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
