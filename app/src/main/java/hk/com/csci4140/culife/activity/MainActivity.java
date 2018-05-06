@@ -24,6 +24,7 @@ import hk.com.csci4140.culife.fragment.OtherMissionFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
 import hk.com.csci4140.culife.fragment.PostMissionStepOneFragment;
 import hk.com.csci4140.culife.fragment.RangeFragment;
+import hk.com.csci4140.culife.fragment.UserProfileFragment;
 import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
@@ -70,6 +71,8 @@ public class MainActivity extends BaseActivity {
 
             //Check if the user has login, if not, show the policy fragment
             Fragment initFragment = UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
+            // michael added, to disable the terms and conditions page when starting the app
+            initFragment = new HomeFragment();
             boolean hasBottomNav = UserModel.isLogin;
             //Set if the fragment has bottom navigation bar
             setBottomNavFragment(hasBottomNav);
@@ -200,7 +203,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new HabitDetailFragment();
                 break;
             case 4:
-                fragment = new OtherMissionFragment();
+                fragment = new UserProfileFragment();
                 break;
             default:
                 fragment = null;
