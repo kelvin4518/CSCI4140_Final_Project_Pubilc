@@ -22,6 +22,7 @@ import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 
 
+
 public class HabitDetailFragment extends BaseFragment {
 
     private static final String TAG = "HabitDetaiFrag";
