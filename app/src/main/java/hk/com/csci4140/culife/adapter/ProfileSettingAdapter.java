@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 
@@ -36,6 +37,28 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
     private ArrayList<String> settingList;
     private ArrayList<Integer> settingLogoList;
     private Context mContext;
+    private int mPosition;
+
+
+
+    // define the custom view holder
+    final static class ProfileSettingViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_profile_setting_logo)
+        ImageView mLogo;
+
+        @BindView(R.id.item_profile_setting_content)
+        TextView mContent;
+
+        @BindView(R.id.item_profile_setting_button)
+        Button mButton;
+
+        int mViewHolderPosition;
+
+        ProfileSettingViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
 
 
 
@@ -55,7 +78,7 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
 
 
     // overwrite some necessary methods
-    // what layout to use
+    // what layout to use : deciding the outlook
     @Override
     public ProfileSettingAdapter.ProfileSettingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_profile_setting, parent, false);
@@ -63,11 +86,25 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
         return holder;
     }
 
-    // how should we put data into the view
+    // what data is in the layout : putting data
     @Override
-    public void onBindViewHolder(ProfileSettingAdapter.ProfileSettingViewHolder holder, final int position) {
+    public void onBindViewHolder(final ProfileSettingAdapter.ProfileSettingViewHolder holder, final int position) {
+        holder.mViewHolderPosition = position;
         holder.mContent.setText(settingList.get(position));
         holder.mLogo.setImageResource(settingLogoList.get(position));
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "the original one";
+                if(holder.mViewHolderPosition==0){
+                    message = "1 st row";
+                }else if(holder.mViewHolderPosition==1){
+                    message = "2 nd row";
+                }
+                Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // total number of the items
@@ -83,22 +120,4 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
         return position;
     }
 
-
-
-    // define the custom view holder
-    final static class ProfileSettingViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_profile_setting_logo)
-        ImageView mLogo;
-
-        @BindView(R.id.item_profile_setting_content)
-        TextView mContent;
-
-        @BindView(R.id.item_profile_setting_button)
-        Button mButton;
-
-        ProfileSettingViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-        }
-    }
 }

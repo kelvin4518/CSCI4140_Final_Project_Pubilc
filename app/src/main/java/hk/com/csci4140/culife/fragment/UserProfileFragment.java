@@ -118,9 +118,11 @@ public class UserProfileFragment extends BaseFragment {
         // whether the change in content will change the layout size
         mOptionRecyclerView.setHasFixedSize(false);
         mOptionRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getContext());
         mOptionRecyclerView.setLayoutManager(mLayoutManager);
+
         // use an Adapter
         ArrayList<String> settingList = new ArrayList<String>();
         settingList.add("Habit Performance Analysis");

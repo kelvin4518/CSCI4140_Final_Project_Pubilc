@@ -8,6 +8,16 @@
     android:paddingTop="@dimen/spacing_large"
     android:layout_height="70dp">
 
+    <Button
+        android:id="@+id/item_profile_setting_button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="2dp"
+        android:visibility="gone"
+        android:text="Button" />
+
     <ImageView
         android:id="@+id/item_profile_setting_logo"
         android:layout_width="50dp"
@@ -34,15 +44,6 @@
         android:background="@android:color/darker_gray"
         android:layout_alignParentBottom="true"/>
 
-    <Button
-        android:id="@+id/item_profile_setting_button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="2dp"
-        android:visibility="invisible"
-        android:text="Button" />
 
 
 </RelativeLayout>

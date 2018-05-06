@@ -138,12 +138,12 @@ public class HabitDetailFragment extends BaseFragment {
                 .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
-//                        Toast.makeText(getActivity(), confirmBtn.getText().toString(), Toast.LENGTH_LONG).show();
                         if(confirmBtn.getText().toString().equalsIgnoreCase("确认完成")){
                             confirmBtn.setText("取消");
-                        }
-                        if(confirmBtn.getText().toString().equalsIgnoreCase("取消")){
+                            confirmBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+                        } else if(confirmBtn.getText().toString().equalsIgnoreCase("取消")){
                             confirmBtn.setText("确认完成");
+                            confirmBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
                         }
 //                        confirmBtn.setText("确认完成");
                         sDialog.dismissWithAnimation();
