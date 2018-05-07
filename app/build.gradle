@@ -8,7 +8,7 @@ android {
     compileSdkVersion 26
     buildToolsVersion '27.0.3'
     defaultConfig {
-        applicationId "hk.com.csci4140.culife"
+        applicationId "hk.com.apptech.culife"
 
         //TODO: Please update the One signal ID
         manifestPlaceholders = [onesignal_app_id: "ca0c5ce3-4ff4-48be-9b94-e7366db82eab",

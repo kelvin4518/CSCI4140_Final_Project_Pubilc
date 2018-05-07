@@ -222,25 +222,25 @@
     <string name="step_view_first_text">Fill in the data</string>
     <string name="step_view_second_text">Prepayments</string>
     <string name="step_view_third_text">Complete</string>
-    <string name="post_mission_name_title">Mission name</string>
-    <string name="post_mission_type_title">Types of mission</string>
+    <string name="post_habbit_name">Habbit name</string>
+    <string name="post_habbit_type">Type of the Habbit</string>
     <string name="post_mission_date_title">Date of mission</string>
     <string name="post_mission_date_default">No limit of date</string>
     <string-array name="post_mission_date_array">
         <item>No limit date</item>
         <item>Select the date</item>
     </string-array>
-    <string name="post_mission_time_title">Time of mission</string>
+    <string name="post_habbit_time">Time of Habbit</string>
     <string name="post_mission_time_from">to</string>
     <string name="post_mission_start_after_end">The beginning date must earlier than the ending date</string>
     <string name="post_mission_num_title">Number of member</string>
     <string name="post_mission_num_unit">Name</string>
-    <string name="post_mission_method_title">Release method</string>
-    <string-array name="post_mission_method_array">
+    <string name="post_habbit_method">Release method</string>
+    <string-array name="post_habbit_method_array">
         <item>Date</item>
         <item>Time</item>
     </string-array>
-    <string name="post_mission_period_title">Time limit</string>
+    <string name="post_habbit_period">Time limit</string>
     <string name="post_mission_period_start_after_end">The beginning date must earlier than the ending date</string>
     <string name="post_mission_date_before_today_warning">The date selected should earlier than today</string>
     <string name="post_mission_detail_hint">Detail of the job</string>
@@ -271,7 +271,7 @@
 
     <!-- Post Mission Step Two Fragment -->
     <string name="post_mission_two_salary_format">$%1$,.2f</string>
-    <string name="post_mission_two_confirm_content">确认招聘内容</string>
+    <string name="post_habbit_two_confirm_content">Confirm the habbit content</string>
     <string name="post_mission_two_no_location">无特定地点</string>
     <string name="post_mission_two_no_date">无特定时间</string>
     <string name="post_mission_two_need_video">提供影片证明</string>
@@ -303,14 +303,14 @@
     <string name="post_mission_two_fee_format">$%1$,.2f</string>
     <string name="post_mission_two_tips_1">程式手续费只会于任务完成后才收取，现阶段只是预付。</string>
     <string name="post_mission_two_tips_2">如在未委托任何人情况下结束任务委托将会退回程式手续费。</string>
-    <string name="post_mission_two_continue">预付款</string>
+    <string name="post_mission_two_continue">Confirm</string>
 
     <!-- Post Mission Finished Fragment -->
     <string name="post_mission_finished_title">付款完成</string>
     <string name="post_mission_finished_total_fee_format">成功付款&#032;$%1$,.2f&#032;!</string>
     <string name="post_mission_finished_end_date_format">你的任务将会发布，并会在%1$s结束。</string>
     <string name="post_mission_finished_num_and_service_fee_format">如你在委托结束前未完成%1$d位员工的招募，每个未被招募的名额将退回程式手续费$%2$,.2f</string>
-    <string name="post_mission_finished_continue">确认</string>
+    <string name="post_habbit_finished_continue">Confirm</string>
 
     <!-- Mission Detail Fragment -->
     <string name="mission_detail_title">职位详情</string>
