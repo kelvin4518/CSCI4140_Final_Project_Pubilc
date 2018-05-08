@@ -161,7 +161,7 @@ public class HabitDetailFragment extends BaseFragment {
         super.onDestroy();
 
         //Set the title of previous fragment
-        setToolbarTitle(mPrevTitle);
+//        setToolbarTitle(mPrevTitle);
     }
 
 

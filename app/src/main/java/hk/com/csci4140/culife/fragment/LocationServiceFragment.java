@@ -162,11 +162,17 @@ public class LocationServiceFragment extends BaseFragment {
 
     // the page is dismissed
     @Override
+    public void onStop(){
+//        stopLocationUpdates();
+        super.onStop();
+    }
+
+    @Override
     public void onDestroy(){
-        stopLocationUpdates();
+//        stopLocationUpdates();
         super.onDestroy();
         //Set the title of previous fragment
-        setToolbarTitle(mPrevTitle);
+//        setToolbarTitle(mPrevTitle);
     }
 
 

@@ -74,7 +74,11 @@ public class MainActivity extends BaseActivity {
             //Check if the user has login, if not, show the policy fragment
             Fragment initFragment = UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
             // michael added, to disable the terms and conditions page when starting the app
-            initFragment = new HomeFragment();
+
+
+
+            initFragment = new FriendMomentFragment();
+
             boolean hasBottomNav = UserModel.isLogin;
             //Set if the fragment has bottom navigation bar
             setBottomNavFragment(hasBottomNav);
@@ -104,7 +108,7 @@ public class MainActivity extends BaseActivity {
         // Set background color
         bottomNavigation.setDefaultBackgroundColor(Color.parseColor("#FEFEFE"));
 
-        // Disable the translation inside the CoordinatorLayout
+        // Disable thpre-initializede translation inside the CoordinatorLayout
         bottomNavigation.setBehaviorTranslationEnabled(false);
 
         // Change colors
@@ -193,13 +197,15 @@ public class MainActivity extends BaseActivity {
         Fragment fragment;
         switch (position){
             case 0:
-                fragment = new HomeFragment();
+                // fragment = new HomeFragment();
+                fragment = new FriendMomentFragment();
                 break;
             case 1:
                 fragment = new RangeFragment();
                 break;
             case 2:
-                fragment = new PostMissionStepOneFragment();
+                // fragment = new PostMissionStepOneFragment();
+                fragment = new HabitDetailFragment();
                 break;
             case 3:
                 fragment = new LocationServiceFragment();
