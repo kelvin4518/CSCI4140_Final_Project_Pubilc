@@ -9,7 +9,7 @@ import butterknife.ButterKnife;
 import hk.com.apptech.culife.R;
 
 /**
- * Created by linjiajie(August Lin) on 01/11/2017.
+ * Created by zhenghao(Kelvin Zheng) on 01/04/2018.
  */
 
 public class MessageFragment extends BaseFragment {

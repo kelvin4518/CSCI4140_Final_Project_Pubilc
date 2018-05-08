@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by linjiajie(August Lin) on 30/11/2017.
+ * Created by maoyuxuan(Michael Mao) on 30/04/2018.
  */
 
 public class CollectionsModel implements Serializable {

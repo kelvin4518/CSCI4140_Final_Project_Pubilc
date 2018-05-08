@@ -23,7 +23,7 @@ import hk.com.apptech.culife.observer.ProgressObserver;
 import hk.com.apptech.culife.utility.Utility;
 
 /**
- * Created by linjiajie(August Lin) on 07/11/2017.
+ * Created by zhenghao(Kelvin Zheng) on 07/04/2018.
  */
 
 public class RegisterPhoneFragment extends BaseFragment {

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by linjiajie(August Lin) on 14/11/2017.
+ * Created by maoyuxuan(Michael Mao) on 14/04/2018.
  */
 
 public class GetVerificationCodeModel implements Serializable{

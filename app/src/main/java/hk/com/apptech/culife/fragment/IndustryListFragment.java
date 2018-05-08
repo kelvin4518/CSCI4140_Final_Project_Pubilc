@@ -17,8 +17,9 @@ import hk.com.apptech.culife.R;
 import hk.com.apptech.culife.adapter.IndustryListAdapter;
 
 /**
- * Created by linjiajie(August Lin) on 15/11/2017.
+ * Created by liujie(Jerry Liu) on 15/04/2018.
  */
+
 
 public class IndustryListFragment extends BaseFragment {
 

@@ -15,8 +15,9 @@ import hk.com.apptech.culife.activity.MainActivity;
 import hk.com.apptech.culife.utility.Utility;
 
 /**
- * Created by linjiajie(August Lin) on 30/11/2017.
+ * Created by liujie(Jerry Liu) on 30/04/2018.
  */
+
 
 public class PostMissionFinishedFragment extends BaseFragment {
 

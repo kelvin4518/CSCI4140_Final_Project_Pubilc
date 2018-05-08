@@ -33,7 +33,7 @@ import hk.com.apptech.culife.observer.ProgressObserver;
 import hk.com.apptech.culife.utility.Utility;
 
 /**
- * Created by linjiajie(August Lin) on 09/11/2017.
+ * Created by liujie(Jerry Liu) on 09/04/2018.
  */
 
 public class HomeShiftFragment extends BaseFragment {

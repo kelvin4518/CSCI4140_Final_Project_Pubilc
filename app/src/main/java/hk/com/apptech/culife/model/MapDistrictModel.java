@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by linjiajie(August Lin) on 12/12/2017.
+ * Created by maoyuxuan(Michael Mao) on 12/04/2018.
  */
 
 public class MapDistrictModel implements Serializable {

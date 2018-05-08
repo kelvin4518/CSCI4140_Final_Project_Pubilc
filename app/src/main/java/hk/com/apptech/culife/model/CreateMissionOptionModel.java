@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by linjiajie(August Lin) on 23/11/2017.
+ * Created by maoyuxuan(Michael Mao) on 23/04/2018.
  */
 
 public class CreateMissionOptionModel implements Serializable {

@@ -49,7 +49,7 @@ import okhttp3.RequestBody;
 import static android.app.Activity.RESULT_OK;
 
 /**
- * Created by linjiajie(August Lin) on 08/11/2017.
+ * Created by zhenghao(Kelvin Zheng) on 08/04/2018.
  */
 
 public class EditProfileFragment extends BaseFragment {

@@ -25,7 +25,7 @@ import hk.com.apptech.culife.observer.ProgressObserver;
 import hk.com.apptech.culife.utility.Utility;
 
 /**
- * Created by linjiajie(August Lin) on 28/11/2017.
+ * Created by liujie(Jerry Liu) on 28/04/2018.
  */
 
 public class PostMissionStepTwoFragment extends BaseFragment {

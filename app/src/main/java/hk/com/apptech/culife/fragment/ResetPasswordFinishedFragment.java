@@ -11,7 +11,7 @@ import butterknife.OnClick;
 import hk.com.apptech.culife.R;
 
 /**
- * Created by linjiajie(August Lin) on 08/11/2017.
+ * Created by zhenghao(Kelvin Zheng) on 08/04/2018.
  */
 
 public class ResetPasswordFinishedFragment extends BaseFragment {

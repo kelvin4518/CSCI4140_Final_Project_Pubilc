@@ -37,7 +37,7 @@ import hk.com.apptech.culife.utility.Utility;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 /**
- * Created by linjiajie(August Lin) on 04/12/2017.
+ * Created by zhenghao(Kelvin Zheng) on 04/04/2018.
  */
 
 public class MissionDetailFragment extends BaseFragment {

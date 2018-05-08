@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by linjiajie(August Lin) on 14/11/2017.
+ * Created by gechen(Ge Chen) on 14/04/2018.
  */
 
 public class LoginModel implements Serializable {

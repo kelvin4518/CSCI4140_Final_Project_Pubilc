@@ -31,7 +31,7 @@ import hk.com.apptech.culife.model.UserModel;
 import hk.com.apptech.culife.utility.SessionManager;
 
 /**
- * Created by linjiajie(August Lin) on 26/10/2017.
+ * Created by zhenghao(Kelvin Zheng) on 26/04/2018.
  */
 
 public class BaseFragment extends Fragment {

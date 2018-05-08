@@ -13,7 +13,7 @@ import butterknife.OnClick;
 import hk.com.apptech.culife.R;
 
 /**
- * Created by linjiajie(August Lin) on 31/10/2017.
+ * Created by liujie(Jerry Liu) on 31/04/2018.
  */
 
 public class PolicyFragment extends BaseFragment {

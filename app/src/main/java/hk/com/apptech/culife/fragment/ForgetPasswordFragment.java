@@ -20,7 +20,7 @@ import hk.com.apptech.culife.observer.ObserverOnNextListener;
 import hk.com.apptech.culife.observer.ProgressObserver;
 
 /**
- * Created by linjiajie(August Lin) on 08/11/2017.
+ * Created by liujie(Jerry Liu) on 08/04/2018.
  */
 
 public class ForgetPasswordFragment extends BaseFragment {

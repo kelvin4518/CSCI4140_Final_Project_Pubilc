@@ -14,7 +14,7 @@ import hk.com.apptech.culife.activity.MainActivity;
 import hk.com.apptech.culife.model.UserModel;
 
 /**
- * Created by linjiajie(August Lin) on 08/11/2017.
+ * Created by liujie(Jerry Liu) on 08/04/2018.
  */
 
 public class RegisterFinishedFragment extends BaseFragment {
