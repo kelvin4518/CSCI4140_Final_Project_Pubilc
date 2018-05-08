@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
@@ -28,6 +30,13 @@ import hk.com.csci4140.culife.utility.Utility;
 /**
  * Created by zhenghao(Kelvin Zheng) on 01/04/2018.
  */
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONObject;
+
 
 public class LoginFragment extends BaseFragment {
 
@@ -43,7 +52,11 @@ public class LoginFragment extends BaseFragment {
     EditText mPassword;
 
     private String errorText = "";
+    final String TARGET_URL = "ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
 
+
+
+    // before the user see the page
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -60,6 +73,10 @@ public class LoginFragment extends BaseFragment {
         return mView;
     }
 
+
+
+
+    // when user is interacting with the page
     @OnClick(R.id.login_wechat_button)
     void onClickWechatLogin(){
         //TODO: WeChat Login function
@@ -85,7 +102,6 @@ public class LoginFragment extends BaseFragment {
     void onClickRegister(){
         replaceFragment(new RegisterFragment(), null);
     }
-
 
     //Check if the information that user input is valid
     private boolean checkUserInput(){
@@ -113,18 +129,48 @@ public class LoginFragment extends BaseFragment {
         return true;
     }
 
+    private boolean checkUserInputEmail(){
+
+        if(mPhone.getText() == null || mPhone.getText().toString().equals("")){
+            // errorText = getString(R.string.login_warning_input_phone_num);
+            errorText = "Please enter the email";
+            return false;
+        }
+
+        if(!mPhone.getText().toString().contains("@")){
+            errorText = "Please enter the valid email address";
+            return false;
+        }
+
+        if(mPassword.getText() == null || mPassword.getText().toString().equals("")){
+
+            errorText = getString(R.string.login_warning_input_password);
+            return false;
+        }
+
+        return true;
+
+    }
+
     //Save the Parameter and call API
     private void saveParameter(){
 
-        if(checkUserInput()){
+        if(checkUserInputEmail()){
             //Put the parameter and call API
             HashMap<String, String> mParameter = new HashMap<>();
-            mParameter.put(Constant.LOGIN_PHONE_PHONE, mPhone.getText().toString());
             mParameter.put(Constant.LOGIN_PHONE_PASSWORD, mPassword.getText().toString());
             mParameter.put(Constant.LOGIN_PHONE_DEVICE_TYPE, Constant.DEVICE_TYPE);
             mParameter.put(Constant.LOGIN_PHONE_DEVICE_TOKEN, Utility.getDeviceToken());
+//            mParameter.put(Constant.LOGIN_PHONE_PHONE, mPhone.getText().toString());
+//            callLoginHttp(mParameter);
+            mParameter.put("email", mPhone.getText().toString());
 
-            callLoginHttp(mParameter);
+            RequestParams params = new RequestParams();
+            RequestParams embeddedParams = new RequestParams();
+            embeddedParams.put("email",mPhone.getText().toString());
+            embeddedParams.put("password",mPassword.getText().toString());
+            params.put("user", embeddedParams);
+            callLoginByEmailHttp(params);
         }
         else {
 
@@ -157,5 +203,28 @@ public class LoginFragment extends BaseFragment {
             }
         };
         HttpMethod.getInstance().loginByPhone(new ProgressObserver<LoginModel>(getContext(), observer), map);
+    }
+
+
+    //Call Login by Email Http
+    private void callLoginByEmailHttp(RequestParams params){
+        // AsyncHttpClient belongs to the loopj dependency.
+        AsyncHttpClient client = new AsyncHttpClient();
+
+        // Making an HTTP GET request by providing a URL and the parameters.
+        client.post(TARGET_URL, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("API_REPORT", "onSuccess: login");
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: "+statusCode+" "+response);
+            }
+
+        });
     }
 }

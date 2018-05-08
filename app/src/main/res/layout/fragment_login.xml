@@ -69,7 +69,7 @@
 
             <EditText
                 android:id="@+id/login_phone_num"
-                android:inputType="phone"
+                android:inputType="textEmailAddress"
                 android:background="@android:drawable/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

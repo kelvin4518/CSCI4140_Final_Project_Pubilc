@@ -115,6 +115,10 @@ public class HttpMethod {
         ApiSubscribe(HttpMethod.getRunningGoldService().loginByPhone(map), observer);
     }
 
+    //Login by Email
+    public void loginByEmail(Observer<LoginModel> observer, HashMap<String, String> map){
+        ApiSubscribe(HttpMethod.getRunningGoldService().loginByEmail(map), observer);
+    }
 
     //Forget Password
     public void forgetPassword(Observer<GetVerificationCodeModel> observer, String phone){

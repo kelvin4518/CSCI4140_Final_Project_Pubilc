@@ -112,4 +112,5 @@ dependencies {
     compile 'com.google.android.gms:play-services-fitness:15.0.0'
     compile 'com.google.android.gms:play-services-base:15.0.0'
     compile 'com.android.support:support-annotations:+'
+    compile 'com.loopj.android:android-async-http:1.4.9'
 }
