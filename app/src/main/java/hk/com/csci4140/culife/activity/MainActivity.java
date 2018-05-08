@@ -20,6 +20,7 @@ import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.FriendMomentFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
+import hk.com.csci4140.culife.fragment.LocationServiceFragment;
 import hk.com.csci4140.culife.fragment.MessageFragment;
 import hk.com.csci4140.culife.fragment.OtherMissionFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
@@ -201,7 +202,7 @@ public class MainActivity extends BaseActivity {
                 fragment = new PostMissionStepOneFragment();
                 break;
             case 3:
-                fragment = new FriendMomentFragment();
+                fragment = new LocationServiceFragment();
                 break;
             case 4:
                 fragment = new UserProfileFragment();
