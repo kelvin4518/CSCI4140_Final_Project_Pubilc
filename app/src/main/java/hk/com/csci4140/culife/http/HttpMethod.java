@@ -39,7 +39,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HttpMethod {
 
-    public static final String BASE_URL = "http://119.81.130.181/runninggold/public/index.php/api/";
+//    public static final String BASE_URL = "http://119.81.130.181/runninggold/public/index.php/api/";
+    public static final String BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
 
     private static final int DEFAULT_TIMEOUT = 60;
 
@@ -114,6 +115,10 @@ public class HttpMethod {
         ApiSubscribe(HttpMethod.getRunningGoldService().loginByPhone(map), observer);
     }
 
+    //Login by Email
+    public void loginByEmail(Observer<LoginModel> observer, HashMap<String, String> map){
+        ApiSubscribe(HttpMethod.getRunningGoldService().loginByEmail(map), observer);
+    }
 
     //Forget Password
     public void forgetPassword(Observer<GetVerificationCodeModel> observer, String phone){

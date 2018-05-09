@@ -89,6 +89,21 @@ public interface RunningGoldService {
     );
     //===========================  END  ===========================
 
+    //Login (By Email)
+    /**
+     *
+     * String   email
+     * String   password
+     * String   device_token
+     * String   device_type (IOS / Android)
+     *
+     */
+    @FormUrlEncoded
+    @POST("users/login")
+    Observable<LoginModel> loginByEmail(@Field("user") Map<String, String> map
+    );
+    //===========================  END  ===========================
+
 
 
 

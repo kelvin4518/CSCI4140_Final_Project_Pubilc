@@ -7,6 +7,9 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.activity.LoginActivity;
 import hk.com.csci4140.culife.utility.SessionManager;
@@ -63,6 +66,21 @@ public class UserModel {
         SessionManager.putInt(mContext, Constant.REGION, regionNum);
         SessionManager.putInt(mContext, Constant.SHOW_LOCATION, showLocation);
         initModel(mContext);
+    }
+
+    public static void fromLoginJson(Context mContext,boolean isRemember,JSONObject jsonObject) {
+        try {
+            JSONObject responseObject = jsonObject.getJSONObject("user");
+            String token = responseObject.getString("token");
+            SessionManager.putBoolean(mContext, Constant.IS_LOGIN, true);
+            SessionManager.putBoolean(mContext, Constant.IS_REMEMBER, isRemember);
+            SessionManager.putString(mContext, Constant.TOKEN, token);
+            isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
+            isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
+            token = SessionManager.getString(mContext, Constant.TOKEN);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
