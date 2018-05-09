@@ -11,12 +11,17 @@ import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Dictionary;
 import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.HttpEntity;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
@@ -31,11 +36,15 @@ import hk.com.csci4140.culife.utility.Utility;
  * Created by zhenghao(Kelvin Zheng) on 01/04/2018.
  */
 
+import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
 import org.json.JSONObject;
+
+import org.json.*;
+import com.loopj.android.http.*;
 
 
 public class LoginFragment extends BaseFragment {
@@ -52,8 +61,8 @@ public class LoginFragment extends BaseFragment {
     EditText mPassword;
 
     private String errorText = "";
-    final String TARGET_URL = "ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
-
+    final String TARGET_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
+//    private static AsyncHttpClient client;
 
 
     // before the user see the page
@@ -156,21 +165,30 @@ public class LoginFragment extends BaseFragment {
     private void saveParameter(){
 
         if(checkUserInputEmail()){
-            //Put the parameter and call API
-            HashMap<String, String> mParameter = new HashMap<>();
-            mParameter.put(Constant.LOGIN_PHONE_PASSWORD, mPassword.getText().toString());
-            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TYPE, Constant.DEVICE_TYPE);
-            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TOKEN, Utility.getDeviceToken());
-//            mParameter.put(Constant.LOGIN_PHONE_PHONE, mPhone.getText().toString());
-//            callLoginHttp(mParameter);
-            mParameter.put("email", mPhone.getText().toString());
+//            //Put the parameter and call API
+//            HashMap<String, String> mParameter = new HashMap<>();
+//            mParameter.put(Constant.LOGIN_PHONE_PASSWORD, mPassword.getText().toString());
+//            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TYPE, Constant.DEVICE_TYPE);
+//            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TOKEN, Utility.getDeviceToken());
+////            mParameter.put(Constant.LOGIN_PHONE_PHONE, mPhone.getText().toString());
+////            callLoginHttp(mParameter);
+//            mParameter.put("email", mPhone.getText().toString());
 
-            RequestParams params = new RequestParams();
-            RequestParams embeddedParams = new RequestParams();
-            embeddedParams.put("email",mPhone.getText().toString());
-            embeddedParams.put("password",mPassword.getText().toString());
-            params.put("user", embeddedParams);
-            callLoginByEmailHttp(params);
+
+            JSONObject jsonParams = new JSONObject();
+            JSONObject outerJsonParams = new JSONObject();
+            try {
+                jsonParams.put("email", mPhone.getText().toString());
+                jsonParams.put("password", mPassword.getText().toString());
+                outerJsonParams.put("user",jsonParams);
+                StringEntity entity = new StringEntity(outerJsonParams.toString());
+                callLoginByEmailHttp(entity);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
         }
         else {
 
@@ -207,24 +225,27 @@ public class LoginFragment extends BaseFragment {
 
 
     //Call Login by Email Http
-    private void callLoginByEmailHttp(RequestParams params){
-        // AsyncHttpClient belongs to the loopj dependency.
+    private void callLoginByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
 
-        // Making an HTTP GET request by providing a URL and the parameters.
-        client.post(TARGET_URL, params, new JsonHttpResponseHandler() {
-
+        client.post(getContext(),TARGET_URL,params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+                showBottomSnackBar("Welcome to CULife !");
+                UserModel.fromLoginJson(getContext(),mCbRememberMe.isChecked(),response);
+                replaceActivity(MainActivity.class, null);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
                 Log.d("API_REPORT", "onFailure: login");
-                Log.d("API_REPORT", "onFailure: "+statusCode+" "+response);
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.login_warning_wrong_password));
             }
-
         });
     }
 }

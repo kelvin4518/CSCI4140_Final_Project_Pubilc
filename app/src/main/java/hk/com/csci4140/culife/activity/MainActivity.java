@@ -156,30 +156,32 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
                 // Do something cool here...
-                if(position > 0){
-                    if(!UserModel.isLogin){
-                        if(bottomNavigation.getCurrentItem() != position) {
-                            if (position != 2) {
-                                previousItem = position;
-                            }
-                            setTabSelectFragment(position);
-                        }
-                        return true;
-                    }
-                    else {
-                        showBottomSnackBar(getString(R.string.should_login));
-                        return false;
-                    }
-                }
-                else {
-                    if(bottomNavigation.getCurrentItem() != position) {
-                        if (position != 2) {
-                            previousItem = position;
-                        }
-                        setTabSelectFragment(position);
-                    }
-                    return true;
-                }
+                setTabSelectFragment(position);
+                return true;
+//                if(position > 0){
+//                    if(UserModel.isLogin){
+//                        if(bottomNavigation.getCurrentItem() != position) {
+//                            if (position != 2) {
+//                                previousItem = position;
+//                            }
+//                            setTabSelectFragment(position);
+//                        }
+//                        return true;
+//                    }
+//                    else {
+//                        showBottomSnackBar(getString(R.string.should_login));
+//                        return false;
+//                    }
+//                }
+//                else {
+//                    if(bottomNavigation.getCurrentItem() != position) {
+//                        if (position != 2) {
+//                            previousItem = position;
+//                        }
+//                        setTabSelectFragment(position);
+//                    }
+//                    return true;
+//                }
 
             }
         });
