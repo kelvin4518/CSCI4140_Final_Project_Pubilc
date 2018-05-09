@@ -45,6 +45,7 @@ import org.json.JSONObject;
 
 import org.json.*;
 import com.loopj.android.http.*;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 
 public class LoginFragment extends BaseFragment {
@@ -61,7 +62,13 @@ public class LoginFragment extends BaseFragment {
     EditText mPassword;
 
     private String errorText = "";
-    final String TARGET_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
+
+
+    CatLoadingView mView;
+
+
+
+//    final String TARGET_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
 //    private static AsyncHttpClient client;
 
 
@@ -112,7 +119,7 @@ public class LoginFragment extends BaseFragment {
         // replaceFragment(new RegisterFragment(), null);
 
         // 现在暂时直接转到电话／邮件注册页面
-        replaceFragment(new RegisterPhoneFragment(), null);
+        replaceFragment(new RegisterEmailFragment(), null);
     }
 
     //Check if the information that user input is valid
@@ -231,9 +238,15 @@ public class LoginFragment extends BaseFragment {
     private void callLoginByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
 
-        client.post(getContext(),TARGET_URL,params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+
+        mView = new CatLoadingView();
+
+        mView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"users/login",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
                 Log.d("API_REPORT", "onSuccess: login");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
                 Log.d("API_REPORT", "onSuccess: response: "+response);
@@ -244,6 +257,7 @@ public class LoginFragment extends BaseFragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
                 Log.d("API_REPORT", "onFailure: login");
                 Log.d("API_REPORT", "onFailure: status : "+statusCode);
                 Log.d("API_REPORT", "onFailure: response : "+response);

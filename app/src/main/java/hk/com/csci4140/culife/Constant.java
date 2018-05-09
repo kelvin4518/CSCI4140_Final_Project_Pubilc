@@ -6,6 +6,8 @@ package hk.com.csci4140.culife;
 
 public interface Constant {
 
+    String API_BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
+
     //General String Value
     String ACTIVITY_BUNDLE = "activity_bundle";
     String TRUE = "1";

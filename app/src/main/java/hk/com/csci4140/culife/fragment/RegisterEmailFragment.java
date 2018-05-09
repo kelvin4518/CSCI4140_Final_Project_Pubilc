@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,20 +47,15 @@ public class RegisterEmailFragment extends BaseFragment {
     @BindView(R.id.register_via_email)
     EditText mEmailAddress;
 
-    @BindView(R.id.register_et_password)
+    @BindView(R.id.register_email_password)
     EditText mPassword;
 
-    @BindView(R.id.register_et_retype_password)
+    @BindView(R.id.register_email_retype_password)
     EditText mRetypePassword;
-
-    @BindView(R.id.register_region_spinner)
-    Spinner mRegionSpinner;
-
-    @BindView(R.id.register_policy_checkbox)
-    CheckBox mPolicyCheckBox;
 
     private String mTitle;
     private String errorText = "";
+    CatLoadingView mView;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -88,7 +84,7 @@ public class RegisterEmailFragment extends BaseFragment {
         super.onDestroy();
 
         //Previous fragment has no toolbar
-        setToolbarVisibility(false);
+//        setToolbarVisibility(false);
     }
 
 
@@ -179,10 +175,10 @@ public class RegisterEmailFragment extends BaseFragment {
             //
 
 
-
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
+                jsonParams.put("username", "maomao2");
                 jsonParams.put("email", mEmailAddress.getText().toString());
                 jsonParams.put("password", mPassword.getText().toString());
                 outerJsonParams.put("user",jsonParams);
@@ -229,14 +225,16 @@ public class RegisterEmailFragment extends BaseFragment {
 
 
 
-    final String TARGET_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users";
 
     private void callRegisterByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
+        mView = new CatLoadingView();
+        mView.show(getFragmentManager(), "");
 
-        client.post(getContext(),TARGET_URL,params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+        client.post(getContext(),Constant.API_BASE_URL+"users",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
                 Log.d("API_REPORT", "onSuccess: register");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
                 Log.d("API_REPORT", "onSuccess: response: "+response);
@@ -247,6 +245,7 @@ public class RegisterEmailFragment extends BaseFragment {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
                 Log.d("API_REPORT", "onFailure: register");
                 Log.d("API_REPORT", "onFailure: status : "+statusCode);
                 Log.d("API_REPORT", "onFailure: response : "+response);
