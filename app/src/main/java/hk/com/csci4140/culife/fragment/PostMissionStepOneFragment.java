@@ -96,6 +96,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
     @BindView(R.id.post_mission_one_period_end_time)
     TextView postPeriodEnd;
 
+    @BindView(R.id.habbit_content)
+    EditText postHabbitContent;
 
     private String mTitle;
     private String mPrevTitle;
@@ -153,16 +155,12 @@ public class PostMissionStepOneFragment extends BaseFragment {
     @Override
     public void onResume(){
         super.onResume();
-        //Resume the map
-        //mMapView.onResume();
     }
 
 
     @Override
     public void onPause(){
         super.onPause();
-        //Pause the map
-        //mMapView.onPause();
     }
 
 
@@ -181,14 +179,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
         super.onStart();
 
         initialMethodSpinner();
-        //initialMap();
-        //if(mOptionsModel == null){
-        //    callGetOptionsHttp();
-        //}
-        //else {
-            //initialMissionTypeSpinner();
-            initialPeriodSpinner();
-        //}
+        initialPeriodSpinner();
+
         //If user is from step two
         if(parameter != null){
             //Mission Date
@@ -205,33 +197,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         }
     }
 
-
-    //Initial the Mission Type Spinner
-    /*private void initialMissionTypeSpinner(){
-        ArrayList<String> typeList = new ArrayList<>();
-        //Initial the Type list
-        for(CreateMissionOptionModel.Result.MissionType type : mOptionsModel.getResult().getMissionTypes()){
-            typeList.add(type.getType());
-        }
-
-        SpinnerAdapter spinnerAdapter =
-                new ArrayAdapter<>(getContext(), R.layout.item_customize_spinner, typeList);
-        typeSpinner.setAdapter(spinnerAdapter);
-        typeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectedType = i;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-            }
-        });
-        //If user has already select a item, set it
-        if(selectedType != -1){
-            typeSpinner.setSelection(selectedType);
-        }
-    }*/
 
 
     //Initialize the post method spinner
@@ -280,9 +245,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
     private void initialPeriodSpinner(){
         ArrayList<String> periodList = new ArrayList<>();
         //Initial the Period list
-        /*for(CreateMissionOptionModel.Result.PostPeriod postPeriod : mOptionsModel.getResult().getPostPeriods()){
-            periodList.add(postPeriod.getPeriod());
-        }*/
 
         SpinnerAdapter spinnerAdapter =
                 new ArrayAdapter<>(getContext(), R.layout.item_customize_spinner, periodList);
@@ -314,22 +276,12 @@ public class PostMissionStepOneFragment extends BaseFragment {
         }
         parameter.put(Constant.MISSION_TITLE, postName.getText().toString());
 
-
-        //Mission Type
-        //parameter.put(Constant.MISSION_TYPE_ID, Integer.toString(mOptionsModel.getResult().getMissionTypes().get(selectedType).getId()));
-        //parameter.put(Constant.MISSION_TYPE, typeSpinner.getSelectedItem().toString());
-
-
-        //Mission Date
-        /*
-        if(postDate.getText().toString().equals(getString(R.string.post_mission_date_default))){
-            parameter.put(Constant.MISSION_NO_SPEC_DATE, Constant.TRUE);
+        if(postHabbitContent.getText() == null || postHabbitContent.getText().toString().equals("")){
+            errorText = getString(R.string.post_habbit_content);
+            return false;
         }
-        else {
-            parameter.put(Constant.MISSION_NO_SPEC_DATE, Constant.FALSE);
-            parameter.put(Constant.MISSION_DATE, postDate.getText().toString());
-        }
-        */
+
+        parameter.put(Constant.MISSION_POST_HABBIT_CONTENT, postHabbitContent.getText().toString());
 
         //Mission start time and end time
         if( (startTime.getText() == null || startTime.getText().toString().equals(""))
@@ -341,15 +293,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         parameter.put(Constant.MISSION_START_TIME, startTime.getText().toString());
         parameter.put(Constant.MISSION_END_TIME, endTime.getText().toString());
 
-
-        //Mission num of needed
-        /*
-        if(postNum.getText() == null || postNum.getText().toString().equals("")){
-            errorText = getString(R.string.post_mission_input_num);
-            return false;
-        }
-        parameter.put(Constant.MISSION_NUM_NEEDED, postNum.getText().toString());
-    */
 
         //Mission post method and post period
         if(selectedMethod == 0){
@@ -375,32 +318,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
         return true;
     }
-
-
-    //Call the Http to get the options value
-    /*private void callGetOptionsHttp(){
-        ObserverOnNextListener<CreateMissionOptionModel> observer = new ObserverOnNextListener<CreateMissionOptionModel>() {
-            @Override
-            public void onNext(CreateMissionOptionModel model) {
-                if(model.getStatus().equals(Constant.CONNECT_SUCCESS)){
-
-                    mOptionsModel = model;
-
-                    //Initial the type spinner
-                    //initialMissionTypeSpinner();
-
-                    //Initial the post period spinner
-                    initialPeriodSpinner();
-
-                }
-                else if(model.getStatus().equals(Constant.CONNECT_FAILED)){
-                    showBottomSnackBar(getString(R.string.network_connect_errors));
-                    Log.e(TAG, "Fail: " + model.getResult().getErrors().get(0));
-                }
-            }
-        };
-        HttpMethod.getInstance().getCreateMissionOptions(new ProgressObserver<CreateMissionOptionModel>(getContext(), observer), UserModel.token, Utility.getLanguageId(getContext()));
-    }*/
 
 
     //@OnClick(R.id.post_mission_one_date)

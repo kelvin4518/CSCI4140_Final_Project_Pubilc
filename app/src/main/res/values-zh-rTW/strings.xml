@@ -41,17 +41,17 @@
     <string name="permission_reject">程序將會在兩秒後結束</string>
 
     <!-- Login Fragment -->
-    <string name="login_normal">登入</string>
-    <string name="login_wechat">微信登入</string>
-    <string name="login_register">新用戶？按此註冊帳號</string>
-    <string name="login_remember_me">記住我</string>
-    <string name="login_forget_password">忘記密碼？</string>
-    <string name="login_phone_hint">電話號碼</string>
-    <string name="login_password_hint">密碼</string>
-    <string name="login_warning_input_phone_num">請輸入電話號碼</string>
-    <string name="login_warning_valid_phone_num">請輸入正確的電話號碼</string>
-    <string name="login_warning_input_password">請輸入密碼</string>
-    <string name="login_warning_wrong_password">密碼錯誤</string>
+    <string name="login_normal">login</string>
+    <string name="login_wechat">Wechat login</string>
+    <string name="login_register">New comer? Please regist first</string>
+    <string name="login_remember_me">Remember me</string>
+    <string name="login_forget_password">Forget your password？</string>
+    <string name="login_phone_hint">Phone number</string>
+    <string name="login_password_hint">Password</string>
+    <string name="login_warning_input_phone_num">Please input the phone number</string>
+    <string name="login_warning_valid_phone_num">Please input the correct phone number</string>
+    <string name="login_warning_input_password">Please input the password</string>
+    <string name="login_warning_wrong_password">Wrong password</string>
 
     <!-- Register Fragment -->
     <string name="register_phone">電話註冊</string>
@@ -150,7 +150,7 @@
 
     <!-- Home Fragment -->
     <string name="home_fragment_title">Running Gold</string>
-    <string name="home_login">登入</string>
+    <string name="home_login">login</string>
     <string name="home_show_all">顯示全部</string>
     <string name="home_show_mission">顯示任務</string>
     <string name="home_show_taker">顯示委託人</string>

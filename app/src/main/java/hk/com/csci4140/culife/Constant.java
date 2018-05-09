@@ -116,18 +116,9 @@ public interface Constant {
     String MISSION_POST_METHOD = "post_method";
     String MISSION_POST_START = "post_start";
     String MISSION_POST_END = "post_end";
-    String MISSION_POST_PERIOD_ID = "post_period";
     String MISSION_POST_PERIOD = "mission_post_period";
-    String MISSION_NEED_INTERVIEW = "need_face";
-    String MISSION_SALARY = "salary";
-    String MISSION_HAS_ADDRESS = "have_address";
-    String MISSION_ADDRESS = "address";
-    String MISSION_ADDRESS_LATITUDE = "lat";
-    String MISSION_ADDRESS_LONGITUDE = "lng";
-    String MISSION_NEED_VIDEO = "need_video";
-    String MISSION_NEED_PHOTO = "need_photo";
-    String MISSION_DISCLOSE_MEDIA = "public_media";
     String MISSION_CONTENT = "content";
+    String MISSION_POST_HABBIT_CONTENT = "content";
     String MISSION_REQUIREMENT = "requirement";
     String MISSION_REGION = "region";
 

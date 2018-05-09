@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9F70CF</color>
+    <color name="colorPrimary">#926aba</color>
     <color name="color_select_tab">#52f8b7</color>
     <color name="color_habbit_toolbar">#1fd890</color>
     <color name="colorPrimaryDark">#ef4a1d</color>
     <color name="colorAccent">#f42126</color>
 
-    <color name="textColor">#F3A530</color>
+    <color name="textColor">#926aba</color>
     <color name="textColorSelected">#EB7B2D</color>
     <color name="textSelectedBackground">#f7cf31</color>
     <color name="textColorHint">#f7ccd5</color>

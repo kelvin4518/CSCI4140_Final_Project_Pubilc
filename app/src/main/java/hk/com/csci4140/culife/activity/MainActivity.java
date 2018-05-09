@@ -130,27 +130,6 @@ public class MainActivity extends BaseActivity {
         // Use colored navigation with circle reveal effect
         bottomNavigation.setColored(true);
 
-        // Set current item programmatically
-        //bottomNavigation.setCurrentItem(1);
-
-        // Customize notification (title, background, typeface)
-        //bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#F63D2B"));
-
-        // Add or remove notification for each item
-        //bottomNavigation.setNotification("1", 3);
-        // OR
-        /*AHNotification notification = new AHNotification.Builder()
-                .setText("1")
-                .setBackgroundColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_dark))
-                .setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.white))
-                .build();
-        bottomNavigation.setNotification(notification, 1); */
-
-        // Enable / disable item & set disable color
-        //bottomNavigation.enableItemAtPosition(2);
-        //bottomNavigation.disableItemAtPosition(2);
-        //bottomNavigation.setItemDisableColor(Color.parseColor("#3A000000"));
-
         // Set listeners
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
