@@ -20,6 +20,7 @@ import hk.com.csci4140.culife.adapter.IndustryListAdapter;
  * Created by liujie(Jerry Liu) on 15/04/2018.
  */
 
+
 public class IndustryListFragment extends BaseFragment {
 
     @BindView(R.id.industry_recycler_view)

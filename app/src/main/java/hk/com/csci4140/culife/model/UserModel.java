@@ -4,11 +4,14 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
+import android.util.DisplayMetrics;
+import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import hk.com.csci4140.culife.Constant;
+import hk.com.csci4140.culife.activity.LoginActivity;
 import hk.com.csci4140.culife.utility.SessionManager;
 
 /**

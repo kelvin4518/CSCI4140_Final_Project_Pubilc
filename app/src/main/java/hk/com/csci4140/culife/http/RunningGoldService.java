@@ -7,8 +7,8 @@ import hk.com.csci4140.culife.model.CreateMissionModel;
 import hk.com.csci4140.culife.model.CreateMissionOptionModel;
 import hk.com.csci4140.culife.model.EditProfileOptionModel;
 import hk.com.csci4140.culife.model.GetMissionDetailModel;
-import hk.com.csci4140.culife.model.GetVerificationCodeModel;
 import hk.com.csci4140.culife.model.LoginModel;
+import hk.com.csci4140.culife.model.GetVerificationCodeModel;
 import hk.com.csci4140.culife.model.MapDistrictModel;
 import hk.com.csci4140.culife.model.MapModel;
 import hk.com.csci4140.culife.model.NearbyListModel;
@@ -22,13 +22,14 @@ import okhttp3.RequestBody;
 import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
 /**
- * Created by gechen(Ge Chen) on 14/04/2018.
+ * Created by linjiajie(August Lin) on 14/11/2017.
  */
 
 public interface RunningGoldService {

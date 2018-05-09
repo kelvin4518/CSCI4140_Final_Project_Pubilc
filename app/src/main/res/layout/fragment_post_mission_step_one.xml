@@ -66,7 +66,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/step_view_first_text"/>
+                    android:text="@string/step_view_first_text"
+                    android:textColor="@android:color/holo_purple" />
 
 
                 <View
@@ -80,7 +81,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/step_view_second_text"/>
+                    android:text="@string/step_view_second_text"
+                    android:textColor="@android:color/holo_purple" />
 
                 <View
                     android:layout_width="wrap_content"
@@ -93,7 +95,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/step_view_third_text"/>
+                    android:text="@string/step_view_third_text"
+                    android:textColor="@android:color/holo_purple" />
 
             </LinearLayout>
         </LinearLayout>
@@ -117,8 +120,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_name_title"
-                    android:textSize="@dimen/text_size_normal"/>
+                    android:text="@string/post_habbit_name"
+                    android:textColor="@android:color/holo_purple"
+                    android:textSize="@dimen/text_size_normal" />
 
                 <EditText
                     android:id="@+id/post_mission_one_name"
@@ -144,8 +148,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_type_title"
-                    android:textSize="@dimen/text_size_normal"/>
+                    android:text="@string/post_habbit_type"
+                    android:textColor="@android:color/holo_purple"
+                    android:textSize="@dimen/text_size_normal" />
 
                 <Spinner
                     android:id="@+id/post_mission_one_type_spinner"
@@ -164,38 +169,6 @@
                 android:background="@android:drawable/edit_text"
                 >
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/spacing_small"
-                    android:paddingBottom="@dimen/spacing_small"
-                    >
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/text_size_normal"
-                        android:text="@string/post_mission_date_title"
-                        android:gravity="start|center_vertical"
-                        />
-
-
-
-                    <TextView
-                        android:id="@+id/post_mission_one_date"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textSize="@dimen/text_size_normal"
-                        android:text="@string/post_mission_date_default"
-                        android:drawableEnd="@drawable/ic_action_expand_more"
-                        android:gravity="end|center_vertical"
-                        />
-
-                </LinearLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
@@ -205,21 +178,20 @@
                     />
 
                 <LinearLayout
-                    android:paddingTop="@dimen/spacing_normal"
-                    android:paddingBottom="@dimen/spacing_normal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="43dp"
                     android:orientation="horizontal"
-                    >
+                    android:paddingBottom="@dimen/spacing_normal"
+                    android:paddingTop="@dimen/spacing_normal">
 
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="start|center_vertical"
-                        android:text="@string/post_mission_time_title"
-                        android:textSize="@dimen/text_size_normal"
-                        />
+                        android:text="@string/post_habbit_time"
+                        android:textColor="@android:color/holo_purple"
+                        android:textSize="@dimen/text_size_normal" />
 
                     <TextView
                         android:id="@+id/post_mission_one_start_time"
@@ -227,8 +199,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center"
+                        android:textColor="@android:color/holo_purple"
                         android:textSize="@dimen/text_size_normal"
-                        tools:text="10:00"/>
+                        tools:text="10:00" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -236,7 +209,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/post_mission_time_from"
-                        android:textSize="@dimen/text_size_normal"/>
+                        android:textColor="@android:color/holo_purple"
+                        android:textSize="@dimen/text_size_normal" />
 
                     <TextView
                         android:id="@+id/post_mission_one_end_time"
@@ -244,46 +218,11 @@
                         android:layout_height="match_parent"
                         android:layout_weight="2"
                         android:gravity="center"
+                        android:textColor="@android:color/holo_purple"
                         android:textSize="@dimen/text_size_normal"
-                        tools:text="24:00"/>
+                        tools:text="24:00" />
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_num_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <EditText
-                    android:id="@+id/post_mission_one_num"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:inputType="number"
-                    android:background="@android:color/white"
-                    android:gravity="end|center_vertical"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/spacing_small"
-                    android:paddingEnd="0dp"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_num_unit"
-                    android:textSize="@dimen/text_size_normal"/>
 
             </LinearLayout>
 
@@ -306,20 +245,19 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textSize="@dimen/text_size_normal"
-                        android:text="@string/post_mission_method_title"
                         android:gravity="start|center_vertical"
-                        />
+                        android:text="@string/post_habbit_method"
+                        android:textColor="@android:color/holo_purple"
+                        android:textSize="@dimen/text_size_normal" />
 
                     <Spinner
                         android:id="@+id/post_mission_one_method_spinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
+                        android:entries="@array/post_habbit_method_array"
                         android:gravity="end|center_vertical"
-                        android:entries="@array/post_mission_method_array"
-                        android:textAlignment="textEnd"
-                        />
+                        android:textAlignment="textEnd" />
 
                 </LinearLayout>
 
@@ -341,10 +279,10 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
-                        android:textSize="@dimen/text_size_normal"
-                        android:text="@string/post_mission_period_title"
                         android:gravity="start|center_vertical"
-                        />
+                        android:text="@string/post_habbit_period"
+                        android:textColor="@android:color/holo_purple"
+                        android:textSize="@dimen/text_size_normal" />
 
                     <Spinner
                         android:visibility="gone"
@@ -361,8 +299,9 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:textColor="@android:color/holo_purple"
                         android:textSize="@dimen/text_size_normal"
-                        tools:text="2017-11-11"/>
+                        tools:text="2017-11-11" />
 
                     <TextView
                         android:id="@+id/post_mission_one_period_from"
@@ -371,7 +310,8 @@
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="@string/post_mission_time_from"
-                        android:textSize="@dimen/text_size_normal"/>
+                        android:textColor="@android:color/holo_purple"
+                        android:textSize="@dimen/text_size_normal" />
 
                     <TextView
                         android:id="@+id/post_mission_one_period_end_time"
@@ -379,299 +319,12 @@
                         android:layout_height="match_parent"
                         android:layout_weight="3"
                         android:gravity="center"
+                        android:textColor="@android:color/holo_purple"
                         android:textSize="@dimen/text_size_normal"
-                        tools:text="2017-11-12"/>
+                        tools:text="2017-11-12" />
 
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/mission_detail_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/spacing_large"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/spacing_small"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/greyDark"/>
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:paddingStart="@dimen/text_size_normal"
-                    android:paddingEnd="@dimen/text_size_normal"
-                    android:gravity="center_horizontal"
-                    android:text="@string/post_mission_detail_hint"/>
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/greyDark"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_interview_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/post_mission_one_interview_switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                     />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_salary_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <EditText
-                    android:id="@+id/post_mission_one_salary"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:inputType="numberDecimal"
-                    android:background="@android:color/white"
-                    android:gravity="end|center_vertical"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <TextView
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:paddingStart="@dimen/spacing_small"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_salary_hkd"
-                    tools:text="HKD"
-                    android:textSize="@dimen/text_size_normal"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/post_mission_pick_location_title"/>
-
-                <com.baidu.mapapi.map.MapView
-                    android:id="@+id/post_mission_bmapView"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    android:clickable="true"
-                    android:focusable="true"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:background="@android:drawable/edit_text">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="start|center_vertical"
-                        android:text="@string/post_mission_address_title"
-                        android:textSize="@dimen/text_size_normal"/>
-
-                    <EditText
-                        android:id="@+id/post_mission_one_address"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="3"
-                        android:inputType="text"
-                        android:background="@android:color/white"
-                        android:gravity="end|center_vertical"
-                        android:hint="@string/post_mission_address_default"
-                        android:textSize="@dimen/text_size_normal"/>
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/post_mission_address_hint"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_upload_video_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/post_mission_one_video_switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_upload_photo_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/post_mission_one_photo_switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_mission_disclose_media_title"
-                    android:textSize="@dimen/text_size_normal"/>
-
-                <com.kyleduo.switchbutton.SwitchButton
-                    android:id="@+id/post_mission_one_disclose_media_switch_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="end|center_vertical"
-                    />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/post_mission_content_title"/>
-
-                <EditText
-                    android:id="@+id/post_mission_one_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="4"
-                    android:inputType="textMultiLine"
-                    android:gravity="top|start"
-                    android:scrollHorizontally="false"
-                    android:background="@android:drawable/edit_text"
-                    android:textSize="@dimen/text_size_normal"/>
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/spacing_normal"
-                android:layout_marginTop="@dimen/spacing_normal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/post_mission_requirement_title"/>
-
-                <EditText
-                    android:id="@+id/post_mission_one_requirement"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lines="4"
-                    android:inputType="textMultiLine"
-                    android:gravity="top|start"
-                    android:scrollHorizontally="false"
-                    android:background="@android:drawable/edit_text"
-                    android:textSize="@dimen/text_size_normal"/>
-
 
             </LinearLayout>
 

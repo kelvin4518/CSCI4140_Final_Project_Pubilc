@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.cazaea:sweet-alert-dialog-1.0.0">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/sweet-alert-dialog-1.0.0.aar/84bee743af0538ef87d730b8f7ad41bb/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/sweet-alert-dialog-1.0.0.aar/84bee743af0538ef87d730b8f7ad41bb/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.cazaea/sweet-alert-dialog/1.0.0/6ae9026d7fccb5dce1c24e073424db1cb6b41b25/sweet-alert-dialog-1.0.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

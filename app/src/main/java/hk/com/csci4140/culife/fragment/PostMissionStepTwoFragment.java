@@ -35,27 +35,6 @@ public class PostMissionStepTwoFragment extends BaseFragment {
     @BindView(R.id.post_mission_two_title)
     TextView missionTitle;
 
-    @BindView(R.id.post_mission_two_salary)
-    TextView missionSalary;
-
-    @BindView(R.id.post_mission_two_location)
-    TextView missionLocation;
-
-    @BindView(R.id.post_mission_two_mission_date_with_icon)
-    TextView missionDateWithIcon;
-
-    @BindView(R.id.post_mission_two_switch_container)
-    LinearLayout missionSwitchContainer;
-
-    @BindView(R.id.post_mission_two_video_needed)
-    TextView missionVideoNeeded;
-
-    @BindView(R.id.post_mission_two_photo_needed)
-    TextView missionPhotoNeeded;
-
-    @BindView(R.id.post_mission_two_disclose_media)
-    TextView missionDiscloseMedia;
-
     @BindView(R.id.post_mission_two_mission_date)
     TextView missionDate;
 
@@ -64,37 +43,6 @@ public class PostMissionStepTwoFragment extends BaseFragment {
 
     @BindView(R.id.post_mission_two_content)
     TextView missionContent;
-
-    @BindView(R.id.post_mission_two_requirement)
-    TextView missionRequirement;
-
-    @BindView(R.id.post_mission_two_others)
-    TextView missionOthers;
-
-    @BindView(R.id.post_mission_two_post_date_start)
-    TextView missionPostStart;
-
-    @BindView(R.id.post_mission_two_post_date_end)
-    TextView missionPostEnd;
-
-    @BindView(R.id.post_mission_two_post_period)
-    TextView missionPostPeriod;
-
-    @BindView(R.id.post_mission_two_charge_salary)
-    TextView missionChargeSalary;
-
-    @BindView(R.id.post_mission_two_num_needed)
-    TextView missionNumNeeded;
-
-    @BindView(R.id.post_mission_two_post_fee)
-    TextView missionPostFee;
-
-    @BindView(R.id.post_mission_two_service_fee)
-    TextView missionServiceFee;
-
-    @BindView(R.id.post_mission_two_total_fee)
-    TextView missionTotalFee;
-
 
     private String mTitle;
     private String mPrevTitle;
@@ -114,8 +62,8 @@ public class PostMissionStepTwoFragment extends BaseFragment {
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(false);
-        setPrevBottomNavFragment(false);
+        setBottomNavFragment(true);
+        setPrevBottomNavFragment(true);
     }
 
 
@@ -178,43 +126,7 @@ public class PostMissionStepTwoFragment extends BaseFragment {
 
             //Salary
             float salary = Float.parseFloat(parameter.get(Constant.MISSION_SALARY));
-            missionSalary.setText(String.format(getString(R.string.post_mission_two_salary_format), salary));
-
-            //Location
-            if(parameter.get(Constant.MISSION_HAS_ADDRESS).equals(Constant.FALSE)){
-                missionLocation.setText(getString(R.string.post_mission_two_no_location));
-            }
-            else {
-                missionLocation.setText(parameter.get(Constant.MISSION_ADDRESS));
-            }
-
-            //Date
-            if(parameter.get(Constant.MISSION_NO_SPEC_DATE).equals(Constant.TRUE)){
-                missionDateWithIcon.setText(getString(R.string.post_mission_two_no_date));
-                missionDate.setText(getString(R.string.post_mission_two_no_date));
-            }
-            else {
-                missionDateWithIcon.setText(Utility.convertToChineseDate(getContext(), parameter.get(Constant.MISSION_DATE)));
-                missionDate.setText(Utility.convertToChineseDate(getContext(), parameter.get(Constant.MISSION_DATE)));
-            }
-
-            //Video, Photo and disclose media
-            int goneNum = 0;
-            if(parameter.get(Constant.MISSION_NEED_VIDEO).equals(Constant.FALSE)){
-                missionVideoNeeded.setVisibility(View.GONE);
-                goneNum ++;
-            }
-            if(parameter.get(Constant.MISSION_NEED_PHOTO).equals(Constant.FALSE)){
-                missionPhotoNeeded.setVisibility(View.GONE);
-                goneNum ++;
-            }
-            if(parameter.get(Constant.MISSION_DISCLOSE_MEDIA).equals(Constant.FALSE)){
-                missionDiscloseMedia.setVisibility(View.GONE);
-                goneNum ++;
-            }
-            if(goneNum == 3){
-                missionSwitchContainer.setVisibility(View.INVISIBLE);
-            }
+            //missionSalary.setText(String.format(getString(R.string.post_mission_two_salary_format), salary));
 
             //Time
             missionTime.setText(String.format(getString(R.string.time_format_period),
@@ -225,65 +137,6 @@ public class PostMissionStepTwoFragment extends BaseFragment {
             if(parameter.get(Constant.MISSION_CONTENT) != null){
                 missionContent.setText(parameter.get(Constant.MISSION_CONTENT));
             }
-
-            //Requirement
-            if(parameter.get(Constant.MISSION_REQUIREMENT) != null){
-                missionRequirement.setText(parameter.get(Constant.MISSION_REQUIREMENT));
-            }
-
-            //Others
-            if(parameter.get(Constant.MISSION_NEED_INTERVIEW).equals(Constant.TRUE)){
-                missionOthers.setText(getString(R.string.post_mission_two_need_interview));
-            }
-
-            //Post Period
-            String endDate;
-            if(parameter.get(Constant.MISSION_POST_METHOD).equals("1")){
-                String startDate = Utility.getToday();
-                // 0 == 3個月 ， 1 == 1個月
-                int monthAfter = parameter.get(Constant.MISSION_POST_PERIOD_ID).equals("0") ? 3 : 1;
-                endDate = Utility.getDateAfterMonth(startDate, monthAfter);
-                missionPostStart.setText(Utility.convertToChineseDate(getContext(), startDate));
-                missionPostEnd.setText(Utility.convertToChineseDate(getContext(), endDate));
-                missionPostPeriod.setText(String.format(getString(R.string.post_mission_two_post_period_format),
-                        parameter.get(Constant.MISSION_POST_PERIOD)));
-            }
-            else {
-                String startDate = parameter.get(Constant.MISSION_POST_START);
-                endDate = parameter.get(Constant.MISSION_POST_END);
-                missionPostStart.setText(Utility.convertToChineseDate(getContext(), startDate));
-                missionPostEnd.setText(Utility.convertToChineseDate(getContext(), endDate));
-                int daysDiff = Utility.getDaysBetween(startDate, endDate);
-                missionPostPeriod.setText(String.format(getString(R.string.post_mission_two_post_period_days_format),
-                        daysDiff));
-            }
-
-            //Charge Salary
-            missionChargeSalary.setText(String.format(getString(R.string.post_mission_two_fee_format), salary));
-
-            //Num of needed
-            int numNeeded = Integer.parseInt(parameter.get(Constant.MISSION_NUM_NEEDED));
-            missionNumNeeded.setText(String.format(getString(R.string.post_mission_two_num_needed_format),
-                    numNeeded));
-
-            //Post Fee
-            missionPostFee.setText(String.format(getString(R.string.post_mission_two_fee_format), salary));
-
-            //Service Fee
-            float serviceFee = (float) (salary * 0.03);
-            missionServiceFee.setText(String.format(getString(R.string.post_mission_two_fee_format), serviceFee));
-
-            //Total Fee
-            float totalFee = salary + serviceFee;
-            missionTotalFee.setText(String.format(getString(R.string.post_mission_two_fee_format), totalFee));
-
-
-            //Put values into bundle that will be passed to finished fragment
-            finishedBundle.putFloat(Constant.MISSION_POST_FINISHED_TOTAL_FEE, totalFee);
-            finishedBundle.putString(Constant.MISSION_POST_FINISHED_END_DATE, endDate);
-            finishedBundle.putInt(Constant.MISSION_POST_FINISHED_NUM_NEEDED, numNeeded);
-            finishedBundle.putFloat(Constant.MISSION_POST_FINISHED_SERVICE_FEE, serviceFee);
-
         }
     }
 

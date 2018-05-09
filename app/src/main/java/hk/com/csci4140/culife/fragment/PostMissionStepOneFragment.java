@@ -77,17 +77,12 @@ public class PostMissionStepOneFragment extends BaseFragment {
     @BindView(R.id.post_mission_one_type_spinner)
     Spinner typeSpinner;
 
-    @BindView(R.id.post_mission_one_date)
-    TextView postDate;
-
     @BindView(R.id.post_mission_one_start_time)
     TextView startTime;
 
     @BindView(R.id.post_mission_one_end_time)
     TextView endTime;
 
-    @BindView(R.id.post_mission_one_num)
-    EditText postNum;
 
     @BindView(R.id.post_mission_one_method_spinner)
     Spinner postMethodSpinner;
@@ -104,33 +99,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
     @BindView(R.id.post_mission_one_period_end_time)
     TextView postPeriodEnd;
 
-    @BindView(R.id.post_mission_one_interview_switch_button)
-    SwitchButton needInterView;
-
-    @BindView(R.id.post_mission_one_salary)
-    EditText postSalary;
-
-    @BindView(R.id.post_mission_bmapView)
-    MapView mMapView;
-
-    @BindView(R.id.post_mission_one_address)
-    EditText postAddress;
-
-    @BindView(R.id.post_mission_one_video_switch_button)
-    SwitchButton needVideo;
-
-    @BindView(R.id.post_mission_one_photo_switch_button)
-    SwitchButton needPhoto;
-
-    @BindView(R.id.post_mission_one_disclose_media_switch_button)
-    SwitchButton discloseMedia;
-
-    @BindView(R.id.post_mission_one_content)
-    EditText postContent;
-
-    @BindView(R.id.post_mission_one_requirement)
-    EditText postRequirement;
-
 
     private String mTitle;
     private String mPrevTitle;
@@ -144,9 +112,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
     private int selectedMethod = -1;
     private int selectedPeriod = -1;
 
-    //百度地图
-    private BaiduMap mBaiduMap;
-    private LatLng selectedPoint;
 
 
     //Initial Setting of every fragment
@@ -165,7 +130,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(false);
+        setBottomNavFragment(true);
         setPrevBottomNavFragment(true);
     }
 
@@ -191,7 +156,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
     public void onResume(){
         super.onResume();
         //Resume the map
-        mMapView.onResume();
+        //mMapView.onResume();
     }
 
 
@@ -199,19 +164,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
     public void onPause(){
         super.onPause();
         //Pause the map
-        mMapView.onPause();
-    }
-
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-
-        //在activity执行onDestroy时执行mMapView.onDestroy()，实现地图生命周期管理
-        mMapView.onDestroy();
-        //关闭定位
-        // 当不需要定位图层时关闭定位图层
-        mBaiduMap.setMyLocationEnabled(false);
+        //mMapView.onPause();
     }
 
 
@@ -230,7 +183,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
         super.onStart();
 
         initialMethodSpinner();
-        initialMap();
+        //initialMap();
         if(mOptionsModel == null){
             callGetOptionsHttp();
         }
@@ -241,9 +194,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         //If user is from step two
         if(parameter != null){
             //Mission Date
-            if(parameter.get(Constant.MISSION_NO_SPEC_DATE).equals(Constant.FALSE)){
-                postDate.setText(parameter.get(Constant.MISSION_DATE));
-            }
 
             //Start Time and End Time
             startTime.setText(parameter.get(Constant.MISSION_START_TIME));
@@ -355,103 +305,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         }
     }
 
-
-    //Initial the Baidu Map
-    private void initialMap(){
-        //获取地图
-        mBaiduMap = mMapView.getMap();
-        //设置地图类型
-        mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
-
-        // 开启定位图层
-        mBaiduMap.setMyLocationEnabled(true);
-
-        //Set Map Status to our location
-        if(selectedPoint != null){
-            // 构建MarkerOption，用于在地图上添加Marker
-            BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
-            MarkerOptions options = new MarkerOptions().position(selectedPoint)
-                    .icon(bitmap);
-            // 在地图上添加Marker，并显示
-            mBaiduMap.addOverlay(options);
-
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(selectedPoint, 15);
-            mBaiduMap.animateMapStatus(u);
-        }
-        else {
-            LatLng point = new LatLng(getMyLatitude(), getMyLongitude());
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(point, 15);
-            mBaiduMap.animateMapStatus(u);
-        }
-
-
-
-        //解决与ScrollView冲突问题
-        mMapView.getChildAt(0).setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_UP){
-                    //允许ScrollView截断点击事件，ScrollView可滑动
-                    mScrollView.requestDisallowInterceptTouchEvent(false);
-                }else{
-                    //不允许ScrollView截断点击事件，点击事件由子View处理
-                    mScrollView.requestDisallowInterceptTouchEvent(true);
-                }
-                return false;
-            }
-        });
-
-        //Set Marker Bitmap
-        final BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.drawable.ic_marker);
-        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                //获取经纬度
-                double latitude = latLng.latitude;
-                double longitude = latLng.longitude;
-                //先清除图层
-                mBaiduMap.clear();
-                // 定义Maker坐标点
-                selectedPoint = new LatLng(latitude, longitude);
-                // 构建MarkerOption，用于在地图上添加Marker
-                MarkerOptions options = new MarkerOptions().position(selectedPoint)
-                        .icon(bitmap);
-                // 在地图上添加Marker，并显示
-                mBaiduMap.addOverlay(options);
-                //实例化一个地理编码查询对象
-                GeoCoder geoCoder = GeoCoder.newInstance();
-                //设置反地理编码位置坐标
-                ReverseGeoCodeOption op = new ReverseGeoCodeOption().location(latLng);
-                //发起反地理编码请求(经纬度->地址信息)
-                geoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
-
-                    @Override
-                    public void onGetReverseGeoCodeResult(ReverseGeoCodeResult result) {
-                        if (result == null || result.error != SearchResult.ERRORNO.NO_ERROR) {
-                            showBottomSnackBar(getString(R.string.post_mission_address_no_result));
-                            Log.i(TAG, getString(R.string.post_mission_address_no_result));
-                            return;
-                        }
-
-                        //获取反向地理编码结果
-                        postAddress.setText(result.getAddress());
-                    }
-
-                    @Override
-                    public void onGetGeoCodeResult(GeoCodeResult arg0) {
-                    }
-                });
-                geoCoder.reverseGeoCode(op);
-            }
-
-            @Override
-            public boolean onMapPoiClick(MapPoi mapPoi) {
-                return false;
-            }
-        });
-    }
-
-
     //Check if the user's input is valid
     private boolean checkInputValidation(){
         parameter = new HashMap<>();
@@ -470,6 +323,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
         //Mission Date
+        /*
         if(postDate.getText().toString().equals(getString(R.string.post_mission_date_default))){
             parameter.put(Constant.MISSION_NO_SPEC_DATE, Constant.TRUE);
         }
@@ -477,7 +331,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
             parameter.put(Constant.MISSION_NO_SPEC_DATE, Constant.FALSE);
             parameter.put(Constant.MISSION_DATE, postDate.getText().toString());
         }
-
+        */
 
         //Mission start time and end time
         if( (startTime.getText() == null || startTime.getText().toString().equals(""))
@@ -491,12 +345,13 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
         //Mission num of needed
+        /*
         if(postNum.getText() == null || postNum.getText().toString().equals("")){
             errorText = getString(R.string.post_mission_input_num);
             return false;
         }
         parameter.put(Constant.MISSION_NUM_NEEDED, postNum.getText().toString());
-
+    */
 
         //Mission post method and post period
         if(selectedMethod == 0){
@@ -514,57 +369,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
             parameter.put(Constant.MISSION_POST_PERIOD, postPeriodSpinner.getSelectedItem().toString());
         }
         parameter.put(Constant.MISSION_POST_METHOD, Integer.toString(selectedMethod));
-
-
-        //Mission need interview
-        String needInterview = needInterView.isChecked() ? Constant.TRUE : Constant.FALSE;
-        parameter.put(Constant.MISSION_NEED_INTERVIEW, needInterview);
-
-
-        //Mission salary
-        if(postSalary.getText() == null || postSalary.getText().toString().equals("")){
-            errorText = getString(R.string.post_mission_input_salary);
-            return false;
-        }
-        parameter.put(Constant.MISSION_SALARY, postSalary.getText().toString());
-
-
-        //Mission Address
-        if(postAddress.getText() != null && !postAddress.getText().toString().equals("")){
-            parameter.put(Constant.MISSION_HAS_ADDRESS, Constant.TRUE);
-            parameter.put(Constant.MISSION_ADDRESS, postAddress.getText().toString());
-            parameter.put(Constant.MISSION_ADDRESS_LATITUDE, Double.toString(selectedPoint.latitude));
-            parameter.put(Constant.MISSION_ADDRESS_LONGITUDE, Double.toString(selectedPoint.longitude));
-        }
-        else {
-            parameter.put(Constant.MISSION_HAS_ADDRESS, Constant.FALSE);
-        }
-
-
-        //Mission need video
-        String videoNeeded = needVideo.isChecked() ? Constant.TRUE : Constant.FALSE;
-        parameter.put(Constant.MISSION_NEED_VIDEO, videoNeeded);
-
-
-        //Mission need photo
-        String photoNeeded = needPhoto.isChecked() ? Constant.TRUE : Constant.FALSE;
-        parameter.put(Constant.MISSION_NEED_PHOTO, photoNeeded);
-
-
-        //Mission disclose media
-        String publicMedia = discloseMedia.isChecked() ? Constant.TRUE : Constant.FALSE;
-        parameter.put(Constant.MISSION_DISCLOSE_MEDIA, publicMedia);
-
-        //Mission Content
-        if(postContent.getText() != null && !postContent.getText().toString().equals("")){
-            parameter.put(Constant.MISSION_CONTENT, postContent.getText().toString());
-        }
-
-
-        //Mission Requirement
-        if(postRequirement.getText() != null && !postRequirement.getText().toString().equals("")){
-            parameter.put(Constant.MISSION_REQUIREMENT, postRequirement.getText().toString());
-        }
 
 
         //Token and Region
@@ -601,7 +405,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
     }
 
 
-    @OnClick(R.id.post_mission_one_date)
+    //@OnClick(R.id.post_mission_one_date)
     void onClickMissionDate(final TextView textView){
         new MaterialDialog.Builder(getContext())
                 .title(getString(R.string.selection_title))

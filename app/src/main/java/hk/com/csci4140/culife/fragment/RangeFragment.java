@@ -1,13 +1,20 @@
 package hk.com.csci4140.culife.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.adapter.OtherHabbitAdapter;
 import hk.com.csci4140.culife.model.UserModel;
 
 /**
@@ -16,39 +23,51 @@ import hk.com.csci4140.culife.model.UserModel;
 
 public class RangeFragment extends BaseFragment {
 
-    private static final String TAG = "RangeFrag";
+    @BindView(R.id.industry_recycler_view)
+    RecyclerView mRecyclerView;
 
     private String mTitle;
-
+    private String mPrevTitle;
 
     private void initialSetting(){
-        //Set the Tool bar title
+
         setToolbarTitle(mTitle);
 
-        //Set the bottom navigation visible
-        setBottomNavFragment(true);
+        //Set the bottom navigation visibility
+        setBottomNavFragment(false);
+        setPrevBottomNavFragment(false);
 
-        //Use to set the search icon
-        setHasOptionsMenu(false);
-
-        //Set Login Icon Invisibility
-        setLoginIconVisible(true);
-        //Set the Login Icon
-        setLoginIcon();
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
 
-        //Set the toolbar title of this fragment
-        mTitle = getString(R.string.range_fragment_title);
-        setPrevTitle(mTitle);
+        //This fragment has toolbar
+        setToolbarVisibility(true);
+
+        //Set the title of this fragment, and set the prev title
+        mTitle = getString(R.string.industry_list_title);
+        mPrevTitle = getPrevTitle();
 
         initialSetting();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        //Set the go back icon
+        setGoBackIcon();
+    }
+
+    @Override
+    public void onDestroy(){
+        super.onDestroy();
+
+        //Set the previous fragment's title
+        setToolbarTitle(mPrevTitle);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -58,18 +77,24 @@ public class RangeFragment extends BaseFragment {
         return mView;
     }
 
-
     @Override
     public void onStart(){
         initialSetting();
         super.onStart();
-    }
 
+        //Initial the recycler view
+        Bundle bundle = new Bundle();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.add(1);
+        bundle.putIntegerArrayList(Constant.EDIT_SELECTED_INDUSTRY_LIST, list);
+        ArrayList<Integer> selectedIndustry = getArguments().getIntegerArrayList(Constant.EDIT_SELECTED_INDUSTRY_LIST);
+        ArrayList<String> industryList = getArguments().getStringArrayList(Constant.EDIT_INDUSTRY_LIST);
 
-    @OnClick(R.id.logout_button)
-    void onClickLogout(){
-        UserModel.logout(getContext());
-        setFragment(new RangeFragment(), null);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        OtherHabbitAdapter adapter = new OtherHabbitAdapter(getContext(), industryList, selectedIndustry);
+        mRecyclerView.setAdapter(adapter);
     }
 
 }

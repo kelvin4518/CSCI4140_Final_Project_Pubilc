@@ -18,6 +18,7 @@ import hk.com.csci4140.culife.utility.Utility;
  * Created by liujie(Jerry Liu) on 30/04/2018.
  */
 
+
 public class PostMissionFinishedFragment extends BaseFragment {
 
     private static final String TAG = "PostMissionFinished";
@@ -28,8 +29,8 @@ public class PostMissionFinishedFragment extends BaseFragment {
     @BindView(R.id.post_mission_finished_end_date)
     TextView mEndDate;
 
-    @BindView(R.id.post_mission_finished_num_and_service_fee)
-    TextView mNumNeededAndServiceFee;
+    //@BindView(R.id.post_mission_finished_num_and_service_fee)
+    //TextView mNumNeededAndServiceFee;
 
     private String mTitle;
 
@@ -54,8 +55,8 @@ public class PostMissionFinishedFragment extends BaseFragment {
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(false);
-        setPrevBottomNavFragment(false);
+        setBottomNavFragment(true);
+        setPrevBottomNavFragment(true);
     }
 
 
@@ -106,8 +107,8 @@ public class PostMissionFinishedFragment extends BaseFragment {
         //Num needed and service fee
         int numNeeded = bundle.getInt(Constant.MISSION_POST_FINISHED_NUM_NEEDED);
         float serviceFee = bundle.getFloat(Constant.MISSION_POST_FINISHED_SERVICE_FEE);
-        mNumNeededAndServiceFee.setText(String.format(getString(R.string.post_mission_finished_num_and_service_fee_format),
-                numNeeded, serviceFee));
+        //mNumNeededAndServiceFee.setText(String.format(getString(R.string.post_mission_finished_num_and_service_fee_format),
+        //        numNeeded, serviceFee));
     }
 
 
