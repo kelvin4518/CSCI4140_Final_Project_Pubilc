@@ -12,7 +12,7 @@
         android:id="@+id/item_industry_title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/null"
+        android:layout_alignStart="@+id/item_industry_title3"
         android:layout_centerVertical="true"
         android:textColor="@color/colorPrimary"
         tools:text="Time" />
@@ -52,13 +52,5 @@
         android:layout_alignParentEnd="true"
         android:text="Add"
         android:textColor="@color/colorPrimary" />
-
-    <CheckBox
-        android:id="@+id/item_industry_check_box"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/item_industry_title"
-        android:layout_alignParentStart="true"
-        android:text="CheckBox" />
 
 </RelativeLayout>
