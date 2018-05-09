@@ -77,7 +77,7 @@ public class MainActivity extends BaseActivity {
 
 
 
-            initFragment = new FriendMomentFragment();
+            initFragment = new HomeFragment();
 
             boolean hasBottomNav = UserModel.isLogin;
             //Set if the fragment has bottom navigation bar
@@ -158,30 +158,6 @@ public class MainActivity extends BaseActivity {
                 // Do something cool here...
                 setTabSelectFragment(position);
                 return true;
-//                if(position > 0){
-//                    if(UserModel.isLogin){
-//                        if(bottomNavigation.getCurrentItem() != position) {
-//                            if (position != 2) {
-//                                previousItem = position;
-//                            }
-//                            setTabSelectFragment(position);
-//                        }
-//                        return true;
-//                    }
-//                    else {
-//                        showBottomSnackBar(getString(R.string.should_login));
-//                        return false;
-//                    }
-//                }
-//                else {
-//                    if(bottomNavigation.getCurrentItem() != position) {
-//                        if (position != 2) {
-//                            previousItem = position;
-//                        }
-//                        setTabSelectFragment(position);
-//                    }
-//                    return true;
-//                }
 
             }
         });
@@ -199,15 +175,15 @@ public class MainActivity extends BaseActivity {
         Fragment fragment;
         switch (position){
             case 0:
-                // fragment = new HomeFragment();
-                fragment = new FriendMomentFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new RangeFragment();
+                //fragment = new HomeFragment();
+                fragment = new FriendMomentFragment();
                 break;
             case 2:
-                // fragment = new PostMissionStepOneFragment();
-                fragment = new HabitDetailFragment();
+                 fragment = new PostMissionStepOneFragment();
+                //fragment = new ();
                 break;
             case 3:
                 fragment = new LocationServiceFragment();

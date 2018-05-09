@@ -74,9 +74,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
     @BindView(R.id.post_mission_one_name)
     EditText postName;
 
-    @BindView(R.id.post_mission_one_type_spinner)
-    Spinner typeSpinner;
-
     @BindView(R.id.post_mission_one_start_time)
     TextView startTime;
 
@@ -107,7 +104,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
     HashMap<String, String> parameter;
     private String errorText;
 
-    private CreateMissionOptionModel mOptionsModel;
+    //
+    //private CreateMissionOptionModel mOptionsModel;
     private int selectedType = -1;
     private int selectedMethod = -1;
     private int selectedPeriod = -1;
@@ -184,13 +182,13 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
         initialMethodSpinner();
         //initialMap();
-        if(mOptionsModel == null){
-            callGetOptionsHttp();
-        }
-        else {
-            initialMissionTypeSpinner();
+        //if(mOptionsModel == null){
+        //    callGetOptionsHttp();
+        //}
+        //else {
+            //initialMissionTypeSpinner();
             initialPeriodSpinner();
-        }
+        //}
         //If user is from step two
         if(parameter != null){
             //Mission Date
@@ -209,7 +207,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
     //Initial the Mission Type Spinner
-    private void initialMissionTypeSpinner(){
+    /*private void initialMissionTypeSpinner(){
         ArrayList<String> typeList = new ArrayList<>();
         //Initial the Type list
         for(CreateMissionOptionModel.Result.MissionType type : mOptionsModel.getResult().getMissionTypes()){
@@ -233,7 +231,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
         if(selectedType != -1){
             typeSpinner.setSelection(selectedType);
         }
-    }
+    }*/
 
 
     //Initialize the post method spinner
@@ -282,9 +280,9 @@ public class PostMissionStepOneFragment extends BaseFragment {
     private void initialPeriodSpinner(){
         ArrayList<String> periodList = new ArrayList<>();
         //Initial the Period list
-        for(CreateMissionOptionModel.Result.PostPeriod postPeriod : mOptionsModel.getResult().getPostPeriods()){
+        /*for(CreateMissionOptionModel.Result.PostPeriod postPeriod : mOptionsModel.getResult().getPostPeriods()){
             periodList.add(postPeriod.getPeriod());
-        }
+        }*/
 
         SpinnerAdapter spinnerAdapter =
                 new ArrayAdapter<>(getContext(), R.layout.item_customize_spinner, periodList);
@@ -318,8 +316,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
         //Mission Type
-        parameter.put(Constant.MISSION_TYPE_ID, Integer.toString(mOptionsModel.getResult().getMissionTypes().get(selectedType).getId()));
-        parameter.put(Constant.MISSION_TYPE, typeSpinner.getSelectedItem().toString());
+        //parameter.put(Constant.MISSION_TYPE_ID, Integer.toString(mOptionsModel.getResult().getMissionTypes().get(selectedType).getId()));
+        //parameter.put(Constant.MISSION_TYPE, typeSpinner.getSelectedItem().toString());
 
 
         //Mission Date
@@ -365,7 +363,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
             parameter.put(Constant.MISSION_POST_END, postPeriodEnd.getText().toString());
         }
         else {
-            parameter.put(Constant.MISSION_POST_PERIOD_ID, Integer.toString(mOptionsModel.getResult().getPostPeriods().get(selectedPeriod).getId()));
+            //parameter.put(Constant.MISSION_POST_PERIOD_ID, Integer.toString(mOptionsModel.getResult().getPostPeriods().get(selectedPeriod).getId()));
             parameter.put(Constant.MISSION_POST_PERIOD, postPeriodSpinner.getSelectedItem().toString());
         }
         parameter.put(Constant.MISSION_POST_METHOD, Integer.toString(selectedMethod));
@@ -380,7 +378,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
     //Call the Http to get the options value
-    private void callGetOptionsHttp(){
+    /*private void callGetOptionsHttp(){
         ObserverOnNextListener<CreateMissionOptionModel> observer = new ObserverOnNextListener<CreateMissionOptionModel>() {
             @Override
             public void onNext(CreateMissionOptionModel model) {
@@ -389,7 +387,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
                     mOptionsModel = model;
 
                     //Initial the type spinner
-                    initialMissionTypeSpinner();
+                    //initialMissionTypeSpinner();
 
                     //Initial the post period spinner
                     initialPeriodSpinner();
@@ -402,7 +400,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
             }
         };
         HttpMethod.getInstance().getCreateMissionOptions(new ProgressObserver<CreateMissionOptionModel>(getContext(), observer), UserModel.token, Utility.getLanguageId(getContext()));
-    }
+    }*/
 
 
     //@OnClick(R.id.post_mission_one_date)

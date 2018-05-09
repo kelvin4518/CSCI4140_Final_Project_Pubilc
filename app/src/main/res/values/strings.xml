@@ -16,8 +16,9 @@
     <string name="selection_title">Selection</string>
     <string name="time_format">%1$d:%2$d</string>
     <string name="time_format_period">%1$s&#032;to&#032;%2$s</string>
+    <string name="date_format_period">%1$s&#032;to&#032;%2$s</string>
     <string name="time_format_chinese">%1$d:%2$d (h:m)</string>
-    <string name="date_format_chinese">%1$d/%2$d/%3$d (yyyy/mm/dd)</string>
+    <string name="date_format_chinese">%1$s/%2$s/%3$s (yyyy/mm/dd)</string>
     <string name="warning_title">Warning</string>
     <string name="warning_confirm">Comfirm</string>
     <string name="warning_cancel">Cancel</string>
@@ -29,7 +30,7 @@
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
-    <string name="nav_range">Leaderboard</string>
+    <string name="nav_range">Friends</string>
     <string name="nav_add">Post</string>
     <string name="nav_message">Message</string>
     <string name="nav_other_mission">Other mission</string>
@@ -224,7 +225,7 @@
     <!-- Post Mission Step One Fragment -->
     <string name="post_mission_step_one_title">Release the mission</string>
     <string name="step_view_first_text">Fill in the data</string>
-    <string name="step_view_second_text">Prepayments</string>
+    <string name="step_view_second_text">Comfirm</string>
     <string name="step_view_third_text">Complete</string>
     <string name="post_habbit_name">Habbit name</string>
     <string name="post_habbit_type">Type of the Habbit</string>

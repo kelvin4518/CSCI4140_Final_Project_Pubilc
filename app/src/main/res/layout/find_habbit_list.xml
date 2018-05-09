@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_habbit"
     android:layout_width="match_parent"
     android:layout_height="150dp"
     android:orientation="vertical"
@@ -9,48 +10,61 @@
     android:paddingTop="@dimen/spacing_large">
 
     <TextView
-        android:id="@+id/item_industry_title1"
+        android:id="@+id/expand_or_fold"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/item_industry_title3"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/habbit_delete"
+        android:layout_marginBottom="25dp"
+        android:text="全文"
+        android:textColor="#050505"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignTop="@+id/habbit_delete"
         android:textColor="@color/colorPrimary"
         tools:text="Time" />
 
     <TextView
-        android:id="@+id/item_industry_title3"
+        android:id="@+id/habbit_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="12dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="删除"
+        android:textColor="@android:color/holo_red_dark"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/owner"
         android:layout_width="156dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="24dp"
+        android:layout_alignTop="@+id/time"
+        android:layout_centerHorizontal="true"
+        android:text="owner"
         android:textColor="@color/colorPrimary"
         tools:text="Created by somebody" />
 
     <TextView
-        android:id="@+id/item_industry_title"
+        android:id="@+id/other_habbit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/colorPrimary"
+        android:layout_alignStart="@+id/time"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black"
         tools:text="Other_habbit" />
 
     <View
-        android:layout_width="367dp"
+        android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@android:color/darker_gray" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:text="Add"
-        android:textColor="@color/colorPrimary" />
 
 </RelativeLayout>
