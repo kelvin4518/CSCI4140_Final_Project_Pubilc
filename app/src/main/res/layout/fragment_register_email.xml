@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/spacing_normal"
+        android:padding="@dimen/spacing_normal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/register_via_email"
+            android:inputType="textEmailAddress"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:background="@android:drawable/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/register_email_hint"/>
+
+
+        <EditText
+            android:id="@+id/register_et_password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:background="@android:drawable/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/register_password_hint"/>
+
+        <EditText
+            android:id="@+id/register_et_retype_password"
+            android:inputType="textPassword"
+            android:paddingStart="@dimen/spacing_normal"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:background="@android:drawable/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/register_retype_password_hint"/>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:layout_margin="@dimen/spacing_normal"
+        android:id="@+id/register_email_register_button"
+        android:layout_height="@dimen/button_height_normal"
+        android:layout_width="match_parent"
+        android:text="@string/register_register_button_text"
+        android:textColor="@color/white"
+        android:background="@drawable/selector_color_primary"/>
+
+
+
+
+</LinearLayout>

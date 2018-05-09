@@ -60,6 +60,8 @@
     <!-- Register Phone Fragment -->
     <string name="register_phone_title">Register with phone number</string>
     <string name="register_phone_hint">Phone number</string>
+    <string name="register_email_title">Register with email address</string>
+    <string name="register_email_hint">Email address</string>
     <string name="register_password_hint">Password</string>
     <string name="register_retype_password_hint">Input the password again</string>
     <string name="register_district_hint">District</string>
@@ -73,6 +75,8 @@
     <string name="register_register_button_text">Register</string>
     <string name="register_warning_input_phone_num">Please input the phone number</string>
     <string name="register_warning_valid_phone_num">Please input the correct phone number</string>
+    <string name="register_warning_input_email_address">Please input the email address</string>
+    <string name="register_warning_valid_email_address">Please input the correct email address</string>
     <string name="register_warning_input_password">Please input the password</string>
     <string name="register_warning_retype_password">Please input the password again</string>
     <string name="register_warning_not_the_same">The password is not the same</string>

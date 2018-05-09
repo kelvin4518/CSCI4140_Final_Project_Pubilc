@@ -109,7 +109,10 @@ public class LoginFragment extends BaseFragment {
 
     @OnClick(R.id.login_register_button)
     void onClickRegister(){
-        replaceFragment(new RegisterFragment(), null);
+        // replaceFragment(new RegisterFragment(), null);
+
+        // 现在暂时直接转到电话／邮件注册页面
+        replaceFragment(new RegisterPhoneFragment(), null);
     }
 
     //Check if the information that user input is valid
