@@ -2,27 +2,222 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
+
+
+
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/themeMainBackgroundGrey">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:orientation="vertical">
 
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/ic_launcher_round"/>
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="150dp"
+                    android:layout_height="80dp"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="17dp"
+                    android:layout_weight="0"
+                    android:src="@drawable/selector_color_primary" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="习惯的名字" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="参加 | 打卡"
+                        android:textSize="10dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center_vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="daling"
+                            android:textSize="12dp" />
+
+                        <Button
+                            android:id="@+id/habit_detail_is_followed_button"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="20dp"
+                            android:background="@color/grey"
+                            android:text="已关注"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+
+                        <Button
+                            android:id="@+id/habit_detail_add_contact"
+                            android:layout_width="50dp"
+                            android:layout_height="20dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginLeft="5dp"
+                            android:background="@color/greenLime"
+                            android:text="加好友"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="0dp"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:padding="5dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_profile_image_placeholder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="打卡日历"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_profile_image_placeholder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="排行 * 勋章"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_profile_image_placeholder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="设置"
+                        android:textSize="10dp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_weight="4"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_weight="0"
+                        android:src="@mipmap/ic_profile_image_placeholder" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="邀请好友"
+                        android:textSize="10dp" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+
+            <android.support.design.widget.TabLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:background="@color/white">
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="详情" />
+
+                <android.support.design.widget.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="成员" />
+            </android.support.design.widget.TabLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/habit_detail_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white" />
+
+
 
 
             <LinearLayout
@@ -34,8 +229,8 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1" >
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
 
                     <TextView
@@ -43,39 +238,39 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:textSize="18sp"
-                        android:text="本周习惯完成率" />
+                        android:text="本周习惯完成率"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/complete_percentage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:textSize="36sp"
-                        android:text="72%" />
+                        android:text="72%"
+                        android:textSize="36sp" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/complete_number_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:textSize="18sp"
-                        android:text="累计习惯完成次数" />
+                        android:text="累计习惯完成次数"
+                        android:textSize="18sp" />
 
                     <TextView
                         android:id="@+id/complete_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
-                        android:textSize="36sp"
-                        android:text="31次" />
+                        android:text="31次"
+                        android:textSize="36sp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -83,8 +278,8 @@
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:text="习惯：每天早起"
                 android:textSize="18sp" />
 
@@ -94,7 +289,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="描述：早起才能做完project"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/time_slot"
@@ -102,7 +297,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="时段：全天 / 早上7点 / 上午6点 - 上午7点"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/GPS_contraint"
@@ -110,7 +305,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="地点：宿舍（含有GPS信息）"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/GPS_auto_complete"
@@ -118,7 +313,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:text="使用GPS自动检测：是"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
 
             <LinearLayout
@@ -134,7 +329,7 @@
                     android:layout_marginVertical="15dp"
                     android:layout_weight="0"
                     android:text="参与者:"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/parteners_logo"
@@ -151,7 +346,7 @@
                     android:layout_marginVertical="15dp"
                     android:layout_weight="0"
                     android:text="  Kelvin和其他31人已经完成该习惯"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp" />
 
             </LinearLayout>
 
@@ -168,7 +363,7 @@
                     android:layout_marginVertical="5dp"
                     android:layout_weight="0"
                     android:text="监督人:\nJerry Liu"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp" />
 
                 <ImageView
                     android:id="@+id/supervisor_logo"
@@ -181,7 +376,6 @@
             </LinearLayout>
 
 
-
             <Button
                 android:id="@+id/confirm_complete"
                 android:layout_width="match_parent"
@@ -189,7 +383,30 @@
                 android:layout_marginLeft="100dp"
                 android:layout_marginRight="100dp"
                 android:text="确认完成"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
+
         </LinearLayout>
+
     </ScrollView>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+
+        <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="60dp"
+            android:layout_height="20dp"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="10dp"
+            app:fab_colorNormal="#FF8364"
+            app:fab_colorPressed="#FDB87D"
+            app:fab_colorRipple="#FFE8D5" />
+
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

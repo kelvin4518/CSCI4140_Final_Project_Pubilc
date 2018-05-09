@@ -1,29 +1,37 @@
 package hk.com.csci4140.culife.fragment;
 
+import android.app.ActionBar;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.melnykov.fab.FloatingActionButton;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
+import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
 
 
+public class HabitDetailFragment extends BaseFragment{
 
-public class HabitDetailFragment extends BaseFragment {
 
     private static final String TAG = "HabitDetaiFrag";
 
@@ -61,6 +69,13 @@ public class HabitDetailFragment extends BaseFragment {
     }
 
 
+    @BindView(R.id.habit_detail_recyclerView)
+    RecyclerView mBottomRecyclerView;
+
+    @BindView(R.id.fab)
+    FloatingActionButton fab;
+
+
 
 
 
@@ -68,7 +83,6 @@ public class HabitDetailFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
         //Set the title of this fragment, and set the prev title
         if (mTitle == null) {
@@ -90,6 +104,10 @@ public class HabitDetailFragment extends BaseFragment {
 //        initialSetting();
     }
 
+
+
+
+
 //    @Override
 //    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 //        super.onCreateOptionsMenu(menu, inflater);
@@ -110,6 +128,41 @@ public class HabitDetailFragment extends BaseFragment {
         View mView = inflater.inflate(R.layout.fragment_habit_detail, container, false);
         ButterKnife.bind(this, mView);
 
+        try{
+            fab.attachToRecyclerView(mBottomRecyclerView);
+        }catch (Exception e){
+
+        }
+
+
+        try{
+            mBottomRecyclerView.setHasFixedSize(false);
+            mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+            ArrayList<String> items = new ArrayList<String>();
+            for (int i = 1; i <= 100; i++) {
+                items.add("Item " + i);
+            }
+            mBottomRecyclerView.setAdapter(
+                    new CommonAdapter<String>(getContext(), R.layout.simple_list_item_1, items) {
+                        @Override
+                        public void convert(ViewHolder holder, String s, int pos) {
+                            holder.setText(R.id.text_1, s);
+//                            super.convert( holder,  s, pos);
+                        }
+
+                        @Override
+                        public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                            super.onViewHolderCreated(holder, itemView);
+                            //AutoUtil.autoSize(itemView)
+                        }
+                    });
+        }catch (Exception e){
+            Log.d(TAG, "onCreateView: fail: "+e);
+        }
+
+
         return mView;
     }
 
@@ -119,6 +172,10 @@ public class HabitDetailFragment extends BaseFragment {
         super.onStart();
     }
 
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
 
 
 

@@ -38,4 +38,11 @@
     <color name="yellow">#FFFF00</color>
     <color name="yellowLight">#F0E68C</color>
 
+
+
+    <!-- Michael define colors -->
+    <color name="themeMainBackgroundGrey">#F2F2F0</color>
+    <!--<color name="themeMainBackgroundGrey">#2C365D</color>-->
+
+
 </resources>
