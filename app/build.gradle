@@ -122,4 +122,6 @@ dependencies {
     compile 'jp.wasabeef:blurry:2.1.1'
     compile 'com.wdullaer:materialdatetimepicker:3.6.0'
     compile 'com.github.nanchen2251:WaveSideBar:1.0.6'
+    compile 'com.github.yalantis:multi-selection:v0.1'
+    compile 'com.github.goyourfly:MultiSelectAdapter:3.8'
 }

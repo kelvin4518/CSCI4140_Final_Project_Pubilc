@@ -36,8 +36,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 import butterknife.BindInt;
@@ -130,6 +132,9 @@ public class HabitDetailFragment extends BaseFragment{
 
     @BindView(R.id.fab)
     FloatingActionButton fab;
+
+    ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
+
 
 
 
@@ -331,50 +336,170 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
 
+    @OnClick(R.id.habit_detail_share_icon)
+    void showFriendList(){
+        try{
+            replaceFragment(new FriendListFragment(), null);
+        }catch (Exception e){
+            Log.d(TAG, "showFriendList: "+e);
+        }
+    }
+
+
+
     void recyclerViewCancelScroll(){
 //        mBottomRecyclerView.setNestedScrollingEnabled(false);
     }
 
     void recyclerViewShowMemberList(int flag){
         try{
-            mBottomRecyclerView.setHasFixedSize(false);
-            mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            if(flag==0){
+                mBottomRecyclerView.setHasFixedSize(false);
+                mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
 //            mBottomRecyclerView.setLayoutManager(new CustomLayoutManager(getContext()){
 //                @Override
 //                public boolean canScrollVertically() {
 //                    return false;
 //                }
 //            });
-            mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-            ArrayList<String> items = new ArrayList<String>();
-            for (int i = 1; i <= 20; i++) {
-
-                if(flag == 0){
+                ArrayList<String> items = new ArrayList<String>();
+                for (int i = 1; i <= 20; i++) {
                     items.add("Detail " + i);
-                }else{
-                    items.add("Member " + i);
                 }
-            }
-            mBottomRecyclerView.setAdapter(
-                    new CommonAdapter<String>(getContext(), R.layout.simple_list_item_1, items) {
-                        @Override
-                        public void convert(ViewHolder holder, String s, int pos) {
-                            holder.setText(R.id.text_1, s);
+                mBottomRecyclerView.setAdapter(
+                        new CommonAdapter<String>(getContext(), R.layout.simple_list_item_1, items) {
+                            @Override
+                            public void convert(ViewHolder holder, String s, int pos) {
+                                holder.setText(R.id.text_1, s);
 //                            super.convert( holder,  s, pos);
-                        }
+                            }
 
-                        @Override
-                        public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                            super.onViewHolderCreated(holder, itemView);
-                            //AutoUtil.autoSize(itemView)
-                        }
-                    });
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                //AutoUtil.autoSize(itemView)
+                            }
+                        });
+            }else{
+                mBottomRecyclerView.setHasFixedSize(false);
+                mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                // TODO : get the total number from API result
+                int totalNumber = 22;
+
+                // TODO : need to add the userIDField
+                mSourceData = new ArrayList<Map<String, String>>();
+                Map <String,String> map =  new HashMap<String,String>();
+
+                final String name_key_1 = "column1_username";
+                final String name_key_2 = "column2_username";
+                final String name_key_3 = "column3_username";
+                final String name_key_4 = "column4_username";
+                final String icon_key_1 = "column1_icon_link";
+                final String icon_key_2 = "column2_icon_link";
+                final String icon_key_3 = "column3_icon_link";
+                final String icon_key_4 = "column4_icon_link";
+                final String id_key_1 = "";
+                final String id_key_2 = "";
+                final String id_key_3 = "";
+                final String id_key_4 = "";
+
+
+                for (int i = 0; i < totalNumber; i++) {
+                    int column = (i+1)%4;
+
+                    // TODO : the id is also needed
+                    // TODO : use the result from API
+                    String userName = "Michael";
+                    String iconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";
+
+                    if(column == 1){
+                        map.put(name_key_1,userName);
+                        map.put(icon_key_1,iconLink);
+                    }else if(column == 2){
+                        map.put(name_key_2,userName);
+                        map.put(icon_key_2,iconLink);
+                    }else if(column == 3){
+                        map.put(name_key_3,userName);
+                        map.put(icon_key_3,iconLink);
+                    }else{
+                        map.put(name_key_4,userName);
+                        map.put(icon_key_4,iconLink);
+                        mSourceData.add(map);
+                        map = new HashMap<String,String>();
+                    }
+
+                    if(column!=0 && i==totalNumber-1){
+                        mSourceData.add(map);
+                    }
+                }
+
+//                Log.d(TAG, "recyclerViewShowMemberList: Array! : "+mSourceData);
+
+
+                mBottomRecyclerView.setAdapter(
+                        new CommonAdapter<Map<String, String>>(getContext(), R.layout.item_habit_detail_member_list_row, mSourceData) {
+                            @Override
+                            public void convert(ViewHolder holder, Map m, int pos) {
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_1)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, (String)m.get(name_key_1));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_2)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, (String)m.get(name_key_2));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_3)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, (String)m.get(name_key_3));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_4)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, (String)m.get(name_key_4));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, "");
+                                }
+
+                            }
+
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                //AutoUtil.autoSize(itemView)
+                            }
+                        });
+            }
         }catch (Exception e){
             Log.d(TAG, "onCreateView: fail: "+e);
         }
         recyclerViewCancelScroll();
     }
+
+
 
 
 

@@ -4,6 +4,9 @@ package hk.com.csci4140.culife.fragment;
 import android.app.ActionBar;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.TabItem;
@@ -14,12 +17,14 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
@@ -28,14 +33,26 @@ import com.cazaea.sweetalert.SweetAlertDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.goyourfly.multiple.adapter.MultipleAdapter;
+import com.goyourfly.multiple.adapter.MultipleSelect;
+import com.goyourfly.multiple.adapter.menu.MenuBar;
+import com.goyourfly.multiple.adapter.viewholder.DecorateFactory;
+import com.goyourfly.multiple.adapter.viewholder.view.CustomViewFactory;
+import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 import com.nanchen.wavesidebar.SearchEditText;
 import com.nanchen.wavesidebar.Trans2PinYinUtil;
 import com.nanchen.wavesidebar.WaveSideBarView;
+import com.nanchen.wavesidebar.WaveSideBarView.OnSelectIndexItemListener;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -200,11 +217,14 @@ public class FriendListFragment extends BaseFragment {
         for (int i = 1; i <= 20; i++) {
             items.add("Member " + i);
         }
+
         mRecyclerView.setAdapter(
-                new CommonAdapter<String>(getContext(), R.layout.simple_list_item_1, items) {
+                new CommonAdapter<String>(getContext(), R.layout.item_friend_list_with_selection, items) {
                     @Override
                     public void convert(ViewHolder holder, String s, int pos) {
-                        holder.setText(R.id.text_1, s);
+                        String tempIconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";
+                        Glide.with(getContext()).load(tempIconLink).into((ImageView) holder.itemView.findViewById(R.id.item_friend_select_logo));
+                        holder.setText(R.id.item_friend_select_name, s);
 //                            super.convert( holder,  s, pos);
                     }
 
@@ -214,14 +234,24 @@ public class FriendListFragment extends BaseFragment {
                         //AutoUtil.autoSize(itemView)
                     }
                 });
-        
+
+        RadioBtnFactory btnFactory = new RadioBtnFactory(R.color.red_btn_bg_color,3, Gravity.LEFT);
+
+        MultipleAdapter adapter = MultipleSelect
+                .with(getActivity())
+                .adapter(mRecyclerView.getAdapter())
+                .decorateFactory(btnFactory)
+                .build();
+
+        mRecyclerView.setAdapter(adapter);
     }
+
+
 
     void preparationWork(){
         // 使用右侧的首字母栏进行检索
         // when using the side bar to navigate
-        mWaveSideBarView = getActivity().findViewById(R.id.main_side_bar);
-        mWaveSideBarView.setOnSelectIndexItemListener(new WaveSideBarView.OnSelectIndexItemListener() {
+        mWaveSideBarView.setOnSelectIndexItemListener(new OnSelectIndexItemListener() {
             @Override
             public void onSelectIndexItem(String letter) {
                 for (int i=0; i<mUserContactModels.size(); i++) {
@@ -235,7 +265,6 @@ public class FriendListFragment extends BaseFragment {
 
         // 使用搜索按钮进行搜索
         // search by top bar
-        mSearchEditText = getActivity().findViewById(R.id.main_search);
         mSearchEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
