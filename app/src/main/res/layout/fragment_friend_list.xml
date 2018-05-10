@@ -14,14 +14,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-        <com.nanchen.wavesidebar.WaveSideBarView
-            android:id="@+id/main_side_bar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:padding="8dp"
-            app:sidebar_lazy_respond="false"
-            app:sidebar_text_color="@color/colorAccent" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,17 +28,17 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/blue_background"
-                android:drawableLeft="@mipmap/ic_launcher"
+                android:background="@drawable/ic_action_search"
+                android:drawableLeft="@drawable/friend_list_icon_search"
                 android:drawablePadding="5dp"
-                android:drawableStart="@mipmap/ic_launcher"
+                android:drawableStart="@drawable/friend_list_icon_search"
                 android:gravity="center_vertical"
-                android:hint="@string/login_warning_input_password"
+                android:hint="search"
                 android:imeOptions="actionSearch"
                 android:maxLines="1"
                 android:padding="5dp"
                 android:textSize="16sp"
-                app:drawableDel="@mipmap/ic_launcher" />
+                app:drawableDel="@drawable/friend_list_edit_delete" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/friend_list_recyclerView"
@@ -53,7 +46,18 @@
                 android:layout_height="match_parent"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="187dp" />
+
+
         </LinearLayout>
+
+        <com.nanchen.wavesidebar.WaveSideBarView
+            android:id="@+id/main_side_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="8dp"
+            app:sidebar_lazy_respond="false"
+            app:sidebar_text_color="@color/colorAccent" />
     </LinearLayout>
 
 
