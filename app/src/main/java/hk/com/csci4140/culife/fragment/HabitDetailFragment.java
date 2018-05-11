@@ -413,6 +413,10 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
     void recyclerViewShowMemberList(int flag){
+        //String identity;
+        //Bundle message_bundle = getIntent().getExtras();
+        //identity = message_bundle.getString("message");
+        //Log.d(TAG, "Testmessage: "+ identity);
         try{
             if(flag==0){
                 mBottomRecyclerView.setHasFixedSize(false);

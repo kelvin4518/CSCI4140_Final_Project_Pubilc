@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,9 +15,12 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.ListView;
 
 import com.baidu.location.BDAbstractLocationListener;
 import com.baidu.location.BDLocation;
@@ -24,10 +28,23 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
+import com.bumptech.glide.Glide;
+import com.cazaea.sweetalert.SweetAlertDialog;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
+import com.zhy.adapter.recyclerview.CommonAdapter;
+import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,11 +52,16 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 import co.ceryle.radiorealbutton.RadioRealButton;
 import co.ceryle.radiorealbutton.RadioRealButtonGroup;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.HomeFragmentAdapter;
 import hk.com.csci4140.culife.http.HttpMethod;
 import hk.com.csci4140.culife.model.HomeFragmentModel;
+import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.MapModel;
 import hk.com.csci4140.culife.model.MissionDetailModel;
 import hk.com.csci4140.culife.model.TakerInfoModel;
@@ -49,39 +71,51 @@ import hk.com.csci4140.culife.observer.ProgressObserver;
 import hk.com.csci4140.culife.utility.Utility;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class HomeFragment extends BaseFragment  {
+public class HomeFragment extends BaseFragment {
 
 
-    //@BindView(R.id.tab_layout)
-    //TabLayout mTabLayout;
-
-    /*mTabLayout.OnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-        @Override
-        public void onTabSelected(TabLayout.Tab tab) {
-            Log.i(TAG,"onTabSelected:"+tab.getText());
-        }
-
-        @Override
-        public void onTabUnselected(TabLayout.Tab tab) {
-
-        }
-
-        @Override
-        public void onTabReselected(TabLayout.Tab tab) {
-
-        }
-    });*/
-
-    List<HomeFragmentModel> mList = new ArrayList<>();
+    @BindView(R.id.habbit_tablayout)
+    TabLayout mTabLayout;
 
     @BindView(R.id.habbit_list)
     RecyclerView mRecyclerView;
+
+    List<HomeFragmentModel> mList = new ArrayList<>();
+
+    ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
+
+    CatLoadingView mView;
 
     private static final String TAG = "HomeFrag";
     //Title of this fragment
     private String mTitle;
 
-    private void initialSetting(){
+    private int habitIDToGO;
+
+    public class MyClickListener implements View.OnClickListener{
+        int position;
+        public MyClickListener(int my_position){
+            this.position = my_position;
+        }
+        @Override
+        public void onClick(View v) {
+            //Log.d(TAG, "onClick: "+position);
+            JSONObject jsonParams = new JSONObject();
+            JSONObject outerJsonParams = new JSONObject();
+            try {
+                jsonParams.put("habitid", "28");
+                outerJsonParams.put("habit",jsonParams);
+                StringEntity entity = new StringEntity(outerJsonParams.toString());
+                callLoginByEmailHttp(entity);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initialSetting() {
         setToolbarTitle(mTitle);
 
         //Set the bottom navigation visible
@@ -91,8 +125,40 @@ public class HomeFragment extends BaseFragment  {
         setHasOptionsMenu(true);
     }
 
+    private void callLoginByEmailHttp(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mView = new CatLoadingView();
+
+        mView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"habits/show",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+
+                HabitModel habit  = new HabitModel();
+                habit.initwithjson(response);
+                replaceFragment(new HabitDetailFragment(),null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+    }
+
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         //Set the toolbar title of this fragment
@@ -102,16 +168,15 @@ public class HomeFragment extends BaseFragment  {
         initialSetting();
     }
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
         //In case the duplicate menu item
         try {
-            for(int i = 0; i < menu.size(); i ++){
+            for (int i = 0; i < menu.size(); i++) {
                 menu.getItem(i).setVisible(false);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.e(TAG, "onCreateOptionsMenu: " + e.toString());
         }
 
@@ -123,11 +188,10 @@ public class HomeFragment extends BaseFragment  {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
                 //If user has login, go to search Fragment
-                if(UserModel.isLogin){
+                if (UserModel.isLogin) {
                     setPrevTitle(mTitle);
                     replaceFragment(new SearchManagementFragment(), null);
-                }
-                else {
+                } else {
                     showBottomSnackBar(getString(R.string.should_login));
                 }
 
@@ -142,33 +206,234 @@ public class HomeFragment extends BaseFragment  {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         SDKInitializer.initialize(getActivity().getApplicationContext());
         View mView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, mView);
         initData();
-        HomeFragmentAdapter adapter = new HomeFragmentAdapter(mList, getContext());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(adapter);
+
+        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+        for(HomeFragmentModel bean: mList) {
+            String time = bean.getTime();
+            String[] time_list = time.split(":");
+            Integer Hour = Integer.parseInt(time_list[0]);
+            Integer minute = Integer.parseInt(time_list[1]);
+            if (Hour >=0 && Hour <12) {
+                mList_tmp.add(bean);
+            }
+        }
+
+        mRecyclerView.setHasFixedSize(false);
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setAdapter(
+                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                    @Override
+                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                        holder.setText(R.id.other_habbit_title, s.getTitle());
+                        holder.setText(R.id.time, s.getTime());
+                        holder.setText(R.id.owner, s.getIdentity());
+                        holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                    }
+                    @Override
+                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                        super.onViewHolderCreated(holder, itemView);
+                        ButterKnife.bind(this,itemView);
+                    }
+                });
+
+        try {
+            mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    if (tab.getPosition() == 0) {
+                        recyclerViewShowMemberList(0);
+                    } else {
+                        if (tab.getPosition() == 1) {
+                            recyclerViewShowMemberList(1);
+                        } else {
+                            if (tab.getPosition() == 2) {
+                                recyclerViewShowMemberList(2);
+                            } else {
+                                recyclerViewShowMemberList(3);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        } catch (Exception e) {
+
+        }
 
         return mView;
     }
 
+
+    void recyclerViewShowMemberList(int flag) {
+        try {
+            if (flag == 0) {
+                List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                for(HomeFragmentModel bean: mList) {
+                    String time = bean.getTime();
+                    String[] time_list = time.split(":");
+                    Integer Hour = Integer.parseInt(time_list[0]);
+                    Integer minute = Integer.parseInt(time_list[1]);
+                    if (Hour >=0 && Hour <12) {
+                        mList_tmp.add(bean);
+                    }
+                }
+
+                mRecyclerView.setHasFixedSize(false);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(
+                        new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                            @Override
+                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                                holder.setText(R.id.other_habbit_title, s.getTitle());
+                                holder.setText(R.id.time, s.getTime());
+                                holder.setText(R.id.owner, s.getIdentity());
+                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                            }
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                ButterKnife.bind(this,itemView);
+                            }
+                        });
+            } else {
+                if (flag == 1) {
+                    List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                    for(HomeFragmentModel bean: mList) {
+                        String time = bean.getTime();
+                        String[] time_list = time.split(":");
+                        Integer Hour = Integer.parseInt(time_list[0]);
+                        Integer minute = Integer.parseInt(time_list[1]);
+                        if (Hour >=12 && Hour <17) {
+                            mList_tmp.add(bean);
+                        }
+                    }
+
+                    mRecyclerView.setHasFixedSize(false);
+                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    mRecyclerView.setAdapter(
+                            new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                                @Override
+                                public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                                    holder.setText(R.id.other_habbit_title, s.getTitle());
+                                    holder.setText(R.id.time, s.getTime());
+                                    holder.setText(R.id.owner, s.getIdentity());
+                                    holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                                }
+                                @Override
+                                public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                    super.onViewHolderCreated(holder, itemView);
+                                    ButterKnife.bind(this,itemView);
+                                }
+                            });
+                } else {
+                    if (flag == 2) {
+                        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                        for(HomeFragmentModel bean: mList) {
+                            String time = bean.getTime();
+                            String[] time_list = time.split(":");
+                            Integer Hour = Integer.parseInt(time_list[0]);
+                            Integer minute = Integer.parseInt(time_list[1]);
+                            if (Hour >=17 && Hour <24) {
+                                mList_tmp.add(bean);
+                            }
+                        }
+
+                        mRecyclerView.setHasFixedSize(false);
+                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        mRecyclerView.setAdapter(
+                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                                    @Override
+                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                                        holder.setText(R.id.other_habbit_title, s.getTitle());
+                                        holder.setText(R.id.time, s.getTime());
+                                        holder.setText(R.id.owner, s.getIdentity());
+                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                                    }
+                                    @Override
+                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                        super.onViewHolderCreated(holder, itemView);
+                                        ButterKnife.bind(this,itemView);
+                                    }
+                                });
+                    } else {
+                        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                        for(HomeFragmentModel bean: mList) {
+                            String time = bean.getTime();
+                            String[] time_list = time.split(":");
+                            Integer Hour = Integer.parseInt(time_list[0]);
+                            Integer minute = Integer.parseInt(time_list[1]);
+                            mList_tmp.add(bean);
+                        }
+
+                        mRecyclerView.setHasFixedSize(false);
+                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                        mRecyclerView.setAdapter(
+                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                                    @Override
+                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                                        holder.setText(R.id.other_habbit_title, s.getTitle());
+                                        holder.setText(R.id.time, s.getTime());
+                                        holder.setText(R.id.owner, s.getIdentity());
+                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                                    }
+                                    @Override
+                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                        super.onViewHolderCreated(holder, itemView);
+                                        ButterKnife.bind(this,itemView);
+                                    }
+                                });
+                    }
+                }
+            }
+        } catch (Exception e) {
+            Log.d(TAG, "onCreateView: fail: " + e);
+        }
+        //recyclerViewCancelScroll();
+    }
+
+
     private void initData() {
-        String longContent = "-->游泳、快走、慢跑、骑自行车，及一切有氧运动都能锻炼心脏。有氧运动好处多：能锻炼心肺、增强循环系统功能、燃烧脂肪、加大肺活量、降低血压，甚至能预防糖尿病，减少心脏病的发生。美国运动医学院建议，想知道有氧运动强度是否合适，可在运动后测试心率，以达到最高心率的60%—90%为宜。如果想通过有氧运动来减肥，可以选择低度到中度的运动强度，同时延长运动时间，这种方法消耗的热量更多。运动频率每周3—5次，每次20—60分钟。想要锻炼肌肉，可以练举重、做体操以及其他重复伸、屈肌肉的运动。肌肉锻炼可以燃烧热量、增强骨密度、减少受伤，尤其是关节受伤的几率，还能预防骨质疏松。 在做举重运动前，先测一下，如果连续举8次你最多能举多重的东西，就从这个重量开始练习。当你可以连续12次举起这个重量时，试试增加5%的重量。注意每次练习时，要连续举8—12次，这样可以达到肌肉最大耐力的70%—80%，锻炼效果较好。每周2—3次，但要避免连续两天锻炼同一组肌肉群， 以便让肌肉有充分的恢复时间。";
-        String shortContent = "-->健身是一种体育项目，如各种徒手健美操、韵律操、形体操以及各种自抗力动作。";
-        for (int i = 0; i < 20; i++) {
+        String longContent = "Get up early";
+        String shortContent = "Work";
+        for (int i = 0; i < 24; i++) {
             HomeFragmentModel bean = new HomeFragmentModel();
             if (i % 2 == 0) {
-                bean.setContent(i + shortContent);
+                bean.setTitle(shortContent);
+                String time = i + ":00";
+                bean.setTime(time);
+                bean.setIdentity("Owner");
                 bean.setId(i);
             } else {
-                bean.setContent(i + longContent);
+                bean.setTitle(longContent);
+                String time = i + ":00";
+                bean.setTime(time);
+                bean.setIdentity("Participate");
                 bean.setId(i);
             }
             mList.add(bean);
         }
     }
-
 }
-

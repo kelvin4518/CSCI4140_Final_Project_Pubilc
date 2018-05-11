@@ -55,8 +55,19 @@ public class HabitModel {
     public String GPSRequiredTime; // 30, count in minute, use GPS to check whether stay in lat and lng for 30 minutes
     public Boolean isComplete;     // user checking complete
     public Boolean isAutoComplete;     // GPS auto check complete
+<<<<<<< HEAD
     public Boolean isPrivateHabit;     // habit is public and cannot have other to participate
     public Boolean isPrviateVisible;   // habit is public visible and others cannot see
+=======
+    public Boolean ispublicHabit;     // habit is public and cannot have other to participate
+    public Boolean isPrviateVisible;   // habit is public visible and others cannot see
+    public String Content;
+    public String createTime;
+    public Boolean isFavorited;
+    public Integer countFavorited;
+    public String isSlug;
+    public String isUpdated;
+>>>>>>> 7ce34d3ad3053bf3f0f166d3b9442ba36a8c1990
 
 
     // about the user : 这个habit有关user的内容
@@ -66,9 +77,16 @@ public class HabitModel {
     public int selfFinishRatio;
     public int userParticipateNumber;
     public int userFinishNumber;
+<<<<<<< HEAD
     public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
 
 
+=======
+    public String userImage;
+    public String userBio;
+    public Boolean userFollowing;
+    public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
+>>>>>>> 7ce34d3ad3053bf3f0f166d3b9442ba36a8c1990
 
 
     public static void initModel(Context mContext){
@@ -84,5 +102,63 @@ public class HabitModel {
         }
     }
 
+    public void initwithjson(JSONObject response){
+        try {
+            Integer id = response.getInt("id");
+            JSONObject author = response.getJSONObject("author");
+            Integer author_id = author.getInt("id");
+            String author_username = author.getString("username");
+            String author_bio = author.getString("bio");
+            String author_image = author.getString("image");
+            Boolean author_following = author.getBoolean("following");
+            String body = response.getString("body");
+            String createdAt = response.getString("createdAt");
+            String Tdescription = response.getString("description");
+            Boolean favorited = response.getBoolean("favorited");
+            Integer favoritesCount = response.getInt("favoritesCount");
+            String slug = response.getString("slug");
+            //JSONArray tagList = response.getJSONArray("tagList");
+            String title = response.getString("title");
+            String updateAt = response.getString("updatedAt");
+
+            ID = id;
+            name = title;
+            description = Tdescription;
+            startDate = "NA";//
+            endDate = "NA";//
+            startTime = "NA"; //
+            endTime = "NA";//
+            isFinishBefore = false;//
+            needGPSVerify = false;//
+            lat = "NA";//
+            lng = "NA";//
+            location = "NA";      //
+            GPSRequiredTime = "NA";//
+            isComplete = false; //
+            isAutoComplete = false;//
+            ispublicHabit = false; //
+            isPrviateVisible = false;//
+            Content = body;
+            createTime = createdAt;
+            isFavorited = favorited;
+            countFavorited = favoritesCount;
+            isSlug = slug;
+            isUpdated = updateAt;
+
+            owner = author_username;
+            ownerID = author_id;
+            selfFinishNumber = 0;//
+            selfFinishRatio = 0;//
+            userParticipateNumber = 0;//
+            userFinishNumber = 0;//
+            userImage = author_image;
+            userBio = author_bio;
+            userFollowing = author_following;
+        }
+        catch(JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }

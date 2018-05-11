@@ -82,14 +82,6 @@ public class LoginFragment extends BaseFragment {
 
     CatLoadingView mView;
 
-
-
-
-
-
-
-
-
     // use butterknife to set the button behavior
     @OnClick(R.id.login_wechat_button)
     void onClickWechatLogin(){
@@ -120,20 +112,6 @@ public class LoginFragment extends BaseFragment {
         replaceFragment(new RegisterEmailFragment(), null);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // before the user see the page
     @Override
     public void onCreate(Bundle savedInstanceState){
@@ -151,31 +129,11 @@ public class LoginFragment extends BaseFragment {
         return mView;
     }
 
-
-
-
-
-
-
-
-
-
-
-
     //Save the Parameter and call API
     private void saveParameter(){
 
         if(checkUserInputEmail()){
 //            //Put the parameter and call API
-//            HashMap<String, String> mParameter = new HashMap<>();
-//            mParameter.put(Constant.LOGIN_PHONE_PASSWORD, mPassword.getText().toString());
-//            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TYPE, Constant.DEVICE_TYPE);
-//            mParameter.put(Constant.LOGIN_PHONE_DEVICE_TOKEN, Utility.getDeviceToken());
-////            mParameter.put(Constant.LOGIN_PHONE_PHONE, mPhone.getText().toString());
-////            callLoginHttp(mParameter);
-//            mParameter.put("email", mPhone.getText().toString());
-
-
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
