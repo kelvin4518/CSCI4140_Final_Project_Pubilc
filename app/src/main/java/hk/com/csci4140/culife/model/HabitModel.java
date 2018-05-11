@@ -42,7 +42,7 @@ public class HabitModel {
     // about the habit : 关于这个habit的内容
     public int ID;
     public String name;    // get up early
-    public String description;     // to keep healthy body
+    public String description;     // to keep healthy body TODO : Mr. Zheng : can use description to replace content
     public String startDate;   // 2018-05-04 TODO : need to confirm what kind of structure to use
     public String endDate;     // 2018-05-10
     public String startTime;   // 6:00
@@ -58,12 +58,18 @@ public class HabitModel {
     public Boolean isPrivateHabit;     // habit is public and cannot have other to participate
     public Boolean isPrviateVisible;   // habit is public visible and others cannot see
     public Boolean ispublicHabit;     // habit is public and cannot have other to participate
-    public String Content;
+    public String Content;      // TODO : Mr. Zheng : content might be the same as "description", better use description because that is in the API
     public String createTime;
     public Boolean isFavorited;
     public Integer countFavorited;
     public String isSlug;
     public String isUpdated;
+
+
+
+
+
+
 
 
     // about the user : 这个habit有关user的内容
@@ -95,7 +101,7 @@ public class HabitModel {
         }
     }
 
-    public void initwithjson(JSONObject response){
+    public void initHabitWithJSON(JSONObject response){
         try {
             Integer id = response.getInt("id");
             JSONObject author = response.getJSONObject("author");
@@ -153,5 +159,6 @@ public class HabitModel {
         }
 
     }
+
 
 }
