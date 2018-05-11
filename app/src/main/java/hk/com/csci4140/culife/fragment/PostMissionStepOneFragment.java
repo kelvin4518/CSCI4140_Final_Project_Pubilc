@@ -39,7 +39,14 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.kyleduo.switchbutton.SwitchButton;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -47,6 +54,9 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.BaseActivity;
@@ -62,10 +72,19 @@ import hk.com.csci4140.culife.utility.Utility;
 
 /**
  * Created by zhenghao(Kelvin Zheng) on 22/04/2018.
+ *
+ * Structure:
+ * 1. Bind the views and create variables
+ * 2. Bind the onClick and set the selectos
+ * 3. Do works before the user see the page
+ * 4. Do works after the user see the page
  */
 
 public class PostMissionStepOneFragment extends BaseFragment {
 
+
+
+    // Part 1 : Bind the view and create variables
     private static final String TAG = "PostMissionStepOne";
 
     @BindView(R.id.post_mission_scroll_view)
@@ -102,7 +121,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
     private String mTitle;
     private String mPrevTitle;
 
-    //Parameter to post mission api
+    //Paramete
+    // r to post mission api
     HashMap<String, String> parameter;
     private String errorText;
 
@@ -112,93 +132,21 @@ public class PostMissionStepOneFragment extends BaseFragment {
     private int selectedMethod = -1;
     private int selectedPeriod = -1;
 
-
-
-    //Initial Setting of every fragment
-    private void initialSetting() {
-        //set Go Back Icon();
-        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
-        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
-            }
-        });
-
-        //Set Login Icon Invisible
-        setLoginIconVisible(false);
-
-        //Set the bottom navigation visibility
-        setBottomNavFragment(true);
-        setPrevBottomNavFragment(true);
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Set the title of this fragment, and set the prev title
-        if (mTitle == null) {
-            mTitle = getString(R.string.post_mission_step_one_title);
-        }
-        if (mPrevTitle == null) {
-            mPrevTitle = getPrevTitle();
-        }
-        setToolbarTitle(mTitle);
-
-        initialSetting();
-    }
-
-
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-
-    @Override
-    public void onPause(){
-        super.onPause();
-    }
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View mView = inflater.inflate(R.layout.fragment_post_mission_step_one, container, false);
-        ButterKnife.bind(this, mView);
-
-        return mView;
-    }
-
-
-    @Override
-    public void onStart() {
-        initialSetting();
-        super.onStart();
-
-        initialMethodSpinner();
-        initialPeriodSpinner();
-
-        //If user is from step two
-        if(parameter != null){
-            //Mission Date
-
-            //Start Time and End Time
-            startTime.setText(parameter.get(Constant.MISSION_START_TIME));
-            endTime.setText(parameter.get(Constant.MISSION_END_TIME));
-
-            //Post Period
-            if(parameter.get(Constant.MISSION_POST_METHOD).equals(Constant.TRUE)){
-                postPeriodStart.setText(parameter.get(Constant.MISSION_POST_START));
-                postPeriodEnd.setText(parameter.get(Constant.MISSION_POST_END));
-            }
-        }
-    }
+    CatLoadingView mView;
 
 
 
+
+
+
+
+
+
+
+
+
+
+    // Part 2: Bind the onclick and set the selectors
     //Initialize the post method spinner
     private void initialMethodSpinner(){
         postMethodSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -225,7 +173,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         }
     }
 
-
     //Visibility of the Date period
     private void setPeriodDateVisibility(boolean visible){
         if(visible){
@@ -239,7 +186,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
             postPeriodEnd.setVisibility(View.GONE);
         }
     }
-
 
     //Initial the post period spinner
     private void initialPeriodSpinner(){
@@ -319,55 +265,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         return true;
     }
 
-
-    //@OnClick(R.id.post_mission_one_date)
-    void onClickMissionDate(final TextView textView){
-        new MaterialDialog.Builder(getContext())
-                .title(getString(R.string.selection_title))
-                .titleColor(getResources().getColor(R.color.colorAccent))
-                .itemsColor(getResources().getColor(R.color.textColor))
-                .items(R.array.post_mission_date_array)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if(which == 0){
-                            textView.setText(text.toString());
-                        }
-                        else {
-                            final Calendar c = Calendar.getInstance();
-                            int mYear = c.get(Calendar.YEAR);
-                            int mMonth = c.get(Calendar.MONTH);
-                            int mDay = c.get(Calendar.DAY_OF_MONTH);
-                            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                                //选择完日期后会调用该回调函数
-                                @Override
-                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                    //If picked date is early than today
-                                    String pickedDate = Utility.getDateString(year, (monthOfYear) + 1, dayOfMonth);
-                                    String today = Utility.getToday();
-                                    if(Utility.compareDate(pickedDate, today)){
-                                        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText(getString(R.string.warning_title))
-                                                .setContentText(getString(R.string.post_mission_date_before_today_warning))
-                                                .setConfirmText(getString(R.string.warning_confirm))
-                                                .show();
-                                        return;
-                                    }
-
-                                    //因为monthOfYear会比实际月份少一月所以这边要加1
-                                    textView.setText(Utility.getDateString(year, (monthOfYear + 1), dayOfMonth));
-
-                                }
-                            }, mYear, mMonth, mDay);
-                            //弹出选择日期对话框
-                            datePickerDialog.show();
-                        }
-                    }
-                })
-                .show();
-    }
-
-
     @OnClick({R.id.post_mission_one_start_time, R.id.post_mission_one_end_time})
     void onClickMissionTime(final TextView textView){
         final Calendar calendar = Calendar.getInstance();
@@ -425,7 +322,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
         }, hour, minute, true);
         timePickerDialog.show();
     }
-
 
     @OnClick({R.id.post_mission_one_period_start_time, R.id.post_mission_one_period_end_time})
     void onClickPeriodDate(final TextView textView){
@@ -498,24 +394,233 @@ public class PostMissionStepOneFragment extends BaseFragment {
         datePickerDialog.show();
     }
 
-
     @OnClick(R.id.post_mission_one_continue_button)
     void onClickPostMission(){
-        if(checkInputValidation()){
-            //Go to Step Two
-            Bundle bundle = new Bundle();
-            bundle.putSerializable(Constant.MISSION_MAP_PARAMETER, parameter);
-            setPrevTitle(mTitle);
-            replaceFragment(new PostMissionStepTwoFragment(), bundle);
-        }
-        else {
-            //Error dialog
-            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText(getString(R.string.warning_title))
-                    .setContentText(errorText)
-                    .setConfirmText(getString(R.string.warning_confirm))
-                    .show();
+        saveParameter();
+//        if(checkInputValidation()){
+//            //Go to Step Two
+//            Bundle bundle = new Bundle();
+//            bundle.putSerializable(Constant.MISSION_MAP_PARAMETER, parameter);
+//            setPrevTitle(mTitle);
+//            replaceFragment(new PostMissionStepTwoFragment(), bundle);
+//        }
+//        else {
+//            //Error dialog
+//            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+//                    .setTitleText(getString(R.string.warning_title))
+//                    .setContentText(errorText)
+//                    .setConfirmText(getString(R.string.warning_confirm))
+//                    .show();
+//        }
+    }
+
+
+
+
+
+
+
+
+
+
+    //Initial Setting of every fragment
+    private void initialSetting() {
+        //set Go Back Icon();
+        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
+        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Go to the previous navigation bar selected item
+                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+            }
+        });
+
+        //Set Login Icon Invisible
+        setLoginIconVisible(false);
+
+        //Set the bottom navigation visibility
+        setBottomNavFragment(true);
+        setPrevBottomNavFragment(true);
+    }
+
+    @Override
+    public void onStart() {
+        initialSetting();
+        super.onStart();
+
+        initialMethodSpinner();
+        initialPeriodSpinner();
+
+        //If user is from step two
+        if(parameter != null){
+            //Mission Date
+
+            //Start Time and End Time
+            startTime.setText(parameter.get(Constant.MISSION_START_TIME));
+            endTime.setText(parameter.get(Constant.MISSION_END_TIME));
+
+            //Post Period
+            if(parameter.get(Constant.MISSION_POST_METHOD).equals(Constant.TRUE)){
+                postPeriodStart.setText(parameter.get(Constant.MISSION_POST_START));
+                postPeriodEnd.setText(parameter.get(Constant.MISSION_POST_END));
+            }
         }
     }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        //Set the title of this fragment, and set the prev title
+        if (mTitle == null) {
+            mTitle = getString(R.string.post_mission_step_one_title);
+        }
+        if (mPrevTitle == null) {
+            mPrevTitle = getPrevTitle();
+        }
+        setToolbarTitle(mTitle);
+
+        initialSetting();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        final View mView = inflater.inflate(R.layout.fragment_post_mission_step_one, container, false);
+        ButterKnife.bind(this, mView);
+
+        return mView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+    // after user exit the page
+    @Override
+    public void onPause(){
+        super.onPause();
+    }
+
+
+
+
+//    @OnClick(R.id.post_mission_one_date)
+    void onClickMissionDate(final TextView textView){
+        new MaterialDialog.Builder(getContext())
+                .title(getString(R.string.selection_title))
+                .titleColor(getResources().getColor(R.color.colorAccent))
+                .itemsColor(getResources().getColor(R.color.textColor))
+                .items(R.array.post_mission_date_array)
+                .itemsCallback(new MaterialDialog.ListCallback() {
+                    @Override
+                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
+                        if(which == 0){
+                            textView.setText(text.toString());
+                        }
+                        else {
+                            final Calendar c = Calendar.getInstance();
+                            int mYear = c.get(Calendar.YEAR);
+                            int mMonth = c.get(Calendar.MONTH);
+                            int mDay = c.get(Calendar.DAY_OF_MONTH);
+                            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                                //选择完日期后会调用该回调函数
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                    //If picked date is early than today
+                                    String pickedDate = Utility.getDateString(year, (monthOfYear) + 1, dayOfMonth);
+                                    String today = Utility.getToday();
+                                    if(Utility.compareDate(pickedDate, today)){
+                                        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                                                .setTitleText(getString(R.string.warning_title))
+                                                .setContentText(getString(R.string.post_mission_date_before_today_warning))
+                                                .setConfirmText(getString(R.string.warning_confirm))
+                                                .show();
+                                        return;
+                                    }
+
+                                    //因为monthOfYear会比实际月份少一月所以这边要加1
+                                    textView.setText(Utility.getDateString(year, (monthOfYear + 1), dayOfMonth));
+
+                                }
+                            }, mYear, mMonth, mDay);
+                            //弹出选择日期对话框
+                            datePickerDialog.show();
+                        }
+                    }
+                })
+                .show();
+    }
+
+
+
+
+
+
+
+
+
+    private void saveParameter(){
+        JSONObject jsonParams = new JSONObject();
+        JSONObject outerJsonParams = new JSONObject();
+        try {
+            jsonParams.put("body", "the body of michael's habit");
+            jsonParams.put("title", "the title of michael's habit");
+            jsonParams.put("description", "the description of michael's habit");
+
+            outerJsonParams.put("habit",jsonParams);
+            StringEntity entity = new StringEntity(outerJsonParams.toString());
+            callCreateHabitAPI(entity);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+    // Handle Create Habit Request
+    private void callCreateHabitAPI(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+
+        mView = new CatLoadingView();
+
+        mView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"habits/create",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: create habit");
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
+                showBottomSnackBar("Welcome to CULife !");
+                replaceActivity(MainActivity.class, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onFailure: create habit");
+                Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
+            }
+        });
+    }
+
 
 }
