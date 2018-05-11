@@ -97,6 +97,8 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
 
+
+    // 顶上的banner ; the top banner
     @BindView(R.id.habit_detail_logo_imageView)
     ImageView mLogoImageView;
 
@@ -126,15 +128,42 @@ public class HabitDetailFragment extends BaseFragment{
     TabLayout mTabLayout;
 
 
+    // the scrollview
     @BindView(R.id.habit_detail_scrollView)
     ScrollView mScrollView;
 
-
+    // the floating button
     @BindView(R.id.fab)
     FloatingActionButton fab;
 
     ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
 
+    // habit detail confirm complete button
+    Button mConfirmCompleteBtn;
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("habit is complete")
+                    .setContentText("congradulation on finishing a new task")
+                    .setConfirmText(getString(R.string.warning_confirm))
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("确认完成")){
+                                mConfirmCompleteBtn.setText("取消");
+                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+                            } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("取消")){
+                                mConfirmCompleteBtn.setText("确认完成");
+                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
+                            }
+//                        mConfirmCompleteBtn.setText("确认完成");
+                            sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .show();
+        }
+    };
 
 
 
@@ -251,34 +280,34 @@ public class HabitDetailFragment extends BaseFragment{
 
 
 
-    // User interacting with the page
+//     User interacting with the page
 
-    @BindView(R.id.confirm_complete)
-    Button confirmBtn;
-
-    @OnClick(R.id.confirm_complete)
-    void onClickConfirmComplete(){
-        //Show the warning text
-        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
-                .setTitleText("habit is complete")
-                .setContentText("congradulation on finishing a new task")
-                .setConfirmText(getString(R.string.warning_confirm))
-                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-                    @Override
-                    public void onClick(SweetAlertDialog sDialog) {
-                        if(confirmBtn.getText().toString().equalsIgnoreCase("确认完成")){
-                            confirmBtn.setText("取消");
-                            confirmBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                        } else if(confirmBtn.getText().toString().equalsIgnoreCase("取消")){
-                            confirmBtn.setText("确认完成");
-                            confirmBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
-                        }
-//                        confirmBtn.setText("确认完成");
-                        sDialog.dismissWithAnimation();
-                    }
-                })
-                .show();
-    }
+//    @BindView(R.id.confirm_complete)
+//    Button confirmBtn;
+//
+//    @OnClick(R.id.confirm_complete)
+//    void onClickConfirmComplete(){
+//        //Show the warning text
+//        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+//                .setTitleText("habit is complete")
+//                .setContentText("congradulation on finishing a new task")
+//                .setConfirmText(getString(R.string.warning_confirm))
+//                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+//                    @Override
+//                    public void onClick(SweetAlertDialog sDialog) {
+//                        if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("确认完成")){
+//                            mConfirmCompleteBtn.setText("取消");
+//                            mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+//                        } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("取消")){
+//                            mConfirmCompleteBtn.setText("确认完成");
+//                            mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
+//                        }
+////                        mConfirmCompleteBtn.setText("确认完成");
+//                        sDialog.dismissWithAnimation();
+//                    }
+//                })
+//                .show();
+//    }
 
 
     @OnClick(R.id.habit_detail_calendar_icon)
@@ -364,22 +393,22 @@ public class HabitDetailFragment extends BaseFragment{
 //            });
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                ArrayList<String> items = new ArrayList<String>();
-                for (int i = 1; i <= 20; i++) {
+                final ArrayList<String> items = new ArrayList<String>();
+                for (int i = 1; i <= 1; i++) {
                     items.add("Detail " + i);
                 }
                 mBottomRecyclerView.setAdapter(
-                        new CommonAdapter<String>(getContext(), R.layout.simple_list_item_1, items) {
+                        new CommonAdapter<String>(getContext(), R.layout.item_habit_detail, items) {
                             @Override
                             public void convert(ViewHolder holder, String s, int pos) {
-                                holder.setText(R.id.text_1, s);
-//                            super.convert( holder,  s, pos);
                             }
 
                             @Override
                             public void onViewHolderCreated(ViewHolder holder, View itemView) {
                                 super.onViewHolderCreated(holder, itemView);
-                                //AutoUtil.autoSize(itemView)
+                                ButterKnife.bind(this,itemView);
+                                mConfirmCompleteBtn = itemView.findViewById(R.id.confirm_complete);
+                                itemView.findViewById(R.id.confirm_complete).setOnClickListener(mOnClickListener);
                             }
                         });
             }else{

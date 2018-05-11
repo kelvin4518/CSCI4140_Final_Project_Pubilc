@@ -122,25 +122,37 @@ public class FriendListFragment extends BaseFragment {
     private void initialSetting() {
         //set Go Back Icon();
         // setGoBackIcon();
-        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
-        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
-            }
-        });
+//        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
+//        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //Go to the previous navigation bar selected item
+//                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+//            }
+//        });
+//
+//
+//        //Set Login Icon Invisible
+//        setLoginIconVisible(false);
+//
+//        //Set the bottom navigation visibility
+//        setBottomNavFragment(true);
+//        setPrevBottomNavFragment(true);
+//
+//        //Use to set the menu icon
+//        setHasOptionsMenu(true);
 
+
+
+        //Set the Go Back
+        setGoBackIcon();
 
         //Set Login Icon Invisible
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
-        setPrevBottomNavFragment(true);
-
-        //Use to set the menu icon
-        setHasOptionsMenu(true);
+        setBottomNavFragment(false);
+        setPrevBottomNavFragment(false);
     }
 
 
