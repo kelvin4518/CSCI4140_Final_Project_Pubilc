@@ -180,7 +180,7 @@ public class MainActivity extends BaseActivity {
                 //fragment = new ();
                 break;
             case 3:
-                fragment = new LocationServiceFragment();
+                fragment = new HabitDetailFragment();
                 break;
             case 4:
                 fragment = new UserProfileFragment();

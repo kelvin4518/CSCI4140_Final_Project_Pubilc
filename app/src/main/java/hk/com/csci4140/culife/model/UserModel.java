@@ -80,6 +80,7 @@ public class UserModel {
             isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
             isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
             token = SessionManager.getString(mContext, Constant.TOKEN);
+            initModel(mContext);
         } catch (JSONException e) {
             e.printStackTrace();
         }

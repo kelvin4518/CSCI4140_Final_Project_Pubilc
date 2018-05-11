@@ -3,68 +3,86 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_habbit"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:paddingEnd="@dimen/spacing_large"
     android:paddingStart="@dimen/spacing_large"
     android:paddingTop="@dimen/spacing_large">
 
-    <TextView
-        android:id="@+id/expand_or_fold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/habbit_delete"
-        android:layout_marginBottom="25dp"
-        android:text="全文"
-        android:textColor="#050505"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/habbit_delete"
-        android:textColor="@color/colorPrimary"
-        tools:text="Time" />
-
-    <TextView
-        android:id="@+id/habbit_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="12dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="删除"
-        android:textColor="@android:color/holo_red_dark"
-        android:textSize="14sp" />
-
-    <TextView
-        android:id="@+id/owner"
-        android:layout_width="156dp"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/time"
-        android:layout_centerHorizontal="true"
-        android:text="owner"
-        android:textColor="@color/colorPrimary"
-        tools:text="Created by somebody" />
-
-    <TextView
-        android:id="@+id/other_habbit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/time"
-        android:layout_centerVertical="true"
-        android:textColor="@color/black"
-        tools:text="Other_habbit" />
-
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignTop="@+id/habbit_delete"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"
+                tools:text="Time" />
+
+            <TextView
+                android:id="@+id/owner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/time"
+                android:layout_centerHorizontal="true"
+                android:layout_weight="1"
+                android:text="owner"
+                android:textColor="@color/colorPrimary"
+                tools:text="Created by somebody" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/other_habbit_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignStart="@+id/time"
+                    android:layout_centerVertical="true"
+                    android:layout_weight="1"
+                    android:text="Habbit title"
+                    android:textColor="@color/black" />
+
+                <CheckBox
+                    android:id="@+id/checkBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Check out" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider2"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="1"
+            android:background="?android:attr/listDivider" />
+
+    </LinearLayout>
 
 </RelativeLayout>

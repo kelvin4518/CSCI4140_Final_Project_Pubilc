@@ -22,6 +22,7 @@
     <string name="warning_title">Warning</string>
     <string name="warning_confirm">Comfirm</string>
     <string name="warning_cancel">Cancel</string>
+    <string name="habbit_pull_fail">This habbit doesn't exist</string>
     <string name="should_login">Please login first</string>
 
 

@@ -93,7 +93,7 @@ public class RegisterEmailFragment extends BaseFragment {
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
-                jsonParams.put("username", "maomao2");
+                jsonParams.put("username", "115506");
                 jsonParams.put("email", mEmailAddress.getText().toString());
                 jsonParams.put("password", mPassword.getText().toString());
                 outerJsonParams.put("user",jsonParams);
