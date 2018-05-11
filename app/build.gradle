@@ -124,4 +124,6 @@ dependencies {
     compile 'com.github.nanchen2251:WaveSideBar:1.0.6'
     compile 'com.github.yalantis:multi-selection:v0.1'
     compile 'com.github.goyourfly:MultiSelectAdapter:3.8'
+    compile 'cn.jiguang.imui:messagelist:0.7.2'
+    compile 'cn.jiguang.imui:chatinput:0.7.3'
 }
