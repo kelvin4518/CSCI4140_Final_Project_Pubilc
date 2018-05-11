@@ -55,19 +55,15 @@ public class HabitModel {
     public String GPSRequiredTime; // 30, count in minute, use GPS to check whether stay in lat and lng for 30 minutes
     public Boolean isComplete;     // user checking complete
     public Boolean isAutoComplete;     // GPS auto check complete
-<<<<<<< HEAD
     public Boolean isPrivateHabit;     // habit is public and cannot have other to participate
     public Boolean isPrviateVisible;   // habit is public visible and others cannot see
-=======
     public Boolean ispublicHabit;     // habit is public and cannot have other to participate
-    public Boolean isPrviateVisible;   // habit is public visible and others cannot see
     public String Content;
     public String createTime;
     public Boolean isFavorited;
     public Integer countFavorited;
     public String isSlug;
     public String isUpdated;
->>>>>>> 7ce34d3ad3053bf3f0f166d3b9442ba36a8c1990
 
 
     // about the user : 这个habit有关user的内容
@@ -77,16 +73,13 @@ public class HabitModel {
     public int selfFinishRatio;
     public int userParticipateNumber;
     public int userFinishNumber;
-<<<<<<< HEAD
+
     public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
 
-
-=======
     public String userImage;
     public String userBio;
     public Boolean userFollowing;
-    public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
->>>>>>> 7ce34d3ad3053bf3f0f166d3b9442ba36a8c1990
+
 
 
     public static void initModel(Context mContext){

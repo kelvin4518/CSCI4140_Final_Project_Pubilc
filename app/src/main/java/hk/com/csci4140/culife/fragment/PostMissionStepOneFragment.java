@@ -71,6 +71,7 @@ import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.observer.ObserverOnNextListener;
 import hk.com.csci4140.culife.observer.ProgressObserver;
 import hk.com.csci4140.culife.utility.Utility;
+import retrofit2.http.HEAD;
 
 /**
  * Created by zhenghao(Kelvin Zheng) on 22/04/2018.
@@ -86,7 +87,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
 
-<<<<<<< HEAD
     public boolean isEditMode;
     public HabitModel mHabit;
     public void initEditMode(HabitModel habit){
@@ -102,10 +102,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
 
-
-
-=======
->>>>>>> 7d910ba0018a7148831ecb63b491a19adb7319bd
     // Part 1 : Bind the view and create variables
     private static final String TAG = "PostMissionStepOne";
 
@@ -421,7 +417,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
     @OnClick(R.id.post_mission_one_continue_button)
     void onClickPostMission(){
-<<<<<<< HEAD
         // check the input and decide
         if(checkHabitInputIsValid()){
             saveParameter();
@@ -432,7 +427,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
                     .setContentText(errorText)
                     .setConfirmText(getString(R.string.warning_confirm))
                     .show();
-=======
         saveParameter();
 //        if(checkInputValidation()){
 //            //Go to Step Two
@@ -449,106 +443,9 @@ public class PostMissionStepOneFragment extends BaseFragment {
 //                    .setConfirmText(getString(R.string.warning_confirm))
 //                    .show();
 //        }
-    }
-
-
-
-
-
-
-
-
-
-
-    //Initial Setting of every fragment
-    private void initialSetting() {
-        //set Go Back Icon();
-        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
-        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
-            }
-        });
-
-        //Set Login Icon Invisible
-        setLoginIconVisible(false);
-
-        //Set the bottom navigation visibility
-        setBottomNavFragment(true);
-        setPrevBottomNavFragment(true);
-    }
-
-    @Override
-    public void onStart() {
-        initialSetting();
-        super.onStart();
-
-        initialMethodSpinner();
-        initialPeriodSpinner();
-
-        //If user is from step two
-        if(parameter != null){
-            //Mission Date
-
-            //Start Time and End Time
-            startTime.setText(parameter.get(Constant.MISSION_START_TIME));
-            endTime.setText(parameter.get(Constant.MISSION_END_TIME));
-
-            //Post Period
-            if(parameter.get(Constant.MISSION_POST_METHOD).equals(Constant.TRUE)){
-                postPeriodStart.setText(parameter.get(Constant.MISSION_POST_START));
-                postPeriodEnd.setText(parameter.get(Constant.MISSION_POST_END));
-            }
         }
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        //Set the title of this fragment, and set the prev title
-        if (mTitle == null) {
-            mTitle = getString(R.string.post_mission_step_one_title);
-        }
-        if (mPrevTitle == null) {
-            mPrevTitle = getPrevTitle();
-        }
-        setToolbarTitle(mTitle);
-
-        initialSetting();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View mView = inflater.inflate(R.layout.fragment_post_mission_step_one, container, false);
-        ButterKnife.bind(this, mView);
-
-        return mView;
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-    // after user exit the page
-    @Override
-    public void onPause(){
-        super.onPause();
-    }
 
 
 
@@ -604,48 +501,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
 
-
-
-
-
-    private void saveParameter(){
-        JSONObject jsonParams = new JSONObject();
-        JSONObject outerJsonParams = new JSONObject();
-        try {
-            jsonParams.put("body", "the body of michael's habit");
-            jsonParams.put("title", "the title of michael's habit");
-            jsonParams.put("description", "the description of michael's habit");
-
-            outerJsonParams.put("habit",jsonParams);
-            StringEntity entity = new StringEntity(outerJsonParams.toString());
-            callCreateHabitAPI(entity);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
->>>>>>> 7d910ba0018a7148831ecb63b491a19adb7319bd
-        }
-
-
-
-
-//        if(checkInputValidation()){
-//            //Go to Step Two
-//            Bundle bundle = new Bundle();
-//            bundle.putSerializable(Constant.MISSION_MAP_PARAMETER, parameter);
-//            setPrevTitle(mTitle);
-//            replaceFragment(new PostMissionStepTwoFragment(), bundle);
-//        }
-//        else {
-//            //Error dialog
-//            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-//                    .setTitleText(getString(R.string.warning_title))
-//                    .setContentText(errorText)
-//                    .setConfirmText(getString(R.string.warning_confirm))
-//                    .show();
-//        }
-    }
-
     private boolean checkHabitInputIsValid(){
         //Mission Title
         if(mHabitName.getText() == null || mHabitName.getText().toString().equals("")){
@@ -660,12 +515,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
         return true;
     }
-
-
-
-
-
-
 
 
 
@@ -761,70 +610,11 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
 
 
-
-
-
-
     // after user exit the page
     @Override
     public void onPause(){
         super.onPause();
     }
-
-
-
-
-//    @OnClick(R.id.post_mission_one_date)
-    void onClickMissionDate(final TextView textView){
-        new MaterialDialog.Builder(getContext())
-                .title(getString(R.string.selection_title))
-                .titleColor(getResources().getColor(R.color.colorAccent))
-                .itemsColor(getResources().getColor(R.color.textColor))
-                .items(R.array.post_mission_date_array)
-                .itemsCallback(new MaterialDialog.ListCallback() {
-                    @Override
-                    public void onSelection(MaterialDialog dialog, View view, int which, CharSequence text) {
-                        if(which == 0){
-                            textView.setText(text.toString());
-                        }
-                        else {
-                            final Calendar c = Calendar.getInstance();
-                            int mYear = c.get(Calendar.YEAR);
-                            int mMonth = c.get(Calendar.MONTH);
-                            int mDay = c.get(Calendar.DAY_OF_MONTH);
-                            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                                //选择完日期后会调用该回调函数
-                                @Override
-                                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                    //If picked date is early than today
-                                    String pickedDate = Utility.getDateString(year, (monthOfYear) + 1, dayOfMonth);
-                                    String today = Utility.getToday();
-                                    if(Utility.compareDate(pickedDate, today)){
-                                        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                                                .setTitleText(getString(R.string.warning_title))
-                                                .setContentText(getString(R.string.post_mission_date_before_today_warning))
-                                                .setConfirmText(getString(R.string.warning_confirm))
-                                                .show();
-                                        return;
-                                    }
-
-                                    //因为monthOfYear会比实际月份少一月所以这边要加1
-                                    textView.setText(Utility.getDateString(year, (monthOfYear + 1), dayOfMonth));
-
-                                }
-                            }, mYear, mMonth, mDay);
-                            //弹出选择日期对话框
-                            datePickerDialog.show();
-                        }
-                    }
-                })
-                .show();
-    }
-
-
-
-
-
 
 
 
@@ -856,13 +646,6 @@ public class PostMissionStepOneFragment extends BaseFragment {
             e.printStackTrace();
         }
     }
-
-
-
-
-
-
-
 
 
 
@@ -928,39 +711,5 @@ public class PostMissionStepOneFragment extends BaseFragment {
             }
         });
     }
-
-
-
-    // Handle Create Habit Request
-    private void callCreateHabitAPI(StringEntity params){
-        AsyncHttpClient client = new AsyncHttpClient();
-        String AuthorizationToken = "Token "+UserModel.token;
-        client.addHeader("Authorization","Token "+UserModel.token);
-
-        mView = new CatLoadingView();
-
-        mView.show(getFragmentManager(), "");
-
-        client.post(getContext(),Constant.API_BASE_URL+"habits/create",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mView.dismiss();
-                Log.d(Constant.API_REPORT_TAG, "onSuccess: create habit");
-                Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
-                Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
-                showBottomSnackBar("Welcome to CULife !");
-                replaceActivity(MainActivity.class, null);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-                mView.dismiss();
-                Log.d(Constant.API_REPORT_TAG, "onFailure: create habit");
-                Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
-                Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
-            }
-        });
-    }
-
 
 }
