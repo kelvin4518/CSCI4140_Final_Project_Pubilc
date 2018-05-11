@@ -110,55 +110,73 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@android:drawable/edit_text"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="start|center_vertical"
+                        android:text="@string/post_habbit_name"
+                        android:textColor="#6a4080"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/post_mission_one_name"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:background="@android:color/white"
+                        android:gravity="end|center_vertical"
+                        android:inputType="text"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/text_size_normal" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
                     android:layout_weight="1"
-                    android:gravity="start|center_vertical"
-                    android:text="@string/post_habbit_name"
-                    android:textColor="@android:color/holo_purple"
-                    android:textSize="@dimen/text_size_normal" />
-
-                <EditText
-                    android:id="@+id/post_mission_one_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:inputType="text"
-                    android:background="@android:color/white"
-                    android:gravity="end|center_vertical"
-                    android:textSize="@dimen/text_size_normal"/>
+                    android:background="@android:color/darker_gray"
+                    android:paddingEnd="@dimen/spacing_large"
+                    android:paddingStart="@dimen/spacing_large" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:background="@android:drawable/edit_text"
-                >
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="start|center_vertical"
-                    android:text="@string/post_habbit_type"
-                    android:textColor="@android:color/holo_purple"
-                    android:textSize="@dimen/text_size_normal" />
+                    android:text="Habbit Content"
+                    android:textAlignment="center"
+                    android:textColor="#6a4080"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold" />
 
-                <Spinner
-                    android:id="@+id/post_mission_one_type_spinner"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                <EditText
+                    android:id="@+id/habbit_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="end|center_vertical"
-                    />
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -168,14 +186,6 @@
                 android:orientation="vertical"
                 android:background="@android:drawable/edit_text"
                 >
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"
-                    android:paddingStart="@dimen/spacing_large"
-                    android:paddingEnd="@dimen/spacing_large"
-                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -190,8 +200,9 @@
                         android:layout_weight="4"
                         android:gravity="start|center_vertical"
                         android:text="@string/post_habbit_time"
-                        android:textColor="@android:color/holo_purple"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:textColor="#6a4080"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/post_mission_one_start_time"
@@ -247,8 +258,9 @@
                         android:layout_weight="1"
                         android:gravity="start|center_vertical"
                         android:text="@string/post_habbit_method"
-                        android:textColor="@android:color/holo_purple"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:textColor="#6a4080"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold" />
 
                     <Spinner
                         android:id="@+id/post_mission_one_method_spinner"
@@ -281,8 +293,9 @@
                         android:layout_weight="4"
                         android:gravity="start|center_vertical"
                         android:text="@string/post_habbit_period"
-                        android:textColor="@android:color/holo_purple"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:textColor="#6a4080"
+                        android:textSize="@dimen/text_size_normal"
+                        android:textStyle="bold" />
 
                     <Spinner
                         android:visibility="gone"

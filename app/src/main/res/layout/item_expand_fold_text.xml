@@ -74,6 +74,12 @@
             android:text="全文"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add" />
     </LinearLayout>
 
     <View

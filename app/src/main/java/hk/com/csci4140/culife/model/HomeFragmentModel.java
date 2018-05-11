@@ -4,7 +4,7 @@ package hk.com.csci4140.culife.model;
  * Created by maoyuxuan(Michael Mao) on 06/05/2018.
  */
 
-public class FriendMomentModel {
+public class HomeFragmentModel {
 
     private String content;//内容
 

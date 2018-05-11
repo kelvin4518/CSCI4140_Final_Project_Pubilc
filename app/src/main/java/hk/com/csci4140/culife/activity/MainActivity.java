@@ -145,27 +145,6 @@ public class MainActivity extends BaseActivity {
         // Use colored navigation with circle reveal effect
         bottomNavigation.setColored(true);
 
-        // Set current item programmatically
-        //bottomNavigation.setCurrentItem(1);
-
-        // Customize notification (title, background, typeface)
-        //bottomNavigation.setNotificationBackgroundColor(Color.parseColor("#F63D2B"));
-
-        // Add or remove notification for each item
-        //bottomNavigation.setNotification("1", 3);
-        // OR
-        /*AHNotification notification = new AHNotification.Builder()
-                .setText("1")
-                .setBackgroundColor(ContextCompat.getColor(MainActivity.this, android.R.color.holo_red_dark))
-                .setTextColor(ContextCompat.getColor(MainActivity.this, android.R.color.white))
-                .build();
-        bottomNavigation.setNotification(notification, 1); */
-
-        // Enable / disable item & set disable color
-        //bottomNavigation.enableItemAtPosition(2);
-        //bottomNavigation.disableItemAtPosition(2);
-        //bottomNavigation.setItemDisableColor(Color.parseColor("#3A000000"));
-
         // Set listeners
         // TODO : rewrite the check login logic
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
@@ -174,30 +153,6 @@ public class MainActivity extends BaseActivity {
                 // Do something cool here...
                 setTabSelectFragment(position);
                 return true;
-//                if(position > 0){
-//                    if(UserModel.isLogin){
-//                        if(bottomNavigation.getCurrentItem() != position) {
-//                            if (position != 2) {
-//                                previousItem = position;
-//                            }
-//                            setTabSelectFragment(position);
-//                        }
-//                        return true;
-//                    }
-//                    else {
-//                        showBottomSnackBar(getString(R.string.should_login));
-//                        return false;
-//                    }
-//                }
-//                else {
-//                    if(bottomNavigation.getCurrentItem() != position) {
-//                        if (position != 2) {
-//                            previousItem = position;
-//                        }
-//                        setTabSelectFragment(position);
-//                    }
-//                    return true;
-//                }
 
             }
         });
@@ -214,15 +169,15 @@ public class MainActivity extends BaseActivity {
         Fragment fragment;
         switch (position){
             case 0:
-                 fragment = new HomeFragment();
-//                fragment = new FriendMomentFragment();
+                fragment = new HomeFragment();
                 break;
             case 1:
-                fragment = new RangeFragment();
+                //fragment = new HomeFragment();
+                fragment = new FriendMomentFragment();
                 break;
             case 2:
-                // fragment = new PostMissionStepOneFragment();
-                fragment = new HabitDetailFragment();
+                 fragment = new PostMissionStepOneFragment();
+                //fragment = new ();
                 break;
             case 3:
                 fragment = new LocationServiceFragment();

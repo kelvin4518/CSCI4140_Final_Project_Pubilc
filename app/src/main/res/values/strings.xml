@@ -16,8 +16,9 @@
     <string name="selection_title">Selection</string>
     <string name="time_format">%1$d:%2$d</string>
     <string name="time_format_period">%1$s&#032;to&#032;%2$s</string>
+    <string name="date_format_period">%1$s&#032;to&#032;%2$s</string>
     <string name="time_format_chinese">%1$d:%2$d (h:m)</string>
-    <string name="date_format_chinese">%1$d/%2$d/%3$d (yyyy/mm/dd)</string>
+    <string name="date_format_chinese">%1$s/%2$s/%3$s (yyyy/mm/dd)</string>
     <string name="warning_title">Warning</string>
     <string name="warning_confirm">Comfirm</string>
     <string name="warning_cancel">Cancel</string>
@@ -29,7 +30,7 @@
 
     <!-- Navigation -->
     <string name="nav_home">Home</string>
-    <string name="nav_range">Leaderboard</string>
+    <string name="nav_range">Friends</string>
     <string name="nav_add">Post</string>
     <string name="nav_message">Message</string>
     <string name="nav_other_mission">Other mission</string>
@@ -224,9 +225,9 @@
     <!-- Post Mission Step One Fragment -->
     <string name="post_mission_step_one_title">Release the mission</string>
     <string name="step_view_first_text">Fill in the data</string>
-    <string name="step_view_second_text">Prepayments</string>
+    <string name="step_view_second_text">Comfirm</string>
     <string name="step_view_third_text">Complete</string>
-    <string name="post_habbit_name">Habbit name</string>
+    <string name="post_habbit_name">Habbit name:</string>
     <string name="post_habbit_type">Type of the Habbit</string>
     <string name="post_mission_date_title">Date of mission</string>
     <string name="post_mission_date_default">No limit of date</string>
@@ -265,13 +266,14 @@
     <string name="post_mission_step_one_post">Apply</string>
     <!-- Warning Text -->
     <string name="post_mission_input_name">Please input the name of the mission</string>
+    <string name="post_habbit_content">Please input the content of the habbit</string>
     <string name="post_mission_input_time">Please select the date/time of the mission</string>
     <string name="post_mission_input_num">Please input the number of members for the mission </string>
     <string name="post_mission_input_period_date">Please choose the realse date</string>
-    <string name="post_mission_input_salary">Please in put the salary</string>
-    <string name="post_mission_input_address">请输入任务地址</string>
-    <string name="post_mission_input_content">请输入任务内容</string>
-    <string name="post_mission_input_requirement">请输入任务要求</string>
+    <string name="post_mission_input_salary">Please input the salary</string>
+    <string name="post_mission_input_address">Please input the address</string>
+    <string name="post_mission_input_content">Please input the content of the habbit</string>
+    <string name="post_mission_input_requirement">Please input the habbit requirement</string>
 
     <!-- Post Mission Step Two Fragment -->
     <string name="post_mission_two_salary_format">$%1$,.2f</string>
@@ -385,9 +387,9 @@
     <string name="taker_item_accumulated_payment">累积支付报酬: $$%1$,d</string>
 
     <!-- Setting Fragment-->
-    <string name="setting_title">设定</string>
-    <string name="setting_show_location">在地图上显示个人位置</string>
-    <string name="setting_region">地区</string>
+    <string name="setting_title">Setting</string>
+    <string name="setting_show_location">Show location</string>
+    <string name="setting_region">Region</string>
     <string-array name="setting_region_array">
         <item>中国香港</item>
         <item>中国大陆</item>
@@ -398,16 +400,16 @@
         <item>简体中文</item>
         <item>English</item>
     </string-array>
-    <string name="setting_return_record">反馈记录</string>
-    <string name="setting_options">选项</string>
-    <string name="setting_notification">推送通知设定</string>
-    <string name="setting_change_password">更改密码</string>
-    <string name="setting_change_phone">更改电话号码</string>
-    <string name="setting_about">关于</string>
-    <string name="setting_common_problem">常见问题</string>
-    <string name="setting_privacy_policy">私隐条款</string>
-    <string name="setting_usage_policy">使用条款</string>
-    <string name="setting_contact_us">联络我们</string>
+    <string name="setting_return_record">Record</string>
+    <string name="setting_options">Options</string>
+    <string name="setting_notification">Set the notification</string>
+    <string name="setting_change_password">Change the password</string>
+    <string name="setting_change_phone">Change the phone</string>
+    <string name="setting_about">About</string>
+    <string name="setting_common_problem">Common problem</string>
+    <string name="setting_privacy_policy">Privacy policy</string>
+    <string name="setting_usage_policy">Usage policy</string>
+    <string name="setting_contact_us">Contact us</string>
     <string name="setting_log_out">Log out</string>
     <string name="setting_log_out_warning">Are you sure to log out？</string>
 

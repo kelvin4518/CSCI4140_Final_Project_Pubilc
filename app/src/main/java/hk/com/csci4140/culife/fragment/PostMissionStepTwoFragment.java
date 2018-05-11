@@ -125,13 +125,17 @@ public class PostMissionStepTwoFragment extends BaseFragment {
             missionTitle.setText(parameter.get(Constant.MISSION_TITLE));
 
             //Salary
-            float salary = Float.parseFloat(parameter.get(Constant.MISSION_SALARY));
+            //float salary = Float.parseFloat(parameter.get(Constant.MISSION_SALARY));
             //missionSalary.setText(String.format(getString(R.string.post_mission_two_salary_format), salary));
 
             //Time
             missionTime.setText(String.format(getString(R.string.time_format_period),
                     parameter.get(Constant.MISSION_START_TIME),
                     parameter.get(Constant.MISSION_END_TIME)));
+
+            missionDate.setText(String.format(getString(R.string.date_format_period),
+                    parameter.get(Constant.MISSION_POST_START),
+                    parameter.get(Constant.MISSION_POST_END)));
 
             //Content
             if(parameter.get(Constant.MISSION_CONTENT) != null){

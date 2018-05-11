@@ -1,6 +1,5 @@
 package hk.com.csci4140.culife.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -13,9 +12,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import hk.com.csci4140.culife.R;
-import hk.com.csci4140.culife.model.FriendMomentModel;
+import hk.com.csci4140.culife.model.HomeFragmentModel;
 
-public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapter.MyViewHolder> {
+public class HomeFragmentAdapter extends RecyclerView.Adapter<HomeFragmentAdapter.MyViewHolder> {
 
 //    private Activity mContent;
 
@@ -35,34 +34,28 @@ public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapte
      */
     private SparseArray<Integer> mTextStateList;//保存文本状态集合
 
-    List<FriendMomentModel> mList;
+    List<HomeFragmentModel> mList;
 
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView nickname;
+        public TextView owner;
         public TextView content;
         public TextView delete;
         public TextView expandOrFold;
+        public TextView Time;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            nickname = (TextView) itemView.findViewById(R.id.tv_nickname);
-            content = (TextView) itemView.findViewById(R.id.tv_content);
-            delete = (TextView) itemView.findViewById(R.id.tv_delete);
-            expandOrFold = (TextView) itemView.findViewById(R.id.tv_expand_or_fold);
+            owner = (TextView) itemView.findViewById(R.id.owner);
+            content = (TextView) itemView.findViewById(R.id.other_habbit);
+            delete = (TextView) itemView.findViewById(R.id.habbit_delete);
+            expandOrFold = (TextView) itemView.findViewById(R.id.expand_or_fold);
+            Time = (TextView) itemView.findViewById(R.id.time);
         }
     }
 
-
-
-
-
-
-
-
-
-    public FriendMomentAdapter(List<FriendMomentModel> list, Context context) {
+    public HomeFragmentAdapter(List<HomeFragmentModel> list, Context context) {
 //        mContent = context;
         this.mList = list;
         mTextStateList = new SparseArray<>();
@@ -71,13 +64,13 @@ public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapte
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //        return new MyViewHolder(mContent.getLayoutInflater().inflate(R.layout.item_expand_fold_text, parent, false));
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_expand_fold_text, parent, false);
-        final FriendMomentAdapter.MyViewHolder holder = new FriendMomentAdapter.MyViewHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.find_habbit_list, parent, false);
+        final HomeFragmentAdapter.MyViewHolder holder = new HomeFragmentAdapter.MyViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final FriendMomentAdapter.MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final HomeFragmentAdapter.MyViewHolder holder, final int position) {
         int state = mTextStateList.get(mList.get(position).getId(), STATE_UNKNOW);
         //第一次初始化，未知状态
         if (state == STATE_UNKNOW) {
@@ -148,6 +141,7 @@ public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapte
                 notifyDataSetChanged();
             }
         });
+        holder.Time.setText("time");
     }
 
     @Override
