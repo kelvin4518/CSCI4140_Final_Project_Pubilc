@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -42,13 +43,19 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.bottom_navigation)
     AHBottomNavigation bottomNavigation;
 
-
     private boolean hasInitNav = false;
 
     private int previousItem = 0;
 
 
 
+
+
+
+
+
+
+    // before user see the page, set which fragment is going to be displayed
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +65,9 @@ public class MainActivity extends BaseActivity {
         Utility.setLanguage(MainActivity.this);
 
         ButterKnife.bind(this);
-    }
 
+        Log.d(TAG, "onCreate: user token : "+UserModel.token);
+    }
 
     @Override
     public void onStart() {
@@ -75,8 +83,6 @@ public class MainActivity extends BaseActivity {
             Fragment initFragment = UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
             // michael added, to disable the terms and conditions page when starting the app
 
-
-
             initFragment = new HomeFragment();
 
             boolean hasBottomNav = UserModel.isLogin;
@@ -87,6 +93,16 @@ public class MainActivity extends BaseActivity {
     }
 
 
+
+
+
+
+
+
+
+
+    // Bottom Navigation Bar
+
     //Set the bottom navigation bar
     private void setBottomNav(){
         hasInitNav = true;
@@ -96,7 +112,6 @@ public class MainActivity extends BaseActivity {
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.nav_add, R.drawable.ic_action_add, R.color.colorPrimary);
         AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.nav_message, R.drawable.ic_menu_gallery, R.color.colorPrimary);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.nav_other_mission, R.drawable.ic_menu_manage, R.color.colorPrimary);
-
 
         // Add items
         bottomNavigation.addItem(item1);
@@ -131,6 +146,7 @@ public class MainActivity extends BaseActivity {
         bottomNavigation.setColored(true);
 
         // Set listeners
+        // TODO : rewrite the check login logic
         bottomNavigation.setOnTabSelectedListener(new AHBottomNavigation.OnTabSelectedListener() {
             @Override
             public boolean onTabSelected(int position, boolean wasSelected) {
@@ -147,7 +163,6 @@ public class MainActivity extends BaseActivity {
         });
 
     }
-
 
     //Set the Tab selection
     private void setTabSelectFragment(int position){
@@ -178,10 +193,18 @@ public class MainActivity extends BaseActivity {
     }
 
 
+
+
+
+
+
+
+
+
+
+
     //Get the previous selected item in bottom navigation bar
     public int getPreviousItem() {
         return previousItem;
     }
-
-
 }

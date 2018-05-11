@@ -44,7 +44,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon">
+        tools:replace="android:label,android:icon">
 
         <!-- Baidu Map -->
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>

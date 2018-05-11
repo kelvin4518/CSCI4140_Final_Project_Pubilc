@@ -57,6 +57,8 @@ public class UserModel {
     }
 
 
+
+    // this part use session manager to set the necessary state
     public static void login(Context mContext, boolean isRemember, String token,@Nullable String iconUrl, int regionNum, int showLocation){
 
         SessionManager.putBoolean(mContext, Constant.IS_LOGIN, true);
