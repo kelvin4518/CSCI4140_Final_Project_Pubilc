@@ -48,10 +48,27 @@ import com.loopj.android.http.*;
 import com.roger.catloadinglibrary.CatLoadingView;
 
 
+
+
+
+/**
+ * Created by maoyuxuan(Michael Mao) on 31/04/2018.
+ *
+ * code structure :
+ * 1. Bind the views using ButterKnife
+ * 2. Bind the onClick behavior using ButterKnife
+ * 3. Handle what view to be displayed
+ * 4. Login API Handling
+ */
+
+
+
 public class LoginFragment extends BaseFragment {
 
+    // class variables defined here
     private static final String TAG = "LoginFrag";
 
+    // fields in the login form， 登录页面的几个input
     @BindView(R.id.login_remember_me)
     CheckBox mCbRememberMe;
 
@@ -63,36 +80,17 @@ public class LoginFragment extends BaseFragment {
 
     private String errorText = "";
 
-
     CatLoadingView mView;
 
 
 
-//    final String TARGET_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/users/login";
-//    private static AsyncHttpClient client;
-
-
-    // before the user see the page
-    @Override
-    public void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-
-        //This fragment has no toolbar
-        setToolbarVisibility(false);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View mView = inflater.inflate(R.layout.fragment_login, container, false);
-        ButterKnife.bind(this, mView);
-
-        return mView;
-    }
 
 
 
 
-    // when user is interacting with the page
+
+
+    // use butterknife to set the button behavior
     @OnClick(R.id.login_wechat_button)
     void onClickWechatLogin(){
         //TODO: WeChat Login function
@@ -122,54 +120,47 @@ public class LoginFragment extends BaseFragment {
         replaceFragment(new RegisterEmailFragment(), null);
     }
 
-    //Check if the information that user input is valid
-    private boolean checkUserInput(){
 
-        if(mPhone.getText() == null || mPhone.getText().toString().equals("")){
 
-            errorText = getString(R.string.login_warning_input_phone_num);
-            return false;
-        }
 
-        if( (mPhone.getText().toString().length() != Constant.HONGKONG_PHONE_LENGTH)
-                &&
-                (mPhone.getText().toString().length() != Constant.CHINA_PHONE_LENGTH)){
 
-            errorText = getString(R.string.login_warning_valid_phone_num);
-            return false;
-        }
 
-        if(mPassword.getText() == null || mPassword.getText().toString().equals("")){
 
-            errorText = getString(R.string.login_warning_input_password);
-            return false;
-        }
 
-        return true;
+
+
+
+
+
+
+
+    // before the user see the page
+    @Override
+    public void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
+        //This fragment has no toolbar
+        setToolbarVisibility(false);
     }
 
-    private boolean checkUserInputEmail(){
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View mView = inflater.inflate(R.layout.fragment_login, container, false);
+        ButterKnife.bind(this, mView);
 
-        if(mPhone.getText() == null || mPhone.getText().toString().equals("")){
-            // errorText = getString(R.string.login_warning_input_phone_num);
-            errorText = "Please enter the email";
-            return false;
-        }
-
-        if(!mPhone.getText().toString().contains("@")){
-            errorText = "Please enter the valid email address";
-            return false;
-        }
-
-        if(mPassword.getText() == null || mPassword.getText().toString().equals("")){
-
-            errorText = getString(R.string.login_warning_input_password);
-            return false;
-        }
-
-        return true;
-
+        return mView;
     }
+
+
+
+
+
+
+
+
+
+
+
 
     //Save the Parameter and call API
     private void saveParameter(){
@@ -211,33 +202,32 @@ public class LoginFragment extends BaseFragment {
         }
     }
 
-    //Call Login by Phone Http
-    private void callLoginHttp(HashMap<String, String> map){
-        ObserverOnNextListener<LoginModel> observer = new ObserverOnNextListener<LoginModel>() {
-            @Override
-            public void onNext(LoginModel model) {
-                if(model.getStatus().equals(Constant.CONNECT_SUCCESS)){
-                    UserModel.login(getContext(), mCbRememberMe.isChecked(),
-                            model.getResult().getToken(),
-                            model.getResult().getIconUrl(),
-                            model.getResult().getRegion(),
-                            model.getResult().getShowLocation());
-                    replaceActivity(MainActivity.class, null);
-                }
-                else if(model.getStatus().equals(Constant.CONNECT_FAILED)){
-                    showBottomSnackBar(getString(R.string.login_warning_wrong_password));
-                    Log.e(TAG, "Fail: " + model.getResult().getErrors().get(0));
-                }
-            }
-        };
-        HttpMethod.getInstance().loginByPhone(new ProgressObserver<LoginModel>(getContext(), observer), map);
-    }
+    private boolean checkUserInputEmail(){
 
+        if(mPhone.getText() == null || mPhone.getText().toString().equals("")){
+            // errorText = getString(R.string.login_warning_input_phone_num);
+            errorText = "Please enter the email";
+            return false;
+        }
+
+        if(!mPhone.getText().toString().contains("@")){
+            errorText = "Please enter the valid email address";
+            return false;
+        }
+
+        if(mPassword.getText() == null || mPassword.getText().toString().equals("")){
+
+            errorText = getString(R.string.login_warning_input_password);
+            return false;
+        }
+
+        return true;
+
+    }
 
     //Call Login by Email Http
     private void callLoginByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
-
 
         mView = new CatLoadingView();
 
@@ -265,4 +255,55 @@ public class LoginFragment extends BaseFragment {
             }
         });
     }
+
+
+    // OLD CODE : NOT USE ANYMORE
+    //Check if the information that user input is valid
+    private boolean checkUserInput(){
+
+        if(mPhone.getText() == null || mPhone.getText().toString().equals("")){
+
+            errorText = getString(R.string.login_warning_input_phone_num);
+            return false;
+        }
+
+        if( (mPhone.getText().toString().length() != Constant.HONGKONG_PHONE_LENGTH)
+                &&
+                (mPhone.getText().toString().length() != Constant.CHINA_PHONE_LENGTH)){
+
+            errorText = getString(R.string.login_warning_valid_phone_num);
+            return false;
+        }
+
+        if(mPassword.getText() == null || mPassword.getText().toString().equals("")){
+
+            errorText = getString(R.string.login_warning_input_password);
+            return false;
+        }
+
+        return true;
+    }
+
+    //Call Login by Phone Http
+    private void callLoginHttp(HashMap<String, String> map){
+        ObserverOnNextListener<LoginModel> observer = new ObserverOnNextListener<LoginModel>() {
+            @Override
+            public void onNext(LoginModel model) {
+                if(model.getStatus().equals(Constant.CONNECT_SUCCESS)){
+                    UserModel.login(getContext(), mCbRememberMe.isChecked(),
+                            model.getResult().getToken(),
+                            model.getResult().getIconUrl(),
+                            model.getResult().getRegion(),
+                            model.getResult().getShowLocation());
+                    replaceActivity(MainActivity.class, null);
+                }
+                else if(model.getStatus().equals(Constant.CONNECT_FAILED)){
+                    showBottomSnackBar(getString(R.string.login_warning_wrong_password));
+                    Log.e(TAG, "Fail: " + model.getResult().getErrors().get(0));
+                }
+            }
+        };
+        HttpMethod.getInstance().loginByPhone(new ProgressObserver<LoginModel>(getContext(), observer), map);
+    }
+
 }

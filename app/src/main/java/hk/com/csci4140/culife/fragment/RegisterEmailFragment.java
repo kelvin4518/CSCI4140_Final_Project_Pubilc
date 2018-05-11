@@ -36,13 +36,22 @@ import hk.com.csci4140.culife.observer.ProgressObserver;
 import hk.com.csci4140.culife.utility.Utility;
 
 /**
- * Created by zhenghao(Kelvin Zheng) on 07/04/2018.
+ * Created by maoyuxuan(Michael Mao) on 31/04/2018.
+ *
+ * code structure :
+ * 1. Bind the views using ButterKnife
+ * 2. Bind the onClick behavior using ButterKnife
+ * 3. Handle what view to be displayed
+ * 4. Handle the destroy view
+ * 5. Register API Handling
  */
+
 
 public class RegisterEmailFragment extends BaseFragment {
 
-    private static final String TAG = "RegisterEmailFrag";
 
+    // Bind the views using butterKnife
+    private static final String TAG = "RegisterEmailFrag";
 
     @BindView(R.id.register_via_email)
     EditText mEmailAddress;
@@ -57,6 +66,66 @@ public class RegisterEmailFragment extends BaseFragment {
     private String errorText = "";
     CatLoadingView mView;
 
+
+
+
+
+
+
+
+    // Bind the onclick using butterknife
+    @OnClick(R.id.register_email_register_button)
+    void onClickRegister(){
+        if(isInfoValidate()){
+            //Call Register Http, first put the information into bundle
+//            Bundle bundle = new Bundle();
+//            bundle.putString(Constant.REGISTER_PHONE_NUM, mEmailAddress.getText().toString());
+//            bundle.putString(Constant.REGISTER_PASSWORD, mPassword.getText().toString());
+//            bundle.putInt(Constant.REGISTER_REGION, mRegionSpinner.getSelectedItemPosition());
+//
+//            callRegisterHttp(mEmailAddress.getText().toString(),
+//                    mRegionSpinner.getSelectedItemPosition(),
+//                    bundle);
+
+            //
+
+
+            JSONObject jsonParams = new JSONObject();
+            JSONObject outerJsonParams = new JSONObject();
+            try {
+                jsonParams.put("username", "maomao2");
+                jsonParams.put("email", mEmailAddress.getText().toString());
+                jsonParams.put("password", mPassword.getText().toString());
+                outerJsonParams.put("user",jsonParams);
+                StringEntity entity = new StringEntity(outerJsonParams.toString());
+                callRegisterByEmailHttp(entity);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+
+        }
+        else {
+            //Show the warning text
+            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText(getString(R.string.warning_title))
+                    .setContentText(errorText)
+                    .setConfirmText(getString(R.string.warning_confirm))
+                    .show();
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    // before user see the page
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -69,6 +138,13 @@ public class RegisterEmailFragment extends BaseFragment {
         setToolbarTitle(mTitle);
     }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        View mView = inflater.inflate(R.layout.fragment_register_email, container, false);
+        ButterKnife.bind(this, mView);
+
+        return mView;
+    }
 
     @Override
     public void onResume(){
@@ -79,6 +155,14 @@ public class RegisterEmailFragment extends BaseFragment {
     }
 
 
+
+
+
+
+
+
+
+    // after user exit the page
     @Override
     public void onDestroy(){
         super.onDestroy();
@@ -88,13 +172,12 @@ public class RegisterEmailFragment extends BaseFragment {
     }
 
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-        View mView = inflater.inflate(R.layout.fragment_register_email, container, false);
-        ButterKnife.bind(this, mView);
 
-        return mView;
-    }
+
+
+
+
+
 
 
     //Check if the information that user input is valid
@@ -158,79 +241,10 @@ public class RegisterEmailFragment extends BaseFragment {
         return true;
     }
 
-
-    @OnClick(R.id.register_email_register_button)
-    void onClickRegister(){
-        if(isInfoValidate()){
-            //Call Register Http, first put the information into bundle
-//            Bundle bundle = new Bundle();
-//            bundle.putString(Constant.REGISTER_PHONE_NUM, mEmailAddress.getText().toString());
-//            bundle.putString(Constant.REGISTER_PASSWORD, mPassword.getText().toString());
-//            bundle.putInt(Constant.REGISTER_REGION, mRegionSpinner.getSelectedItemPosition());
-//
-//            callRegisterHttp(mEmailAddress.getText().toString(),
-//                    mRegionSpinner.getSelectedItemPosition(),
-//                    bundle);
-
-            //
-
-
-            JSONObject jsonParams = new JSONObject();
-            JSONObject outerJsonParams = new JSONObject();
-            try {
-                jsonParams.put("username", "maomao2");
-                jsonParams.put("email", mEmailAddress.getText().toString());
-                jsonParams.put("password", mPassword.getText().toString());
-                outerJsonParams.put("user",jsonParams);
-                StringEntity entity = new StringEntity(outerJsonParams.toString());
-                callRegisterByEmailHttp(entity);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-
-        }
-        else {
-            //Show the warning text
-            new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                    .setTitleText(getString(R.string.warning_title))
-                    .setContentText(errorText)
-                    .setConfirmText(getString(R.string.warning_confirm))
-                    .show();
-        }
-    }
-
-
-    //Call the Register API
-    private void callRegisterHttp(String phone, int region, final Bundle bundle){
-        ObserverOnNextListener<GetVerificationCodeModel> observer = new ObserverOnNextListener<GetVerificationCodeModel>() {
-            @Override
-            public void onNext(GetVerificationCodeModel model) {
-                if(model.getStatus().equals(Constant.CONNECT_SUCCESS)){
-                    setPrevTitle(mTitle);
-                    replaceFragment(new VerifyPhoneFragment(), bundle);
-                }
-                else if(model.getStatus().equals(Constant.CONNECT_FAILED)){
-                    showBottomSnackBar(getString(R.string.network_connect_errors));
-                    Log.e(TAG, "Fail: " + model.getResult().getErrors().get(0));
-                }
-            }
-        };
-        HttpMethod.getInstance().registerByPhone(new ProgressObserver<GetVerificationCodeModel>(getContext(), observer), phone, region);
-    }
-
-
-
-
-
-
-
     private void callRegisterByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
         mView = new CatLoadingView();
         mView.show(getFragmentManager(), "");
-
         client.post(getContext(),Constant.API_BASE_URL+"users",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -252,5 +266,24 @@ public class RegisterEmailFragment extends BaseFragment {
                 showBottomSnackBar("Register Fails. Please try again later");
             }
         });
+    }
+
+    // OLD CODE : NOT USE ANYMORE
+    //Call the Register API
+    private void callRegisterHttp(String phone, int region, final Bundle bundle){
+        ObserverOnNextListener<GetVerificationCodeModel> observer = new ObserverOnNextListener<GetVerificationCodeModel>() {
+            @Override
+            public void onNext(GetVerificationCodeModel model) {
+                if(model.getStatus().equals(Constant.CONNECT_SUCCESS)){
+                    setPrevTitle(mTitle);
+                    replaceFragment(new VerifyPhoneFragment(), bundle);
+                }
+                else if(model.getStatus().equals(Constant.CONNECT_FAILED)){
+                    showBottomSnackBar(getString(R.string.network_connect_errors));
+                    Log.e(TAG, "Fail: " + model.getResult().getErrors().get(0));
+                }
+            }
+        };
+        HttpMethod.getInstance().registerByPhone(new ProgressObserver<GetVerificationCodeModel>(getContext(), observer), phone, region);
     }
 }
