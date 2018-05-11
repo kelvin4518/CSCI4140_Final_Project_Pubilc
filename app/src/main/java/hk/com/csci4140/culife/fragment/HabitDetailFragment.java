@@ -50,6 +50,7 @@ import butterknife.OnItemSelected;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
+import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.utility.Utility;
 import jp.wasabeef.blurry.Blurry;
 
@@ -137,6 +138,16 @@ public class HabitDetailFragment extends BaseFragment{
     FloatingActionButton fab;
 
     ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
+
+    HabitModel mHabit;
+
+
+
+
+
+
+
+
 
     // habit detail confirm complete button
     Button mConfirmCompleteBtn;
@@ -310,6 +321,11 @@ public class HabitDetailFragment extends BaseFragment{
 //    }
 
 
+
+
+
+
+    // Calendar
     @OnClick(R.id.habit_detail_calendar_icon)
     void showCalendar(){
 
@@ -365,10 +381,26 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
 
+    // TODO : give the real habitModel to the fragment
+    @OnClick(R.id.habit_detail_setting_icon)
+    void navigateToSetting(){
+        PostMissionStepOneFragment editFragment = new PostMissionStepOneFragment();
+        mHabit = new HabitModel();
+        mHabit.ID = 28;
+        mHabit.name = "我给你一个假的";
+        mHabit.description = "假的description";
+        editFragment.initEditMode(mHabit);
+        replaceFragment(editFragment, null);
+    }
+
+
+
     @OnClick(R.id.habit_detail_share_icon)
     void showFriendList(){
         try{
-            replaceFragment(new FriendListFragment(), null);
+            FriendListFragment destFragment = new FriendListFragment();
+            destFragment.mNumberOfItems = 5;
+            replaceFragment(destFragment, null);
         }catch (Exception e){
             Log.d(TAG, "showFriendList: "+e);
         }

@@ -109,6 +109,8 @@ public class FriendListFragment extends BaseFragment {
     private List<UserContactModel> mUserContactModels;
 
 
+    public int mNumberOfItems;
+
 
 
 
@@ -226,7 +228,7 @@ public class FriendListFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         ArrayList<String> items = new ArrayList<String>();
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= mNumberOfItems; i++) {
             items.add("Member " + i);
         }
 

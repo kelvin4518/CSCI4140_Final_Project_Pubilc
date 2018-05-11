@@ -40,33 +40,33 @@ import java.util.Map;
 public class HabitModel {
 
     // about the habit : 关于这个habit的内容
-    private int ID;
-    private String name;    // get up early
-    private String description;     // to keep healthy body
-    private String startDate;   // 2018-05-04 TODO : need to confirm what kind of structure to use
-    private String endDate;     // 2018-05-10
-    private String startTime;   // 6:00
-    private String endTime;     // 18:00
-    private Boolean isFinishBefore;  // if it is true, then only need to set the task end time, need to finish this before the end time
-    private Boolean needGPSVerify;  // if it is true, then use GPS to check the location
-    private String lat;     // 33.123
-    private String lng;     // 128.234
-    private String location;        // university library
-    private String GPSRequiredTime; // 30, count in minute, use GPS to check whether stay in lat and lng for 30 minutes
-    private Boolean isComplete;     // user checking complete
-    private Boolean isAutoComplete;     // GPS auto check complete
-    private Boolean isPrivateHabit;     // habit is private and cannot have other to participate
-    private Boolean isPrviateVisible;   // habit is private visible and others cannot see
+    public int ID;
+    public String name;    // get up early
+    public String description;     // to keep healthy body
+    public String startDate;   // 2018-05-04 TODO : need to confirm what kind of structure to use
+    public String endDate;     // 2018-05-10
+    public String startTime;   // 6:00
+    public String endTime;     // 18:00
+    public Boolean isFinishBefore;  // if it is true, then only need to set the task end time, need to finish this before the end time
+    public Boolean needGPSVerify;  // if it is true, then use GPS to check the location
+    public String lat;     // 33.123
+    public String lng;     // 128.234
+    public String location;        // university library
+    public String GPSRequiredTime; // 30, count in minute, use GPS to check whether stay in lat and lng for 30 minutes
+    public Boolean isComplete;     // user checking complete
+    public Boolean isAutoComplete;     // GPS auto check complete
+    public Boolean isPrivateHabit;     // habit is public and cannot have other to participate
+    public Boolean isPrviateVisible;   // habit is public visible and others cannot see
 
 
     // about the user : 这个habit有关user的内容
-    private String owner;
-    private int ownerID;
-    private int selfFinishNumber;
-    private int selfFinishRatio;
-    private int userParticipateNumber;
-    private int userFinishNumber;
-    private ArrayList<Map<String,String>> memberList; // has id, name, icon link,
+    public String owner;
+    public int ownerID;
+    public int selfFinishNumber;
+    public int selfFinishRatio;
+    public int userParticipateNumber;
+    public int userFinishNumber;
+    public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
 
 
 
