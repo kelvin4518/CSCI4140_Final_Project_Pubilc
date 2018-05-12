@@ -1,55 +1,31 @@
 package hk.com.csci4140.culife.activity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
-import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.roger.catloadinglibrary.CatLoadingView;
 
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
-import cz.msebera.android.httpclient.entity.ContentType;
-import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
-import hk.com.csci4140.culife.fragment.FriendMomentFragment;
+import hk.com.csci4140.culife.fragment.ChatListFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
-import hk.com.csci4140.culife.fragment.LocationServiceFragment;
-import hk.com.csci4140.culife.fragment.MessageFragment;
-import hk.com.csci4140.culife.fragment.OtherMissionFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
 import hk.com.csci4140.culife.fragment.PostMissionStepOneFragment;
-import hk.com.csci4140.culife.fragment.RangeFragment;
 import hk.com.csci4140.culife.fragment.UserProfileFragment;
-import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.UserModel;
-import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
-
-
-import com.roger.catloadinglibrary.CatLoadingView;
-
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 /**
  * Created by maoyuxuan(Michael Mao) on 31/04/2018.
@@ -240,7 +216,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case 1:
                 //fragment = new HomeFragment();
-                fragment = new FriendMomentFragment();
+                //fragment = new FriendMomentFragment();
+                fragment = new ChatListFragment();
                 break;
             case 2:
                  fragment = new PostMissionStepOneFragment();

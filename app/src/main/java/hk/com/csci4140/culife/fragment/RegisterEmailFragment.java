@@ -1,6 +1,7 @@
 package hk.com.csci4140.culife.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.roger.catloadinglibrary.CatLoadingView;
@@ -93,7 +98,9 @@ public class RegisterEmailFragment extends BaseFragment {
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
-                jsonParams.put("username", "115506");
+//                jsonParams.put("username", "michael_firebasechat_1");
+                String userNameString = mEmailAddress.getText().toString().split("@")[0];
+                jsonParams.put("username", userNameString);
                 jsonParams.put("email", mEmailAddress.getText().toString());
                 jsonParams.put("password", mPassword.getText().toString());
                 outerJsonParams.put("user",jsonParams);
@@ -243,6 +250,7 @@ public class RegisterEmailFragment extends BaseFragment {
 
     private void callRegisterByEmailHttp(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         mView = new CatLoadingView();
         mView.show(getFragmentManager(), "");
         client.post(getContext(),Constant.API_BASE_URL+"users",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
@@ -254,7 +262,7 @@ public class RegisterEmailFragment extends BaseFragment {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Welcome to CULife !");
                 UserModel.fromLoginJson(getContext(),true,response);
-                replaceActivity(MainActivity.class, null);
+                callRegisterByEmailToGoogleFirebase();
             }
 
             @Override
@@ -266,6 +274,33 @@ public class RegisterEmailFragment extends BaseFragment {
                 showBottomSnackBar("Register Fails. Please try again later");
             }
         });
+    }
+
+
+
+    private FirebaseAuth mFirebaseAuth;
+
+    private void callRegisterByEmailToGoogleFirebase(){
+        // initialize the Auth object
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+        String userEmail = mEmailAddress.getText().toString();
+        String userPassword = mPassword.getText().toString();
+
+        // create the user with email and password
+        mFirebaseAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    showBottomSnackBar("Corresponding Firebase User Created");
+                }else{
+                    showBottomSnackBar("Firebase User Creation Fails");
+                }
+
+                replaceActivity(MainActivity.class, null);
+            }
+        });
+
     }
 
     // OLD CODE : NOT USE ANYMORE

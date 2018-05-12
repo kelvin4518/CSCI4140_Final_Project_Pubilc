@@ -127,4 +127,11 @@ dependencies {
     compile 'com.github.goyourfly:MultiSelectAdapter:3.8'
     compile 'cn.jiguang.imui:messagelist:0.7.2'
     compile 'cn.jiguang.imui:chatinput:0.7.3'
+
+    compile 'com.google.firebase:firebase-core:15.0.0'
+    compile "com.google.firebase:firebase-auth:15.0.0"
+    compile 'com.google.firebase:firebase-database:15.0.0'
 }
+
+
+apply plugin: 'com.google.gms.google-services'
