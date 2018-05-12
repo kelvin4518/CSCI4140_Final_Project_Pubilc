@@ -73,21 +73,7 @@ import hk.com.csci4140.culife.utility.Utility;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomeFragment extends BaseFragment {
-    private ArrayList<HabitModel> mHabitList; // 总的list， this is a list of habit to be shown
-    private ArrayList<HabitModel> mDisplayHabitList; // 每个tab展示的habit的list， this is a list of habit that actually displayed on each tab
 
-    private ArrayList<HabitModel> getHabitListFromJson(JSONObject response){
-        ArrayList<HabitModel> habitList = new ArrayList<HabitModel>();
-
-        // TODO : Mr. Zheng : 将response的内容进行一个for loop，得到一个habitlist，放在 mHabitList 中
-
-
-        return habitList;
-    }
-
-    public void initHomePageDetail(JSONObject response){
-        mHabitList = getHabitListFromJson(response);
-    }
 
     @BindView(R.id.habbit_tablayout)
     TabLayout mTabLayout;
@@ -608,49 +594,4 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    // API : call API and handle result
-
-    private void callShowSingleHabitDetailAPI(StringEntity params){
-        AsyncHttpClient client = new AsyncHttpClient();
-        String AuthorizationToken = "Token "+UserModel.token;
-        client.addHeader("Authorization","Token "+UserModel.token);
-        mCatLoadingView = new CatLoadingView();
-
-        mCatLoadingView.show(getFragmentManager(), "");
-
-        client.post(getContext(),Constant.API_BASE_URL+"habits/show",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mCatLoadingView.dismiss();
-                Log.d("API_REPORT", "onSuccess: login");
-                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
-
-                HabitModel habit  = new HabitModel();
-                habit.initHabitWithJSON(response);
-                replaceFragment(new HabitDetailFragment(),null);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-                mCatLoadingView.dismiss();
-                Log.d("API_REPORT", "onFailure: login");
-                Log.d("API_REPORT", "onFailure: status : "+statusCode);
-                Log.d("API_REPORT", "onFailure: response : "+response);
-                showBottomSnackBar(getString(R.string.habbit_pull_fail));
-            }
-        });
-    }
 }
