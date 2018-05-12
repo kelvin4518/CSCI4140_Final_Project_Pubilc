@@ -50,6 +50,7 @@ public class UserModel {
         myChatName = SessionManager.getString(mContext,Constant.USERNAME);
         // TODO : Distinguish username and chat name, or it is ok with a demo purpose application
         myUserName = myChatName;
+        myID = SessionManager.getString(mContext,Constant.USERID);
         formatMyChatListFromStringList(SessionManager.getArrayList(Constant.USER_CHAT_LIST));
 
         Log.d("USERMODEL", "initModel: list : "+myChatList);

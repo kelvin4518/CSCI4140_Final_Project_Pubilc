@@ -9,6 +9,8 @@ public interface Constant {
     String API_REPORT_TAG = "API_REPORT";
     String API_BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
 
+
+    String USERID = "USERID";
     String USERNAME = "username";
     String USER_CHAT_LIST  = "user_chat_list";
     String USER_CHAT_LIST_OTHER_USER_ID  = "chat_other_user_ID";

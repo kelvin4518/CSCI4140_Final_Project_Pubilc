@@ -200,6 +200,11 @@ public class LoginFragment extends BaseFragment {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Welcome to CULife !");
                 UserModel.fromLoginJson(getContext(),mCbRememberMe.isChecked(),response);
+
+
+
+
+
                 replaceActivity(MainActivity.class, null);
             }
 
@@ -213,6 +218,9 @@ public class LoginFragment extends BaseFragment {
             }
         });
     }
+
+
+
 
 
     // OLD CODE : NOT USE ANYMORE

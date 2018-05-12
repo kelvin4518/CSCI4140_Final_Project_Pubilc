@@ -69,6 +69,7 @@ import hk.com.csci4140.culife.model.TakerInfoModel;
 import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.observer.ObserverOnNextListener;
 import hk.com.csci4140.culife.observer.ProgressObserver;
+import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
 import mehdi.sakout.fancybuttons.FancyButton;
 
@@ -209,6 +210,8 @@ public class HomeFragment extends BaseFragment {
         setPrevTitle(mTitle);
 
         initialSetting();
+
+        callGetProfileAPIToGetID();
     }
 
     @Override
@@ -591,6 +594,54 @@ public class HomeFragment extends BaseFragment {
                 showBottomSnackBar(getString(R.string.habbit_pull_fail));
             }
         });
+    }
+
+
+
+
+
+
+    private void callGetProfileAPIToGetID(){
+        if(UserModel.isLogin){
+            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
+                return;
+            }
+            AsyncHttpClient client = new AsyncHttpClient();
+            String AuthorizationToken = "Token "+UserModel.token;
+            client.addHeader("Authorization","Token "+UserModel.token);
+//            mCatLoadingView = new CatLoadingView();
+
+//            mCatLoadingView.show(getFragmentManager(), "");
+
+            client.get(getContext(),Constant.API_BASE_URL+"profiles/"+UserModel.myUserName,null, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                    mCatLoadingView.dismiss();
+                    Log.d("API_REPORT", "onSuccess: profiles");
+                    Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                    Log.d("API_REPORT", "onSuccess: response: "+response);
+
+//                    SessionManager.putString();
+                    try {
+                        JSONObject responseObject = response.getJSONObject("profile");
+                        String id = String.valueOf(responseObject.getInt("id"));
+                        SessionManager.putString(getContext(), Constant.USERID, id);
+                    }catch (Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+//                    mCatLoadingView.dismiss();
+                    Log.d("API_REPORT", "onFailure: profiles");
+                    Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                    Log.d("API_REPORT", "onFailure: response : "+response);
+                }
+            });
+        }else{
+            return;
+        }
     }
 
 
