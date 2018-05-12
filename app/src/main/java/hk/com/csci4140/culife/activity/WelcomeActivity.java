@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.cazaea.sweetalert.SweetAlertDialog;
 
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.model.UserChatModel;
 import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.utility.Utility;
 import permissions.dispatcher.NeedsPermission;
@@ -49,6 +50,13 @@ public class WelcomeActivity extends BaseActivity {
             //If user has not checked the remember me, clear login status
             UserModel.logout(WelcomeActivity.this);
         }
+
+
+
+        // initialize the UserChatModel
+        // UserChatModel.initUserChatModelFromLocalStorage(WelcomeActivity.this);
+
+
 
 
         //Permission Check

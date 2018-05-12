@@ -1,11 +1,15 @@
 package hk.com.csci4140.culife.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -113,9 +117,6 @@ public class ChatListFragment extends BaseFragment {
 
     public void setSourceData(ArrayList<ChatListItemModel> sourceData) {
         mSourceData = sourceData;
-    }
-
-    void putDataToRecylerView(){
         // fake something for now
         for (int i = 1;i<=5;i++){
             ChatListItemModel chatListItemModel = new ChatListItemModel();
@@ -126,8 +127,9 @@ public class ChatListFragment extends BaseFragment {
             chatListItemModel.correspondingChatDatabaseName = "messages&michael_firebasechat_1&michael_firebasechat_2";
             mSourceData.add(chatListItemModel);
         }
+    }
 
-
+    void putDataToRecylerView(){
 
         // iterate the mSourceData
         mRecyclerView.setHasFixedSize(false);
@@ -176,6 +178,40 @@ public class ChatListFragment extends BaseFragment {
 
 
 
+    //Set the Setting Menu
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        //In case the duplicate menu item
+        try {
+            for(int i = 0; i < menu.size(); i ++){
+                menu.getItem(i).setVisible(false);
+            }
+        }catch (Exception e){
+            Log.e(TAG, "onCreateOptionsMenu: " + e.toString());
+        }
+
+        inflater.inflate(R.menu.chat_list_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        setPrevTitle(mTitle);
+        switch (item.getItemId()){
+            case R.id.show_friend_list_icon:
+//                showBottomSnackBar("show friend list");
+                FriendListFragment friendListFragment = new FriendListFragment();
+                friendListFragment.mNumberOfItems = 20;
+                replaceFragment(friendListFragment,null);
+                break;
+            default:
+                break;
+        }
+
+        return true;
+    }
+
+
     //Initial Setting of every fragment
     private void initialSetting() {
         getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
@@ -221,6 +257,7 @@ public class ChatListFragment extends BaseFragment {
 
         initialSetting();
         initialDatabaseReferenceObject();
+        setSourceData(new ArrayList<ChatListItemModel>());
     }
 
     @Override
@@ -243,6 +280,9 @@ public class ChatListFragment extends BaseFragment {
     public void onResume(){
         super.onResume();
     }
+
+
+
 
 
 

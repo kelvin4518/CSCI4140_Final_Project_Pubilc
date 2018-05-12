@@ -30,8 +30,14 @@ public class UserModel {
     public static int region;
     public static int showLocation;
 
+    // Mihchael added :
+
+    public static String myChatName;
+
+
 
     public static void initModel(Context mContext){
+        myChatName = SessionManager.getString(mContext,Constant.USERNAME);
         isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
         isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
         token = SessionManager.getString(mContext, Constant.TOKEN);
@@ -74,15 +80,26 @@ public class UserModel {
         try {
             JSONObject responseObject = jsonObject.getJSONObject("user");
             String token = responseObject.getString("token");
+
+
+            String username = "Anonymous";
+            // String username = responseObject.getString("username");
+
+
+
+
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: response : "+jsonObject);
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: user : "+responseObject);
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: token : "+token);
             SessionManager.putBoolean(mContext, Constant.IS_LOGIN, true);
             SessionManager.putBoolean(mContext, Constant.IS_REMEMBER, isRemember);
             SessionManager.putString(mContext, Constant.TOKEN, token);
+            SessionManager.putString(mContext, Constant.USERNAME, username);
+
             isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
             isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
             token = SessionManager.getString(mContext, Constant.TOKEN);
+            username = SessionManager.getString(mContext, Constant.USERNAME);
             initModel(mContext);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -131,6 +148,7 @@ public class UserModel {
         SessionManager.putString(mContext, Constant.ICON_URL, "");
         SessionManager.putInt(mContext, Constant.REGION, 0);
         SessionManager.putInt(mContext, Constant.SHOW_LOCATION, 0);
+        SessionManager.putString(mContext, Constant.USERNAME, "");
         initModel(mContext);
     }
 

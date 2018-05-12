@@ -8,21 +8,17 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/white">
 
-    <ListView
-        android:id="@+id/chat_list_view"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/listFooter"
-        android:layout_alignParentTop="true"
-        android:divider="@null"
-        android:dividerHeight="0dp"
-        android:visibility="gone"
-        android:transcriptMode="alwaysScroll" />
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_detail_message_reclyerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/listFooter"
+        android:layout_alignParentTop="true"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        android:transcriptMode="alwaysScroll"
         android:background="@color/white" />
 
     <LinearLayout
@@ -34,7 +30,7 @@
         android:gravity="bottom">
 
         <EditText
-            android:id="@+id/messageInput"
+            android:id="@+id/chat_detail_message_input"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
@@ -48,7 +44,7 @@
             android:gravity="center_horizontal"/>
 
         <ImageButton
-            android:id="@+id/sendButton"
+            android:id="@+id/chat_detail_sendButton"
             android:padding="10dp"
             android:background="@drawable/blue_background"
             android:layout_width="wrap_content"

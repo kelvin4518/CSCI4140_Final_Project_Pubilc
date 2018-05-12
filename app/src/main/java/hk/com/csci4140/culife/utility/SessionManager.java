@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -118,5 +119,24 @@ public class SessionManager {
         }
         return environmentList;
     }
+
+
+
+    // Michael added : array list of map
+//    public static void putMapArrayList(){
+//
+//    }
+//
+//    public static ArrayList<Map<String,String>> getMapArrayList(String key){
+//        ArrayList<Map<String,String>> environmentList = new ArrayList<Map<String,String>>();
+//        int environNums = sharedPreferences.getInt(key, 0);
+//        for (int i = 0; i < environNums; i++) {
+//            String environItem = sharedPreferences.g(key + i, null);
+//            environmentList.add(environItem);
+//        }
+//        return environmentList;
+//    }
+
+
     //==============================================
 }

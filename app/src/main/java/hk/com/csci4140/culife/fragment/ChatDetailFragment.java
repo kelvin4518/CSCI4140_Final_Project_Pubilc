@@ -1,15 +1,20 @@
 package hk.com.csci4140.culife.fragment;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.database.ChildEventListener;
@@ -30,62 +35,79 @@ import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.model.ChatListItemModel;
 import hk.com.csci4140.culife.model.InstantMessageModel;
+import hk.com.csci4140.culife.model.UserModel;
 //import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 
 public class ChatDetailFragment extends BaseFragment {
 
 
+    public String mUserName = UserModel.myChatName;
+    public String mDatabaseName;
+    public DatabaseReference mDatabaseReference;
+    private ArrayList<DataSnapshot> mSnapshotList = new ArrayList<DataSnapshot>();
 
 
 
     private static final String TAG = "ChatDetailFragment";
 
-    private DatabaseReference mDatabaseReference;
 
     private String mTitle;
     private String mPrevTitle;
 
-    public String mDatabaseName;
-
     @BindView(R.id.chat_detail_message_reclyerView)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.chat_detail_message_input)
+    EditText mEditText;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @OnClick(R.id.chat_detail_sendButton)
     void sendMessage(){
-        showBottomSnackBar("the text is sent");
-        InstantMessageModel message = new InstantMessageModel("my message","my username");
-        // child里面定义的string，是告诉database，这个东西存在database的哪个地方
-        mDatabaseReference.child(mDatabaseName).push().setValue(message);
-        mDatabaseReference.addChildEventListener(mChildEventListener);
+        // get the user input and send
+        String input = mEditText.getText().toString();
+        if (!input.equals("")) {
+            InstantMessageModel chat = new InstantMessageModel(input, mUserName);
+            mDatabaseReference.push().setValue(chat);
+            mEditText.setText("");
+        }
     }
 
-    private ArrayList<DataSnapshot> mSnapshotList = new ArrayList<DataSnapshot>();
+
+    private ArrayList<InstantMessageModel> mSourceData = new ArrayList<InstantMessageModel>();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     private ChildEventListener mChildEventListener = new ChildEventListener() {
         // 当有一个新的item出现时，东西都存在dataSnapshot（JSON）
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             mSnapshotList.add(dataSnapshot);
-            // tell the recyclerview to the change of data
-            Log.d(TAG, "onChildAdded: the new message"+mSnapshotList);
-            showBottomSnackBar("new text arrived");
+            try{
+                mSourceData.add(dataSnapshot.getValue(InstantMessageModel.class));
+            }catch (Exception e){
+                showBottomSnackBar("here is the problem");
+            }
+            mRecyclerView.getAdapter().notifyDataSetChanged();
+            mRecyclerView.smoothScrollToPosition(mSourceData.size()-1);
         }
 
         @Override
@@ -119,25 +141,37 @@ public class ChatDetailFragment extends BaseFragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-//        mRecyclerView.setAdapter(
-//                new CommonAdapter<ChatListItemModel>(getContext(), R.layout.item_chat_list, mSourceData) {
-//                    @Override
-//                    public void convert(ViewHolder holder, ChatListItemModel eachSourceData, int pos) {
-//                        Glide.with(getContext()).load(eachSourceData.iconURL).
-//                                into((ImageView) holder.itemView.findViewById(R.id.item_chat_list_chat_image));
-//                        holder.setText(R.id.item_chat_list_chat_title, eachSourceData.chattingToTitle);
-//                        holder.setText(R.id.item_chat_list_last_message_time, eachSourceData.lastChatTime);
-//                        holder.setText(R.id.item_chat_list_last_chat_message, eachSourceData.lastChatMessage);
-//                        holder.itemView.setOnClickListener(new ChatListFragment.MyClickListener(pos));
-//                    }
-//
-//                    @Override
-//                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-//                        super.onViewHolderCreated(holder, itemView);
-//                    }
-//                });
 
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mDatabaseName);
+        mDatabaseReference.addChildEventListener(mChildEventListener);
+
+        mRecyclerView.setAdapter(
+                new CommonAdapter<InstantMessageModel>(getContext(), R.layout.chat_message_row, mSourceData) {
+                    @Override
+                    public void convert(com.zhy.adapter.recyclerview.base.ViewHolder holder, InstantMessageModel eachSourceData, int pos) {
+                        holder.setText(R.id.chat_message_author,eachSourceData.getAuthor());
+                        holder.setText(R.id.chat_message,eachSourceData.getMessage());
+                        if(eachSourceData.getAuthor().equals(mUserName)){
+                            // TODO : beautify the layout
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.END;
+                            holder.itemView.findViewById(R.id.chat_message_author).setLayoutParams(params);
+                            holder.itemView.findViewById(R.id.chat_message).setLayoutParams(params);
+                        }else{
+                            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.WRAP_CONTENT);
+                            params.gravity = Gravity.START;
+                            holder.itemView.findViewById(R.id.chat_message_author).setLayoutParams(params);
+                            holder.itemView.findViewById(R.id.chat_message).setLayoutParams(params);
+                        }
+                    }
+
+                    @Override
+                    public void onViewHolderCreated(com.zhy.adapter.recyclerview.base.ViewHolder holder, View itemView) {
+                        super.onViewHolderCreated(holder, itemView);
+                    }
+                });
     }
+
 
 
 
@@ -170,22 +204,12 @@ public class ChatDetailFragment extends BaseFragment {
     private void initialSetting() {
         setGoBackIcon();
 
-        getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
-        getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
-            }
-        });
-
-
         //Set Login Icon Invisible
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
-        setPrevBottomNavFragment(true);
+        setBottomNavFragment(false);
+        setPrevBottomNavFragment(false);
 
         //Use to set the menu icon
         setHasOptionsMenu(true);
