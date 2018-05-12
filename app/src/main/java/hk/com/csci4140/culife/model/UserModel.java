@@ -40,12 +40,16 @@ public class UserModel {
     // Mihchael added :
 
     public static String myChatName;
+    public static String myUserName;
+    public static String myID;
     public static JSONArray myChatList;
 
 
 
     public static void initModel(Context mContext){
         myChatName = SessionManager.getString(mContext,Constant.USERNAME);
+        // TODO : Distinguish username and chat name, or it is ok with a demo purpose application
+        myUserName = myChatName;
         formatMyChatListFromStringList(SessionManager.getArrayList(Constant.USER_CHAT_LIST));
 
         Log.d("USERMODEL", "initModel: list : "+myChatList);
@@ -235,6 +239,14 @@ public class UserModel {
             return myChatList;
         }else{
             return myChatList;
+        }
+    }
+
+    public static String getMyID() {
+        if(myID == null || myID == ""){
+            return "0";
+        }else{
+            return myID;
         }
     }
 }

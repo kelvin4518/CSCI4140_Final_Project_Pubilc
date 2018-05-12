@@ -20,6 +20,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -32,6 +35,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
@@ -42,6 +47,10 @@ import hk.com.csci4140.culife.model.UserModel;
 
 
 public class ChatListFragment extends BaseFragment {
+
+
+
+    private CatLoadingView mCatLoadingView;
 
 
     private static final String TAG = "ChatListFragment";
@@ -136,7 +145,8 @@ public class ChatListFragment extends BaseFragment {
                 chatListItemModel.chattingToTitle = object.getString(Constant.USER_CHAT_LIST_NAME);
                 chatListItemModel.lastChatTime = object.getString(Constant.USER_CHAT_LIST_LAST_DATE);
                 chatListItemModel.lastChatMessage = object.getString(Constant.USER_CHAT_LIST_LAST_MESSAGE);
-                chatListItemModel.correspondingChatDatabaseName = "messages&michael_firebasechat_1&michael_firebasechat_2";
+                chatListItemModel.correspondingChatDatabaseName = "chat&"+UserModel.myID+"&"+chatListItemModel.otherUserID;
+                Log.d(TAG, "setSourceData: databaseName: "+chatListItemModel.correspondingChatDatabaseName);
                 mSourceData.add(chatListItemModel);
             }catch (Exception e){
 
@@ -215,16 +225,50 @@ public class ChatListFragment extends BaseFragment {
         setPrevTitle(mTitle);
         switch (item.getItemId()){
             case R.id.show_friend_list_icon:
-//                showBottomSnackBar("show friend list");
-                FriendListFragment friendListFragment = new FriendListFragment();
-                friendListFragment.mNumberOfItems = 20;
-                replaceFragment(friendListFragment,null);
+                callGetListAPIAndJumpToFriendList();
                 break;
             default:
                 break;
         }
-
         return true;
+    }
+
+    private void callGetListAPIAndJumpToFriendList(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.get(getContext(),
+                Constant.API_BASE_URL+"profiles/"+UserModel.myUserName+"/followees",
+                null,
+                ContentType.APPLICATION_JSON.getMimeType(),
+                new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: getList");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+
+                FriendListFragment friendListFragment = new FriendListFragment();
+                friendListFragment.fragmentMode = Constant.FRIEND_LIST_FRAGMENT_START_CHAT_MODE;
+                friendListFragment.initFriendListFragmentFromJSON(response);
+                replaceFragment(friendListFragment,null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: getList");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
     }
 
 
