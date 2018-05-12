@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_habbit"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="100dp"
     android:orientation="vertical"
     android:paddingEnd="@dimen/spacing_large"
     android:paddingStart="@dimen/spacing_large"
@@ -11,77 +12,154 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="80dp"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignTop="@+id/habbit_delete"
+            <LinearLayout
+                android:layout_width="25dp"
+                android:layout_height="60dp"
                 android:layout_weight="1"
-                android:textColor="@color/colorPrimary"
-                tools:text="Time" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/owner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/time"
-                android:layout_centerHorizontal="true"
-                android:layout_weight="1"
-                android:text="owner"
-                android:textColor="@color/colorPrimary"
-                tools:text="Created by somebody" />
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="17dp"
+                    android:layout_weight="1" />
 
-        </LinearLayout>
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/aurora_headicon_default" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical">
+                <Space
+                    android:layout_width="25dp"
+                    android:layout_height="18dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
+                android:layout_width="325dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/other_habbit_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignStart="@+id/time"
-                    android:layout_centerVertical="true"
+                <LinearLayout
+                    android:layout_width="225dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Habbit title"
-                    android:textColor="@color/black" />
+                    android:orientation="vertical">
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    <LinearLayout
+                        android:layout_width="225dp"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="12dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/other_habbit_title"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignStart="@+id/time"
+                            android:layout_centerVertical="true"
+                            android:layout_weight="1"
+                            android:text="Habbit title"
+                            android:textColor="@color/black" />
+
+                        <Space
+                            android:layout_width="13dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/owner"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignTop="@+id/time"
+                            android:layout_centerHorizontal="true"
+                            android:layout_weight="1"
+                            android:text="owner"
+                            android:textColor="@color/colorPrimary"
+                            tools:text="Created by somebody" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="225dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+
+                        <Space
+                            android:layout_width="12dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1" />
+
+                        <TextView
+                            android:id="@+id/time"
+                            android:layout_width="213dp"
+                            android:layout_height="20dp"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignTop="@+id/habbit_delete"
+                            android:layout_weight="1"
+                            android:textColor="@color/colorPrimary"
+                            tools:text="Time" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="60dp"
                     android:layout_weight="1"
-                    android:text="Check out" />
+                    android:orientation="vertical">
+
+                    <Space
+                        android:layout_width="100dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1" />
+
+                    <Button
+                        android:id="@+id/checkoutHabit"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_weight="1"
+                        android:text="Check" />
+
+                    <Space
+                        android:layout_width="100dp"
+                        android:layout_height="10dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
             </LinearLayout>
+
         </LinearLayout>
 
-        <View
-            android:id="@+id/divider2"
+        <Space
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:layout_weight="1"
-            android:background="?android:attr/listDivider" />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true" />
+
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="?android:attr/listDivider"
+            android:visibility="visible" />
 
     </LinearLayout>
 

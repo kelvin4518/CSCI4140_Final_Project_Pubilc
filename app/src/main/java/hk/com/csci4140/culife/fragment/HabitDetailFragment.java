@@ -50,6 +50,7 @@ import butterknife.OnItemSelected;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
+import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.utility.Utility;
 import jp.wasabeef.blurry.Blurry;
 
@@ -63,6 +64,8 @@ public class HabitDetailFragment extends BaseFragment{
 
     private static final String TAG = "HabitDetaiFrag";
 
+
+    public int dummyHabitID;
     private String mHabitName;
     private String mHabitContent;
 
@@ -84,7 +87,7 @@ public class HabitDetailFragment extends BaseFragment{
             }
         });
 
-
+        //Log.d(TAG,"dummydata"+dummyHabitID);
         //Set Login Icon Invisible
         setLoginIconVisible(false);
 
@@ -137,6 +140,10 @@ public class HabitDetailFragment extends BaseFragment{
     FloatingActionButton fab;
 
     ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
+
+    HabitModel mHabit;
+
+
 
     // habit detail confirm complete button
     Button mConfirmCompleteBtn;
@@ -275,41 +282,7 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
 
-
-
-
-
-
-//     User interacting with the page
-
-//    @BindView(R.id.confirm_complete)
-//    Button confirmBtn;
-//
-//    @OnClick(R.id.confirm_complete)
-//    void onClickConfirmComplete(){
-//        //Show the warning text
-//        new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
-//                .setTitleText("habit is complete")
-//                .setContentText("congradulation on finishing a new task")
-//                .setConfirmText(getString(R.string.warning_confirm))
-//                .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
-//                    @Override
-//                    public void onClick(SweetAlertDialog sDialog) {
-//                        if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("确认完成")){
-//                            mConfirmCompleteBtn.setText("取消");
-//                            mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-//                        } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("取消")){
-//                            mConfirmCompleteBtn.setText("确认完成");
-//                            mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
-//                        }
-////                        mConfirmCompleteBtn.setText("确认完成");
-//                        sDialog.dismissWithAnimation();
-//                    }
-//                })
-//                .show();
-//    }
-
-
+    // Calendar
     @OnClick(R.id.habit_detail_calendar_icon)
     void showCalendar(){
 
@@ -365,10 +338,26 @@ public class HabitDetailFragment extends BaseFragment{
     }
 
 
+    // TODO : give the real habitModel to the fragment
+    @OnClick(R.id.habit_detail_setting_icon)
+    void navigateToSetting(){
+        PostMissionStepOneFragment editFragment = new PostMissionStepOneFragment();
+        mHabit = new HabitModel();
+        mHabit.ID = 28;
+        mHabit.name = "我给你一个假的";
+        mHabit.description = "假的description";
+        editFragment.initEditMode(mHabit);
+        replaceFragment(editFragment, null);
+    }
+
+
+
     @OnClick(R.id.habit_detail_share_icon)
     void showFriendList(){
         try{
-            replaceFragment(new FriendListFragment(), null);
+            FriendListFragment destFragment = new FriendListFragment();
+            destFragment.mNumberOfItems = 5;
+            replaceFragment(destFragment, null);
         }catch (Exception e){
             Log.d(TAG, "showFriendList: "+e);
         }

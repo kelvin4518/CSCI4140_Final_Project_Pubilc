@@ -3,6 +3,7 @@ package hk.com.csci4140.culife.fragment;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -73,27 +74,84 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomeFragment extends BaseFragment {
 
-
     @BindView(R.id.habbit_tablayout)
     TabLayout mTabLayout;
 
     @BindView(R.id.habbit_list)
     RecyclerView mRecyclerView;
 
-    List<HomeFragmentModel> mList = new ArrayList<>();
-
     ArrayList<Map<String, String>> mSourceData = new ArrayList<Map<String, String>>();
 
-    CatLoadingView mView;
+    CatLoadingView mCatLoadingView;
 
     private static final String TAG = "HomeFrag";
     //Title of this fragment
     private String mTitle;
 
-    private int habitIDToGO;
+    public static ArrayList<HomeFragmentModel> mList = new ArrayList<HomeFragmentModel>();
+    public static ArrayList<HomeFragmentModel> mList_tmp = new ArrayList<>();
+    public static int habitID = 0;
+
+    JSONObject HomeResponse;
+
+    Button mConfirmCompleteBtn;
+
+    private ArrayList<HabitModel> mHabitList; // 总的list， this is a list of habit to be shown
+
+    private ArrayList<HabitModel> mDisplayHabitList; // 每个tab展示的habit的list， this is a list of habit that actually displayed on each tab
+
+    private ArrayList<HabitModel> getHabitListDetialFromJson(JSONObject response) throws JSONException {
+        ArrayList<HabitModel> habitList = new ArrayList<HabitModel>();
+
+        JSONArray habits_list = response.getJSONArray("habits");
+        for (int i = 0; i < habits_list.length(); i++) {
+            JSONObject value = habits_list.getJSONObject(i);
+            HabitModel habit  = new HabitModel();
+            habit.initHabitWithJSON(value);
+            habitList.add(habit);
+        }
+
+        return habitList;
+    }
+
+    public void initHomePageDetail(JSONObject response) {
+        try {
+            mHabitList = getHabitListDetialFromJson(response);
+            Log.d(TAG,"mhabitlist"+mHabitList);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private ArrayList<HomeFragmentModel> getHabitListFromJson(JSONObject response) throws JSONException {
+        ArrayList<HomeFragmentModel> HomeList = new ArrayList<HomeFragmentModel>();
+
+        JSONArray habits_list = response.getJSONArray("habits");
+        for (int i = 0; i < habits_list.length(); i++) {
+            JSONObject value = habits_list.getJSONObject(i);
+            HomeFragmentModel habit  = new HomeFragmentModel();
+            habit.initHomePageWithJSON(value);
+            HomeList.add(habit);
+        }
+
+        return HomeList;
+    }
+
+    public void initHomePageFragment(JSONObject response){
+        try {
+            mList = getHabitListFromJson(response);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void justPassTheValue(JSONObject response){
+        HomeResponse = response;
+    }
 
     public class MyClickListener implements View.OnClickListener{
         int position;
+
         public MyClickListener(int my_position){
             this.position = my_position;
         }
@@ -103,10 +161,14 @@ public class HomeFragment extends BaseFragment {
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
-                jsonParams.put("habitid", "28");
+                //Log.d(TAG,"jsonpart:"+mList_tmp);
+                HomeFragmentModel bean = mList_tmp.get(position);
+                habitID = bean.getHabitId();
+                jsonParams.put("habitid", habitID);
+                //Log.d(TAG,"habitid:"+habitID);
                 outerJsonParams.put("habit",jsonParams);
                 StringEntity entity = new StringEntity(outerJsonParams.toString());
-                callLoginByEmailHttp(entity);
+                callShowSingleHabitDetailAPI(entity);
             } catch (JSONException e) {
                 e.printStackTrace();
             } catch (UnsupportedEncodingException e) {
@@ -123,38 +185,6 @@ public class HomeFragment extends BaseFragment {
 
         //Use to set the search icon
         setHasOptionsMenu(true);
-    }
-
-    private void callLoginByEmailHttp(StringEntity params){
-        AsyncHttpClient client = new AsyncHttpClient();
-        String AuthorizationToken = "Token "+UserModel.token;
-        client.addHeader("Authorization","Token "+UserModel.token);
-        mView = new CatLoadingView();
-
-        mView.show(getFragmentManager(), "");
-
-        client.post(getContext(),Constant.API_BASE_URL+"habits/show",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                mView.dismiss();
-                Log.d("API_REPORT", "onSuccess: login");
-                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
-
-                HabitModel habit  = new HabitModel();
-                habit.initwithjson(response);
-                replaceFragment(new HabitDetailFragment(),null);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-                mView.dismiss();
-                Log.d("API_REPORT", "onFailure: login");
-                Log.d("API_REPORT", "onFailure: status : "+statusCode);
-                Log.d("API_REPORT", "onFailure: response : "+response);
-                showBottomSnackBar(getString(R.string.habbit_pull_fail));
-            }
-        });
     }
 
     @Override
@@ -210,19 +240,26 @@ public class HomeFragment extends BaseFragment {
         SDKInitializer.initialize(getActivity().getApplicationContext());
         View mView = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, mView);
-        initData();
+        initData(); // TODO: add a json object here and initial the data with it
+                    // Use the model (maybe) or use the initdata function
+        //callShowHabitDetailListAPI();
 
-        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
         for(HomeFragmentModel bean: mList) {
             String time = bean.getTime();
-            String[] time_list = time.split(":");
-            Integer Hour = Integer.parseInt(time_list[0]);
-            Integer minute = Integer.parseInt(time_list[1]);
-            if (Hour >=0 && Hour <12) {
+            if (time.compareTo("null")!=0) {
+                String[] time_list = time.split(":");
+                Integer Hour = Integer.parseInt(time_list[0]);
+                Integer minute = Integer.parseInt(time_list[1]);
+                if (Hour >= 0 && Hour < 12) {
+                    mList_tmp.add(bean);
+                }
+            }
+            else {
                 mList_tmp.add(bean);
             }
         }
-
+        mList=mList_tmp;
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -240,6 +277,8 @@ public class HomeFragment extends BaseFragment {
                     public void onViewHolderCreated(ViewHolder holder, View itemView) {
                         super.onViewHolderCreated(holder, itemView);
                         ButterKnife.bind(this,itemView);
+                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                     }
                 });
 
@@ -278,11 +317,38 @@ public class HomeFragment extends BaseFragment {
         return mView;
     }
 
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Log.d(TAG,"HERE");
+            new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("habit is complete")
+                    .setContentText("congradulation on finishing a new task")
+                    .setConfirmText(getString(R.string.warning_confirm))
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sDialog) {
+                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CHECK")){
+                                Log.d(TAG,"CHECK HERE");
+                                mConfirmCompleteBtn.setText("CANSLE");
+                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+                            } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CANSLE")){
+                                Log.d(TAG,"CANCEL HERE");
+                                mConfirmCompleteBtn.setText("CHECK");
+                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
+                            }
+                        //mConfirmCompleteBtn.setText("确认完成");
+                            sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .show();
+        }
+    };
 
     void recyclerViewShowMemberList(int flag) {
         try {
             if (flag == 0) {
-                List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
                 for(HomeFragmentModel bean: mList) {
                     String time = bean.getTime();
                     String[] time_list = time.split(":");
@@ -310,11 +376,13 @@ public class HomeFragment extends BaseFragment {
                             public void onViewHolderCreated(ViewHolder holder, View itemView) {
                                 super.onViewHolderCreated(holder, itemView);
                                 ButterKnife.bind(this,itemView);
+                                mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                             }
                         });
             } else {
                 if (flag == 1) {
-                    List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                    //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
                     for(HomeFragmentModel bean: mList) {
                         String time = bean.getTime();
                         String[] time_list = time.split(":");
@@ -342,11 +410,13 @@ public class HomeFragment extends BaseFragment {
                                 public void onViewHolderCreated(ViewHolder holder, View itemView) {
                                     super.onViewHolderCreated(holder, itemView);
                                     ButterKnife.bind(this,itemView);
+                                    mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                    itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                                 }
                             });
                 } else {
                     if (flag == 2) {
-                        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
                         for(HomeFragmentModel bean: mList) {
                             String time = bean.getTime();
                             String[] time_list = time.split(":");
@@ -374,10 +444,12 @@ public class HomeFragment extends BaseFragment {
                                     public void onViewHolderCreated(ViewHolder holder, View itemView) {
                                         super.onViewHolderCreated(holder, itemView);
                                         ButterKnife.bind(this,itemView);
+                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                                     }
                                 });
                     } else {
-                        List<HomeFragmentModel> mList_tmp = new ArrayList<>();
+                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
                         for(HomeFragmentModel bean: mList) {
                             String time = bean.getTime();
                             String[] time_list = time.split(":");
@@ -403,6 +475,8 @@ public class HomeFragment extends BaseFragment {
                                     public void onViewHolderCreated(ViewHolder holder, View itemView) {
                                         super.onViewHolderCreated(holder, itemView);
                                         ButterKnife.bind(this,itemView);
+                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                                     }
                                 });
                     }
@@ -416,7 +490,10 @@ public class HomeFragment extends BaseFragment {
 
 
     private void initData() {
-        String longContent = "Get up early";
+        callShowHabitDetailListAPI();
+
+        //Local data
+        /*String longContent = "Get up early";
         String shortContent = "Work";
         for (int i = 0; i < 24; i++) {
             HomeFragmentModel bean = new HomeFragmentModel();
@@ -434,6 +511,72 @@ public class HomeFragment extends BaseFragment {
                 bean.setId(i);
             }
             mList.add(bean);
-        }
+        }*/
+    }
+    // API : call API and handle result
+
+    private void callShowSingleHabitDetailAPI(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"habits/show",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+
+                HabitModel habit  = new HabitModel();
+                habit.initHabitWithJSON(response);
+                HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
+                habitDetailFragment.dummyHabitID = habitID;
+                replaceFragment(habitDetailFragment,null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+    }
+
+    private void callShowHabitDetailListAPI(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.get(getContext(),Constant.API_BASE_URL+"habits/created",null, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+
+                initHomePageFragment(response);
+                //Log.d(TAG,"CheckThismList"+mList);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
     }
 }

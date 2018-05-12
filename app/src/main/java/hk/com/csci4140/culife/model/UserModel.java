@@ -74,6 +74,9 @@ public class UserModel {
         try {
             JSONObject responseObject = jsonObject.getJSONObject("user");
             String token = responseObject.getString("token");
+//            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: response : "+jsonObject);
+//            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: user : "+responseObject);
+//            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: token : "+token);
             SessionManager.putBoolean(mContext, Constant.IS_LOGIN, true);
             SessionManager.putBoolean(mContext, Constant.IS_REMEMBER, isRemember);
             SessionManager.putString(mContext, Constant.TOKEN, token);

@@ -10,12 +10,21 @@ import android.util.Log;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
+import com.google.gson.JsonArray;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.FriendMomentFragment;
@@ -28,13 +37,24 @@ import hk.com.csci4140.culife.fragment.PolicyFragment;
 import hk.com.csci4140.culife.fragment.PostMissionStepOneFragment;
 import hk.com.csci4140.culife.fragment.RangeFragment;
 import hk.com.csci4140.culife.fragment.UserProfileFragment;
+import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
 
+
+import com.roger.catloadinglibrary.CatLoadingView;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by maoyuxuan(Michael Mao) on 31/04/2018.
  */
+
 
 public class MainActivity extends BaseActivity {
 
@@ -46,6 +66,11 @@ public class MainActivity extends BaseActivity {
     private boolean hasInitNav = false;
 
     private int previousItem = 0;
+
+    private CatLoadingView mCatLoadingView;
+
+
+
 
 
 
@@ -83,22 +108,57 @@ public class MainActivity extends BaseActivity {
             Fragment initFragment = UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
             // michael added, to disable the terms and conditions page when starting the app
 
+
             initFragment = new HomeFragment();
 
             boolean hasBottomNav = UserModel.isLogin;
             //Set if the fragment has bottom navigation bar
             setBottomNavFragment(hasBottomNav);
-            setFragment(initFragment, null);
+//            setFragment(initFragment, null);
+
+
+
+            JSONObject jsonParams = new JSONObject();
+            callGetHabitListAPI();
         }
     }
 
 
 
+    private void callGetHabitListAPI(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+//
 
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
+        client.get(this,Constant.API_BASE_URL+"habits/created",new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
+                Log.d("API_REPORT", "onSuccess: get habit list");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+                showBottomSnackBar("Success get habit list");
+                HomeFragment destFragment = new HomeFragment();
+                destFragment.justPassTheValue(response);
+                destFragment.initHomePageDetail(response);
+                setFragment(destFragment, null);
+            }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
 
+                Log.d("API_REPORT", "onFailure: get habit list");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar("Fail get habit list");
+                HomeFragment destFragment = new HomeFragment();
+                setFragment(destFragment, null);
+            }
+        });
 
+    }
 
 
     // Bottom Navigation Bar
@@ -110,14 +170,14 @@ public class MainActivity extends BaseActivity {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.nav_home, R.drawable.ic_menu_camera, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.nav_range, R.drawable.ic_menu_send, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.nav_add, R.drawable.ic_action_add, R.color.colorPrimary);
-        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.nav_message, R.drawable.ic_menu_gallery, R.color.colorPrimary);
+        //AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.nav_message, R.drawable.ic_menu_gallery, R.color.colorPrimary);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.nav_other_mission, R.drawable.ic_menu_manage, R.color.colorPrimary);
 
         // Add items
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);
-        bottomNavigation.addItem(item4);
+        //bottomNavigation.addItem(item4);
         bottomNavigation.addItem(item5);
 
         // Set background color
@@ -180,9 +240,9 @@ public class MainActivity extends BaseActivity {
                 //fragment = new ();
                 break;
             case 3:
-                fragment = new HabitDetailFragment();
-                break;
-            case 4:
+                //fragment = new HabitDetailFragment();
+                //break;
+            //case 4:
                 fragment = new UserProfileFragment();
                 break;
             default:

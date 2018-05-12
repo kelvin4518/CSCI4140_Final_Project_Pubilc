@@ -55,9 +55,10 @@ public class HabitModel {
     public String GPSRequiredTime; // 30, count in minute, use GPS to check whether stay in lat and lng for 30 minutes
     public Boolean isComplete;     // user checking complete
     public Boolean isAutoComplete;     // GPS auto check complete
-    public Boolean ispublicHabit;     // habit is public and cannot have other to participate
+    public Boolean isPrivateHabit;     // habit is public and cannot have other to participate
     public Boolean isPrviateVisible;   // habit is public visible and others cannot see
-    public String Content;
+    public Boolean ispublicHabit;     // habit is public and cannot have other to participate
+    //public String Content;
     public String createTime;
     public Boolean isFavorited;
     public Integer countFavorited;
@@ -72,10 +73,13 @@ public class HabitModel {
     public int selfFinishRatio;
     public int userParticipateNumber;
     public int userFinishNumber;
+
+    public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
+
     public String userImage;
     public String userBio;
     public Boolean userFollowing;
-    public ArrayList<Map<String,String>> memberList; // has id, name, icon link,
+
 
 
     public static void initModel(Context mContext){
@@ -91,7 +95,7 @@ public class HabitModel {
         }
     }
 
-    public void initwithjson(JSONObject response){
+    public void initHabitWithJSON(JSONObject response){
         try {
             Integer id = response.getInt("id");
             JSONObject author = response.getJSONObject("author");
@@ -100,7 +104,7 @@ public class HabitModel {
             String author_bio = author.getString("bio");
             String author_image = author.getString("image");
             Boolean author_following = author.getBoolean("following");
-            String body = response.getString("body");
+            //String body = response.getString("body");
             String createdAt = response.getString("createdAt");
             String Tdescription = response.getString("description");
             Boolean favorited = response.getBoolean("favorited");
@@ -109,14 +113,17 @@ public class HabitModel {
             //JSONArray tagList = response.getJSONArray("tagList");
             String title = response.getString("title");
             String updateAt = response.getString("updatedAt");
+            String start_time = response.getString("startTime");
+            String end_time = response.getString("endTime");
 
+            //Boolean privacy = response.getBoolean("namewhat")//TODO: A private habit or not
             ID = id;
             name = title;
             description = Tdescription;
             startDate = "NA";//
             endDate = "NA";//
-            startTime = "NA"; //
-            endTime = "NA";//
+            startTime = start_time;
+            endTime = end_time;
             isFinishBefore = false;//
             needGPSVerify = false;//
             lat = "NA";//
@@ -127,12 +134,13 @@ public class HabitModel {
             isAutoComplete = false;//
             ispublicHabit = false; //
             isPrviateVisible = false;//
-            Content = body;
+            //Content = body;
             createTime = createdAt;
             isFavorited = favorited;
             countFavorited = favoritesCount;
             isSlug = slug;
             isUpdated = updateAt;
+            //isPrivateHabit = privacy; TODO: The privacy part
 
             owner = author_username;
             ownerID = author_id;
@@ -149,5 +157,6 @@ public class HabitModel {
         }
 
     }
+
 
 }

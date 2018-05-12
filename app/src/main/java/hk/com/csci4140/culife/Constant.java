@@ -6,6 +6,7 @@ package hk.com.csci4140.culife;
 
 public interface Constant {
 
+    String API_REPORT_TAG = "API_REPORT";
     String API_BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
 
     //General String Value
