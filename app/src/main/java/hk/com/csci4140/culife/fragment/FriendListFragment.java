@@ -363,7 +363,7 @@ public class FriendListFragment extends BaseFragment {
 
                     // TODO : Should let ChatListFragment to call the replace fragment, so that when exit the chat interface, it go back to ChatListFragmet
                     ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
-                    chatDetailFragment.mDatabaseName = "chat&"+UserModel.myID+"&"+userSelected.id;
+                    chatDetailFragment.mDatabaseName = userSelected.id;
                     replaceFragment(chatDetailFragment,null);
                 }catch (Exception e){
 

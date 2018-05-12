@@ -90,10 +90,10 @@ public class ChatListFragment extends BaseFragment {
     @OnClick(R.id.chat_frag_fake_send_button)
     void sendMessage(){
         showBottomSnackBar("the text is sent");
-        InstantMessageModel message = new InstantMessageModel("my message","my username");
-        // child里面定义的string，是告诉database，这个东西存在database的哪个地方
-        mDatabaseReference.child("messages&michael_firebasechat_1&michael_firebasechat_2").push().setValue(message);
-        mDatabaseReference.addChildEventListener(mChildEventListener);
+//        InstantMessageModel message = new InstantMessageModel("my message","my username");
+//        // child里面定义的string，是告诉database，这个东西存在database的哪个地方
+//        mDatabaseReference.child("messages&michael_firebasechat_1&michael_firebasechat_2").push().setValue(message);
+//        mDatabaseReference.addChildEventListener(mChildEventListener);
     }
 
     private ArrayList<DataSnapshot> mSnapshotList = new ArrayList<DataSnapshot>();
@@ -145,7 +145,7 @@ public class ChatListFragment extends BaseFragment {
                 chatListItemModel.chattingToTitle = object.getString(Constant.USER_CHAT_LIST_NAME);
                 chatListItemModel.lastChatTime = object.getString(Constant.USER_CHAT_LIST_LAST_DATE);
                 chatListItemModel.lastChatMessage = object.getString(Constant.USER_CHAT_LIST_LAST_MESSAGE);
-                chatListItemModel.correspondingChatDatabaseName = "chat&"+UserModel.myID+"&"+chatListItemModel.otherUserID;
+                chatListItemModel.correspondingChatDatabaseName = chatListItemModel.otherUserID;
                 Log.d(TAG, "setSourceData: databaseName: "+chatListItemModel.correspondingChatDatabaseName);
                 mSourceData.add(chatListItemModel);
             }catch (Exception e){
@@ -317,7 +317,7 @@ public class ChatListFragment extends BaseFragment {
 
         initialSetting();
         initialDatabaseReferenceObject();
-        setSourceData(new ArrayList<ChatListItemModel>());
+//        setSourceData(new ArrayList<ChatListItemModel>());
     }
 
     @Override
@@ -338,6 +338,7 @@ public class ChatListFragment extends BaseFragment {
 
     @Override
     public void onResume(){
+        setSourceData(new ArrayList<ChatListItemModel>());
         super.onResume();
     }
 

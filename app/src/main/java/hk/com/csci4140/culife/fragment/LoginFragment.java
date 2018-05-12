@@ -1,6 +1,7 @@
 package hk.com.csci4140.culife.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +37,10 @@ import hk.com.csci4140.culife.utility.Utility;
  * Created by zhenghao(Kelvin Zheng) on 01/04/2018.
  */
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -202,7 +207,7 @@ public class LoginFragment extends BaseFragment {
                 UserModel.fromLoginJson(getContext(),mCbRememberMe.isChecked(),response);
 
 
-
+                callRegisterByEmailToGoogleFirebase();
 
 
                 replaceActivity(MainActivity.class, null);
@@ -221,6 +226,30 @@ public class LoginFragment extends BaseFragment {
 
 
 
+
+    private FirebaseAuth mFirebaseAuth;
+    private void callRegisterByEmailToGoogleFirebase(){
+        // initialize the Auth object
+        mFirebaseAuth = FirebaseAuth.getInstance();
+
+        String userEmail = mPhone.getText().toString();
+        String userPassword = mPassword.getText().toString();
+
+        // create the user with email and password
+        mFirebaseAuth.createUserWithEmailAndPassword(userEmail,userPassword).addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+//                    showBottomSnackBar("Corresponding Firebase User Created");
+                }else{
+//                    showBottomSnackBar("Firebase User Creation Fails");
+                }
+
+                replaceActivity(MainActivity.class, null);
+            }
+        });
+
+    }
 
 
     // OLD CODE : NOT USE ANYMORE
