@@ -23,16 +23,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.model.ChatListItemModel;
 import hk.com.csci4140.culife.model.InstantMessageModel;
+import hk.com.csci4140.culife.model.UserModel;
 //import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 
@@ -118,14 +123,25 @@ public class ChatListFragment extends BaseFragment {
     public void setSourceData(ArrayList<ChatListItemModel> sourceData) {
         mSourceData = sourceData;
         // fake something for now
-        for (int i = 1;i<=5;i++){
-            ChatListItemModel chatListItemModel = new ChatListItemModel();
-            chatListItemModel.iconURL = "https://avatars0.githubusercontent.com/u/9919?s=280&v=4";
-            chatListItemModel.chattingToTitle = "Faker";
-            chatListItemModel.lastChatTime = "星期五";
-            chatListItemModel.lastChatMessage = "dummy message";
-            chatListItemModel.correspondingChatDatabaseName = "messages&michael_firebasechat_1&michael_firebasechat_2";
-            mSourceData.add(chatListItemModel);
+
+
+        for (int i = 0; i<= UserModel.myChatList.length(); i++){
+
+            try{
+                JSONObject object = UserModel.myChatList.getJSONObject(i);
+
+                ChatListItemModel chatListItemModel = new ChatListItemModel();
+                chatListItemModel.otherUserID = object.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID);
+                chatListItemModel.iconURL = object.getString(Constant.USER_CHAT_LIST_ICON_LINK);
+                chatListItemModel.chattingToTitle = object.getString(Constant.USER_CHAT_LIST_NAME);
+                chatListItemModel.lastChatTime = object.getString(Constant.USER_CHAT_LIST_LAST_DATE);
+                chatListItemModel.lastChatMessage = object.getString(Constant.USER_CHAT_LIST_LAST_MESSAGE);
+                chatListItemModel.correspondingChatDatabaseName = "messages&michael_firebasechat_1&michael_firebasechat_2";
+                mSourceData.add(chatListItemModel);
+            }catch (Exception e){
+
+            }
+
         }
     }
 

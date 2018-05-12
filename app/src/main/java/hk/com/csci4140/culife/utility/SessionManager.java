@@ -3,7 +3,13 @@ package hk.com.csci4140.culife.utility;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -124,7 +130,7 @@ public class SessionManager {
 
     // Michael added : array list of map
 //    public static void putMapArrayList(){
-//
+////        sharedPreferences.get
 //    }
 //
 //    public static ArrayList<Map<String,String>> getMapArrayList(String key){
@@ -136,6 +142,12 @@ public class SessionManager {
 //        }
 //        return environmentList;
 //    }
+
+
+
+
+
+
 
 
     //==============================================

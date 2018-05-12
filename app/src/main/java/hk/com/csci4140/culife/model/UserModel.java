@@ -1,14 +1,21 @@
 package hk.com.csci4140.culife.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.activity.LoginActivity;
@@ -33,11 +40,18 @@ public class UserModel {
     // Mihchael added :
 
     public static String myChatName;
+    public static JSONArray myChatList;
 
 
 
     public static void initModel(Context mContext){
         myChatName = SessionManager.getString(mContext,Constant.USERNAME);
+        formatMyChatListFromStringList(SessionManager.getArrayList(Constant.USER_CHAT_LIST));
+
+        Log.d("USERMODEL", "initModel: list : "+myChatList);
+
+
+
         isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
         isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
         token = SessionManager.getString(mContext, Constant.TOKEN);
@@ -82,8 +96,7 @@ public class UserModel {
             String token = responseObject.getString("token");
 
 
-            String username = "Anonymous";
-            // String username = responseObject.getString("username");
+            String username = responseObject.getString("username");
 
 
 
@@ -152,4 +165,80 @@ public class UserModel {
         initModel(mContext);
     }
 
+    public static String getMyChatName() {
+        if(myChatName == null || myChatName == ""){
+            return "Anonymous";
+        }else{
+            return myChatName;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//            JSONObject object = new JSONObject();
+//            object.put("otherUserID","10");
+//            object.put("iconLink","https://avatars0.githubusercontent.com/u/9919?s=280&v=4");
+//            object.put("name","username!");
+//            object.put("lastMessage","some message");
+//            object.put("lastDate","04/05/2018");
+
+
+
+
+
+
+    public static void addNewChatToChatList(JSONObject chatInfo){
+        ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
+        try{
+            String mapString = chatInfo.toString();
+            chatInfoList.add(mapString);
+        }catch (Exception e){
+
+        }
+        SessionManager.putArrayList(chatInfoList,Constant.USER_CHAT_LIST);
+    }
+
+    public static void formatMyChatListFromStringList(ArrayList<String> stringArrayList){
+
+        myChatList = new JSONArray();
+        for(int i=0;i<stringArrayList.size();i++){
+            String jsonString = stringArrayList.get(i);
+            try {
+                JSONObject jsonObject = new JSONObject(jsonString);
+                myChatList.put(jsonObject);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public static JSONArray getMyChatList() {
+        if(myChatList == null){
+            myChatList = new JSONArray();
+            return myChatList;
+        }else{
+            return myChatList;
+        }
+    }
 }

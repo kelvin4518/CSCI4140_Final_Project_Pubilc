@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class ChatListItemModel {
 
+    public String otherUserID;
     public String iconURL;
     public String chattingToTitle;
     public String lastChatTime;
