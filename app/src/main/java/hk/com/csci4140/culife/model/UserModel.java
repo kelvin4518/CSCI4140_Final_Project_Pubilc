@@ -97,10 +97,6 @@ public class UserModel {
 
 
             String username = responseObject.getString("username");
-
-
-
-
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: response : "+jsonObject);
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: user : "+responseObject);
 //            Log.d(Constant.API_REPORT_TAG, "fromLoginJson: token : "+token);
