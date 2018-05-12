@@ -143,8 +143,6 @@ public class HabitDetailFragment extends BaseFragment{
 
     HabitModel mHabit;
 
-
-
     // habit detail confirm complete button
     Button mConfirmCompleteBtn;
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -280,8 +278,6 @@ public class HabitDetailFragment extends BaseFragment{
     public void onResume(){
         super.onResume();
     }
-
-
     // Calendar
     @OnClick(R.id.habit_detail_calendar_icon)
     void showCalendar(){

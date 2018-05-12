@@ -42,7 +42,7 @@ public class HabitModel {
     // about the habit : 关于这个habit的内容
     public int ID;
     public String name;    // get up early
-    public String description;     // to keep healthy body
+    public String description;     // to keep healthy body TODO : Mr. Zheng : can use description to replace content
     public String startDate;   // 2018-05-04 TODO : need to confirm what kind of structure to use
     public String endDate;     // 2018-05-10
     public String startTime;   // 6:00
@@ -64,6 +64,12 @@ public class HabitModel {
     public Integer countFavorited;
     public String isSlug;
     public String isUpdated;
+
+
+
+
+
+
 
 
     // about the user : 这个habit有关user的内容

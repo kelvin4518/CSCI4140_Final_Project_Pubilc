@@ -1,11 +1,8 @@
 package hk.com.csci4140.culife.activity;
 
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
@@ -16,9 +13,11 @@ import com.loopj.android.http.JsonHttpResponseHandler;
 import com.roger.catloadinglibrary.CatLoadingView;
 
 import org.json.JSONObject;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -27,19 +26,14 @@ import cz.msebera.android.httpclient.entity.ContentType;
 import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
-import hk.com.csci4140.culife.fragment.FriendMomentFragment;
+import hk.com.csci4140.culife.fragment.ChatListFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
-import hk.com.csci4140.culife.fragment.LocationServiceFragment;
-import hk.com.csci4140.culife.fragment.MessageFragment;
-import hk.com.csci4140.culife.fragment.OtherMissionFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
 import hk.com.csci4140.culife.fragment.PostMissionStepOneFragment;
-import hk.com.csci4140.culife.fragment.RangeFragment;
 import hk.com.csci4140.culife.fragment.UserProfileFragment;
 import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.UserModel;
-import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
 
 
@@ -115,13 +109,47 @@ public class MainActivity extends BaseActivity {
             //Set if the fragment has bottom navigation bar
             setBottomNavFragment(hasBottomNav);
 //            setFragment(initFragment, null);
-
-
-
             JSONObject jsonParams = new JSONObject();
             callGetHabitListAPI();
         }
     }
+
+
+
+    private void callGetHabitListAPI(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+//
+
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
+        client.get(this,Constant.API_BASE_URL+"habits/created",new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+
+                Log.d("API_REPORT", "onSuccess: get habit list");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+                showBottomSnackBar("Success get habit list");
+                HomeFragment destFragment = new HomeFragment();
+                destFragment.initHomePageDetail(response);
+                setFragment(destFragment, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+
+                Log.d("API_REPORT", "onFailure: get habit list");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar("Fail get habit list");
+                HomeFragment destFragment = new HomeFragment();
+                setFragment(destFragment, null);
+            }
+        });
+
+    }
+
 
 
 
@@ -233,7 +261,8 @@ public class MainActivity extends BaseActivity {
                 break;
             case 1:
                 //fragment = new HomeFragment();
-                fragment = new FriendMomentFragment();
+                //fragment = new FriendMomentFragment();
+                fragment = new ChatListFragment();
                 break;
             case 2:
                  fragment = new PostMissionStepOneFragment();

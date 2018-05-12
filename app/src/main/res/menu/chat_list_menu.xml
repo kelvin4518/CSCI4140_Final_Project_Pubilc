@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/show_friend_list_icon"
+        android:orderInCategory="98"
+        android:icon="@drawable/ic_publisher_unlike"
+        android:title="@string/user_profile_taker_collection_title"
+        app:showAsAction="always" />
+
+
+    <item
+        android:id="@+id/action_wallet"
+        android:orderInCategory="99"
+        android:icon="@drawable/ic_wallet"
+        android:title="@string/user_profile_wallet_title"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_setting"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_setting"
+        android:title="@string/user_profile_setting_title"
+
+        android:visible="false"
+        app:showAsAction="always" />
+
+
+</menu>

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
@@ -15,7 +16,11 @@ import android.widget.Toast;
 
 import com.cazaea.sweetalert.SweetAlertDialog;
 
+import org.json.JSONObject;
+
+import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.model.UserChatModel;
 import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.utility.Utility;
 import permissions.dispatcher.NeedsPermission;
@@ -43,12 +48,35 @@ public class WelcomeActivity extends BaseActivity {
         //Set the Language of app
         Utility.setLanguage(WelcomeActivity.this);
 
+
+
+        try {
+            JSONObject object = new JSONObject();
+            object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,"10");
+            object.put(Constant.USER_CHAT_LIST_ICON_LINK,"https://avatars0.githubusercontent.com/u/9919?s=280&v=4");
+            object.put(Constant.USER_CHAT_LIST_NAME,"username!");
+            object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"some message");
+            object.put(Constant.USER_CHAT_LIST_LAST_DATE,"04/05/2018");
+            UserModel.addNewChatToChatList(object);
+        }catch (Exception e){
+
+        }
+
+
         //Initial User login status
         UserModel.initModel(WelcomeActivity.this);
+        Log.d(TAG, "onCreate: welcome init user model");
         if(!UserModel.isRemember){
             //If user has not checked the remember me, clear login status
             UserModel.logout(WelcomeActivity.this);
         }
+
+
+
+        // initialize the UserChatModel
+        // UserChatModel.initUserChatModelFromLocalStorage(WelcomeActivity.this);
+
+
 
 
         //Permission Check
