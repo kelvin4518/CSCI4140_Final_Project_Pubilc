@@ -15,6 +15,16 @@
         android:layout_height="wrap_content">
 
         <EditText
+            android:id="@+id/register_username"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/edit_text"
+            android:hint="@string/register_username_hint"
+            android:inputType="text"
+            android:paddingEnd="@dimen/spacing_normal"
+            android:paddingStart="@dimen/spacing_normal" />
+
+        <EditText
             android:id="@+id/register_via_email"
             android:inputType="textEmailAddress"
             android:paddingStart="@dimen/spacing_normal"

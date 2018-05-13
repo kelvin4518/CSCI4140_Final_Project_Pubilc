@@ -635,5 +635,46 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    private void callGetProfileAPIToGetID(){
+        if(UserModel.isLogin){
+            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
+                return;
+            }
+            AsyncHttpClient client = new AsyncHttpClient();
+            String AuthorizationToken = "Token "+UserModel.token;
+            client.addHeader("Authorization","Token "+UserModel.token);
+//            mCatLoadingView = new CatLoadingView();
 
+//            mCatLoadingView.show(getFragmentManager(), "");
+
+            client.get(getContext(),Constant.API_BASE_URL+"profiles/"+UserModel.myUserName,null, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                    mCatLoadingView.dismiss();
+                    Log.d("API_REPORT", "onSuccess: profiles");
+                    Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                    Log.d("API_REPORT", "onSuccess: response: "+response);
+
+//                    SessionManager.putString();
+                    try {
+                        JSONObject responseObject = response.getJSONObject("profile");
+                        String id = String.valueOf(responseObject.getInt("id"));
+                        SessionManager.putString(getContext(), Constant.USERID, id);
+                    }catch (Exception e){
+
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+//                    mCatLoadingView.dismiss();
+                    Log.d("API_REPORT", "onFailure: profiles");
+                    Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                    Log.d("API_REPORT", "onFailure: response : "+response);
+                }
+            });
+        }else{
+            return;
+        }
+    }
 }

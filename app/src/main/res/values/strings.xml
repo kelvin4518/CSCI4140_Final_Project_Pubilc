@@ -64,6 +64,7 @@
     <string name="register_phone_hint">Phone number</string>
     <string name="register_email_title">Register with email address</string>
     <string name="register_email_hint">Email address</string>
+    <string name="register_username_hint">Username</string>
     <string name="register_password_hint">Password</string>
     <string name="register_retype_password_hint">Input the password again</string>
     <string name="register_district_hint">District</string>
