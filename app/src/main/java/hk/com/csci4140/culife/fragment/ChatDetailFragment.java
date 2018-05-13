@@ -44,6 +44,7 @@ public class ChatDetailFragment extends BaseFragment {
 
     public String mUserName = UserModel.myChatName;
     public String mDatabaseName;
+    public String mOtherUserID;
     public DatabaseReference mDatabaseReference;
     private ArrayList<DataSnapshot> mSnapshotList = new ArrayList<DataSnapshot>();
 
@@ -107,7 +108,8 @@ public class ChatDetailFragment extends BaseFragment {
                 showBottomSnackBar("here is the problem");
             }
             mRecyclerView.getAdapter().notifyDataSetChanged();
-            mRecyclerView.smoothScrollToPosition(mSourceData.size()-1);
+            mRecyclerView.scrollToPosition(mSourceData.size()-1);
+            //mRecyclerView.smoothScrollToPosition(mSourceData.size()-1);
         }
 
         @Override
@@ -142,7 +144,22 @@ public class ChatDetailFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("USERID"+UserModel.myID).child(mDatabaseName);
+
+        int myID = Integer.valueOf(UserModel.myID);
+        int otherID = Integer.valueOf(mOtherUserID);
+
+        if(myID>otherID){
+            mDatabaseName = "CHAT&"+String.valueOf(myID-otherID)+"&"+String.valueOf(myID+otherID);
+            Log.d(TAG, "mDatabaseName: "+mDatabaseName);
+        }else{
+            mDatabaseName = "CHAT&"+String.valueOf(otherID-myID)+"&"+String.valueOf(myID+otherID);
+            Log.d(TAG, "mDatabaseName: "+mDatabaseName);
+        }
+
+
+        Log.d(TAG, "putDataToRecylerView: the chatroom child database name is : "+mDatabaseName);
+
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mDatabaseName);
         mDatabaseReference.addChildEventListener(mChildEventListener);
 
         mRecyclerView.setAdapter(
@@ -280,6 +297,7 @@ public class ChatDetailFragment extends BaseFragment {
     // the page is dismissed
     @Override
     public void onDestroy(){
+        mEditText.setText("");
         super.onDestroy();
     }
 }

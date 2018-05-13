@@ -358,12 +358,13 @@ public class FriendListFragment extends BaseFragment {
                     object.put(Constant.USER_CHAT_LIST_NAME,userSelected.username);
                     object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"");
                     object.put(Constant.USER_CHAT_LIST_LAST_DATE,reportDate);
-                    UserModel.addNewChatToChatList(object);
+                    UserModel.addNewChatToChatList(getContext(),object);
 
 
                     // TODO : Should let ChatListFragment to call the replace fragment, so that when exit the chat interface, it go back to ChatListFragmet
                     ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
-                    chatDetailFragment.mDatabaseName = userSelected.id;
+                    // chatDetailFragment.mDatabaseName = userSelected.id;
+                    chatDetailFragment.mOtherUserID = userSelected.id;
                     replaceFragment(chatDetailFragment,null);
                 }catch (Exception e){
 

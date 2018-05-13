@@ -9,6 +9,7 @@ public class ChatListItemModel {
     public String chattingToTitle;
     public String lastChatTime;
     public String lastChatMessage;
+    public String isNotRead;
 
     public String correspondingChatDatabaseName;
     public ArrayList<String> chattingToUserList;
