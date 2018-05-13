@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="累计习惯完成次数"
+                    android:text="You have complished"
                     android:textSize="18sp" />
 
                 <TextView
@@ -98,19 +98,10 @@
 
                 <TextView
                     android:id="@+id/textView2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
                     android:layout_weight="0"
-                    android:text="parterner" />
-
-                <TextView
-                    android:id="@+id/habit_parteners"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginVertical="15dp"
-                    android:layout_weight="0"
-                    android:text="namehere"
-                    android:textSize="18sp" />
+                    android:text="parterner:" />
 
             </LinearLayout>
 
@@ -124,7 +115,7 @@
 
             <TextView
                 android:id="@+id/partner_complete_info"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="15dp"
                 android:layout_weight="0"
@@ -146,15 +137,15 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
                     android:layout_weight="0"
-                    android:text="Superviosr" />
+                    android:text="Superviosr:" />
 
                 <TextView
                     android:id="@+id/habit_supervisor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
                     android:layout_marginVertical="5dp"
                     android:layout_weight="0"
                     android:text="namehere"
@@ -178,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:text="确认完成"
+            android:text="Confirm"
             android:textSize="18sp" />
 
     </LinearLayout>

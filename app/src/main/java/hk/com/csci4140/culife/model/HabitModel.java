@@ -65,11 +65,7 @@ public class HabitModel {
     public Integer countFavorited;
     public String isSlug;
     public String isUpdated;
-
-
-
-
-
+    public String member;
 
 
 
@@ -101,6 +97,8 @@ public class HabitModel {
             e.printStackTrace();
         }
     }
+
+    public String getMember(){return member;}
 
     public void initHabitWithJSON(JSONObject response){
         try {

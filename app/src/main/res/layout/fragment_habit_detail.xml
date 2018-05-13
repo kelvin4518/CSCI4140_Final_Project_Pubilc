@@ -64,15 +64,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="习惯的名字" />
+                        android:text="Username" />
 
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="参加 | 打卡"
-                        android:textSize="10dp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -145,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="打卡日历"
+                        android:text="Canlendar"
                         android:textSize="10dp" />
                 </LinearLayout>
 
@@ -169,7 +162,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="排行 * 勋章"
+                        android:text="Rank"
                         android:textSize="10dp" />
                 </LinearLayout>
 
@@ -193,7 +186,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="设置"
+                        android:text="Setting"
                         android:textSize="10dp" />
                 </LinearLayout>
 
@@ -217,7 +210,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="邀请好友"
+                        android:text="Share"
                         android:textSize="10dp" />
                 </LinearLayout>
             </LinearLayout>

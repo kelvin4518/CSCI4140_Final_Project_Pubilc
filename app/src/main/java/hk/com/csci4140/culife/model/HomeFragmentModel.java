@@ -1,7 +1,24 @@
 package hk.com.csci4140.culife.model;
 
+import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import hk.com.csci4140.culife.Constant;
+import hk.com.csci4140.culife.R;
 
 /**
  * Created by maoyuxuan(Michael Mao) on 06/05/2018.
@@ -77,5 +94,6 @@ public class HomeFragmentModel {
         }
 
     }
+
 
 }

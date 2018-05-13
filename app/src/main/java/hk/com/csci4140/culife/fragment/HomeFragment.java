@@ -36,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -116,8 +117,8 @@ public class HomeFragment extends BaseFragment {
     public void initHomePageDetail(JSONObject response) {
         try {
             mHabitList = getHabitListDetialFromJson(response);
-            HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
-            habitDetailFragment.dummyHabitList = mHabitList;
+            //HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
+            //Log.d(TAG,"mhabitLIst"+mHabitList);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -196,6 +197,21 @@ public class HomeFragment extends BaseFragment {
         initialSetting();
 
         callGetProfileAPIToGetID();
+
+        JSONObject jsonParams = new JSONObject();
+        JSONObject outerJsonParams = new JSONObject();
+        try {
+            jsonParams.put("habitid", habitID);
+            outerJsonParams.put("habit", jsonParams);
+            StringEntity entity = new StringEntity(outerJsonParams.toString());
+            //Log.d(TAG,"bodyentity"+jsonParams);
+            callAPItoGetMember(entity);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -275,11 +291,7 @@ public class HomeFragment extends BaseFragment {
                                 Log.d(TAG,"CHECK HERE");
                                 mConfirmCompleteBtn.setText("CANSLE");
                                 mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                            } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CANSLE")){
-                                Log.d(TAG,"CANCEL HERE");
-                                mConfirmCompleteBtn.setText("CHECK");
-                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
-                            }
+                            } else { }
                         //mConfirmCompleteBtn.setText("确认完成");
                             sDialog.dismissWithAnimation();
                         }
@@ -479,6 +491,8 @@ public class HomeFragment extends BaseFragment {
                 habit.initHabitWithJSON(response);
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.dummyHabitID = habitID;
+                //Log.d(TAG,"mhabitList"+mHabitList);
+                habitDetailFragment.dummyHabitList = mHabitList;
                 replaceFragment(habitDetailFragment,null);
             }
 
@@ -605,6 +619,39 @@ public class HomeFragment extends BaseFragment {
         }else{
             return;
         }
+    }
+
+    public void callAPItoGetMember(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        //mCatLoadingView = new CatLoadingView();
+
+        //mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL+"habits/members",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                //mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: member_response: "+response);
+
+                HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
+                habitDetailFragment.member_profiles = response;
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
     }
 
 }
