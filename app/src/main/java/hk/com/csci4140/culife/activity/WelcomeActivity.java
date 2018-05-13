@@ -51,13 +51,13 @@ public class WelcomeActivity extends BaseActivity {
 
 
         try {
-            JSONObject object = new JSONObject();
-            object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,"10");
-            object.put(Constant.USER_CHAT_LIST_ICON_LINK,"https://avatars0.githubusercontent.com/u/9919?s=280&v=4");
-            object.put(Constant.USER_CHAT_LIST_NAME,"username!");
-            object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"some message");
-            object.put(Constant.USER_CHAT_LIST_LAST_DATE,"04/05/2018");
-            UserModel.addNewChatToChatList(object);
+//            JSONObject object = new JSONObject();
+//            object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,"10");
+//            object.put(Constant.USER_CHAT_LIST_ICON_LINK,"https://avatars0.githubusercontent.com/u/9919?s=280&v=4");
+//            object.put(Constant.USER_CHAT_LIST_NAME,"username!");
+//            object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"some message");
+//            object.put(Constant.USER_CHAT_LIST_LAST_DATE,"04/05/2018");
+//            UserModel.addNewChatToChatList(object);
         }catch (Exception e){
 
         }

@@ -40,17 +40,45 @@ public class UserModel {
     // Mihchael added :
 
     public static String myChatName;
+    public static String myUserName;
+    public static String myID;
     public static JSONArray myChatList;
+
+    private String TAG = "USERMODEL";
 
 
 
     public static void initModel(Context mContext){
+        Log.d("USERMODEL", "initModel isLogin: "+isLogin);
+        Log.d("USERMODEL", "initModel isRemember: "+isRemember);
+        Log.d("USERMODEL", "initModel token: "+token);
+        Log.d("USERMODEL", "initModel iconUrl: "+iconUrl);
+        Log.d("USERMODEL", "initModel region: "+region);
+        Log.d("USERMODEL", "initModel showLocation: "+showLocation);
+        Log.d("USERMODEL", "initModel myChatName: "+myChatName);
+        Log.d("USERMODEL", "initModel myUserName: "+myUserName);
+        Log.d("USERMODEL", "initModel myID: "+myID);
+        Log.d("USERMODEL", "initModel myChatList: "+myChatList);
+
+
+        Log.d("USERMODEL", "session initModel isLogin: "+SessionManager.getBoolean(mContext, Constant.IS_LOGIN));
+        Log.d("USERMODEL", "session initModel isRemember: "+SessionManager.getBoolean(mContext, Constant.IS_REMEMBER));
+        Log.d("USERMODEL", "session initModel token: "+SessionManager.getString(mContext, Constant.TOKEN));
+        Log.d("USERMODEL", "session initModel iconUrl: "+SessionManager.getString(mContext, Constant.ICON_URL));
+        Log.d("USERMODEL", "session initModel region: "+SessionManager.getInt(mContext, Constant.REGION));
+        Log.d("USERMODEL", "session initModel showLocation: "+SessionManager.getInt(mContext, Constant.SHOW_LOCATION));
+        Log.d("USERMODEL", "session initModel myChatName: "+SessionManager.getString(mContext,Constant.USERNAME));
+        Log.d("USERMODEL", "session initModel myUserName: "+SessionManager.getString(mContext,Constant.USERNAME));
+        Log.d("USERMODEL", "session initModel myID: "+SessionManager.getString(mContext,Constant.USERID));
+        Log.d("USERMODEL", "session initModel myChatList: "+SessionManager.getArrayList(Constant.USER_CHAT_LIST));
+
+
+
         myChatName = SessionManager.getString(mContext,Constant.USERNAME);
+        // TODO : Distinguish username and chat name, or it is ok with a demo purpose application
+        myUserName = myChatName;
+        myID = SessionManager.getString(mContext,Constant.USERID);
         formatMyChatListFromStringList(SessionManager.getArrayList(Constant.USER_CHAT_LIST));
-
-        Log.d("USERMODEL", "initModel: list : "+myChatList);
-
-
 
         isLogin = SessionManager.getBoolean(mContext, Constant.IS_LOGIN);
         isRemember = SessionManager.getBoolean(mContext, Constant.IS_REMEMBER);
@@ -158,6 +186,16 @@ public class UserModel {
         SessionManager.putInt(mContext, Constant.REGION, 0);
         SessionManager.putInt(mContext, Constant.SHOW_LOCATION, 0);
         SessionManager.putString(mContext, Constant.USERNAME, "");
+
+
+        SessionManager.putString(mContext, Constant.USERID, "");
+        ArrayList<String> emptyList = new ArrayList<String>();
+        SessionManager.putArrayList(emptyList,Constant.USER_CHAT_LIST);
+
+//        public static JSONArray myChatList;
+
+
+
         initModel(mContext);
     }
 
@@ -207,8 +245,20 @@ public class UserModel {
     public static void addNewChatToChatList(JSONObject chatInfo){
         ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
         try{
-            String mapString = chatInfo.toString();
-            chatInfoList.add(mapString);
+            boolean alreadyExist = false;
+
+            for (int i =0;i<myChatList.length();i++){
+                JSONObject temp = myChatList.getJSONObject(i);
+                if(temp.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID) == chatInfo.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID)){
+                    alreadyExist = true;
+                    break;
+                }
+            }
+
+            if(!alreadyExist){
+                String mapString = chatInfo.toString();
+                chatInfoList.add(mapString);
+            }
         }catch (Exception e){
 
         }
@@ -235,6 +285,14 @@ public class UserModel {
             return myChatList;
         }else{
             return myChatList;
+        }
+    }
+
+    public static String getMyID() {
+        if(myID == null || myID == ""){
+            return "0";
+        }else{
+            return myID;
         }
     }
 }

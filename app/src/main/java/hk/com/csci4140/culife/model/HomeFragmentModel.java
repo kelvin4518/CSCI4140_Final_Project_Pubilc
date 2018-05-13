@@ -9,15 +9,15 @@ import org.json.JSONObject;
 
 public class HomeFragmentModel {
 
-    private String title;//内容
+    public String title;//内容
 
-    private String time;
+    public String time;
 
-    private String identity;
+    public String identity;
 
-    private int habit_id;
+    public int habit_id;
 
-    private int id;//该条数据的id
+    public int id;//该条数据的id
 
     public String getTitle() {
         return title;

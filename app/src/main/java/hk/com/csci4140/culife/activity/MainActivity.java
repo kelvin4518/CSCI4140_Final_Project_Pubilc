@@ -116,41 +116,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-    private void callGetHabitListAPI(){
-        AsyncHttpClient client = new AsyncHttpClient();
-        String AuthorizationToken = "Token "+UserModel.token;
-        client.addHeader("Authorization","Token "+UserModel.token);
-//
-
-        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
-        client.get(this,Constant.API_BASE_URL+"habits/created",new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                Log.d("API_REPORT", "onSuccess: get habit list");
-                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
-                showBottomSnackBar("Success get habit list");
-                HomeFragment destFragment = new HomeFragment();
-                destFragment.initHomePageDetail(response);
-                setFragment(destFragment, null);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-
-                Log.d("API_REPORT", "onFailure: get habit list");
-                Log.d("API_REPORT", "onFailure: status : "+statusCode);
-                Log.d("API_REPORT", "onFailure: response : "+response);
-                showBottomSnackBar("Fail get habit list");
-                HomeFragment destFragment = new HomeFragment();
-                setFragment(destFragment, null);
-            }
-        });
-
-    }
-
-
 
 
     private void callGetHabitListAPI(){
@@ -169,7 +134,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Success get habit list");
                 HomeFragment destFragment = new HomeFragment();
-                destFragment.justPassTheValue(response);
+                //destFragment.justPassTheValue(response);
                 destFragment.initHomePageDetail(response);
                 setFragment(destFragment, null);
             }

@@ -223,6 +223,7 @@ public class BaseFragment extends Fragment {
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG,"back");
                 pressBack();
             }
         });
