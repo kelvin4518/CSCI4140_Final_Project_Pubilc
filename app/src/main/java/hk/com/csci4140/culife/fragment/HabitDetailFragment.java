@@ -86,6 +86,7 @@ public class HabitDetailFragment extends BaseFragment{
                 //Go to the previous navigation bar selected item
                 //getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
                 //super.onBackPressed();
+                getFragmentManager().popBackStack();
             }
         });
 
