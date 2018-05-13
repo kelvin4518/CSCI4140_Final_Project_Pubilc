@@ -65,7 +65,7 @@
                 android:background="@android:drawable/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/login_phone_hint"/>
+                android:hint="@string/register_email_hint"/>
 
 
             <EditText
