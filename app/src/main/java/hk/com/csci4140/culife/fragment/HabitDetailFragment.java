@@ -69,7 +69,7 @@ public class HabitDetailFragment extends BaseFragment{
     public int dummyHabitID;
     private String mHabitName;
     private String mHabitContent;
-
+    public ArrayList<HabitModel> dummyHabitList;
 
     private String mTitle;
     private String mPrevTitle;
@@ -86,6 +86,7 @@ public class HabitDetailFragment extends BaseFragment{
                 //Go to the previous navigation bar selected item
                 //getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
                 //super.onBackPressed();
+                getFragmentManager().popBackStack();
             }
         });
 
@@ -376,22 +377,29 @@ public class HabitDetailFragment extends BaseFragment{
             if(flag==0){
                 mBottomRecyclerView.setHasFixedSize(false);
                 mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//            mBottomRecyclerView.setLayoutManager(new CustomLayoutManager(getContext()){
-//                @Override
-//                public boolean canScrollVertically() {
-//                    return false;
-//                }
-//            });
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                final ArrayList<String> items = new ArrayList<String>();
-                for (int i = 1; i <= 1; i++) {
-                    items.add("Detail " + i);
+                final ArrayList<HabitModel> items = new ArrayList<HabitModel>();
+                Log.d(TAG,"itemlatest");
+                for (HabitModel HM:dummyHabitList){
+                    if (HM.ID == dummyHabitID){
+                        HabitModel item = HM;
+                        items.add(item);
+                    }
                 }
                 mBottomRecyclerView.setAdapter(
-                        new CommonAdapter<String>(getContext(), R.layout.item_habit_detail, items) {
+                        new CommonAdapter<HabitModel>(getContext(), R.layout.item_habit_detail, items) {
                             @Override
-                            public void convert(ViewHolder holder, String s, int pos) {
+                            public void convert(ViewHolder holder, HabitModel s, int pos) {
+                                Log.d(TAG,"latestname"+s.name);
+                                holder.setText(R.id.title, s.name);
+                                holder.setText(R.id.content, s.description);
+                                holder.setText(R.id.time_slot, s.startTime + s.endTime);
+                                holder.setText(R.id.GPS_contraint, "GPS not done here");
+                                holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
+                                holder.setText(R.id.habit_parteners, "partner");
+                                holder.setText(R.id.habit_supervisor, "supervisor");
+                                holder.setText(R.id.partner_complete_info, "partner_complete_info");
                             }
 
                             @Override
