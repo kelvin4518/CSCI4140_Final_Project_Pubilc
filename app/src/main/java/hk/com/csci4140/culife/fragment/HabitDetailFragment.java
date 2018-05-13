@@ -48,6 +48,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.activity.BaseActivity;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
 import hk.com.csci4140.culife.model.HabitModel;
@@ -77,13 +78,14 @@ public class HabitDetailFragment extends BaseFragment{
     //Initial Setting of every fragment
     private void initialSetting() {
         //set Go Back Icon();
-        // setGoBackIcon();
+        //setGoBackIcon();
         getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+                //getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+                //super.onBackPressed();
             }
         });
 
@@ -92,7 +94,7 @@ public class HabitDetailFragment extends BaseFragment{
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
+        setBottomNavFragment(false);
         setPrevBottomNavFragment(true);
 
         //Use to set the menu icon

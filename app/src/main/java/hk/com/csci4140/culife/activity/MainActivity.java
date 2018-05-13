@@ -134,7 +134,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Success get habit list");
                 HomeFragment destFragment = new HomeFragment();
-                destFragment.justPassTheValue(response);
+                //destFragment.justPassTheValue(response);
                 destFragment.initHomePageDetail(response);
                 setFragment(destFragment, null);
             }

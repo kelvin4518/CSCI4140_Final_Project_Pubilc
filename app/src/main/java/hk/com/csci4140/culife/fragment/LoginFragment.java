@@ -88,15 +88,6 @@ public class LoginFragment extends BaseFragment {
     CatLoadingView mView;
 
     // use butterknife to set the button behavior
-    @OnClick(R.id.login_wechat_button)
-    void onClickWechatLogin(){
-        //TODO: WeChat Login function
-        new SweetAlertDialog(getContext(), SweetAlertDialog.WARNING_TYPE)
-                .setTitleText(getString(R.string.warning_title))
-                .setContentText("Still need to implemented")
-                .setConfirmText(getString(R.string.warning_confirm))
-                .show();
-    }
 
     @OnClick(R.id.login_normal_button)
     void onClickNormalLogin(){
