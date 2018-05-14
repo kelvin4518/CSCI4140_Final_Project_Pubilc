@@ -646,7 +646,7 @@ public class HabitDetailFragment extends BaseFragment{
                 mCatLoadingView.dismiss();
                 Log.d("API_REPORT", "onSuccess: login");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
+                Log.d("API_REPORT", "onSuccess: date_response: "+response);
                 JSONArray date_list = new JSONArray();
                 try {
                     date_list = response.getJSONArray("check_date");
@@ -670,8 +670,8 @@ public class HabitDetailFragment extends BaseFragment{
 
                 Calendar[] days;
                 List<Calendar> blockedDays = new ArrayList<>();
-
-                for (Integer i=0;i < date_list.length();i++) {
+                Boolean flag = false;
+                for (Integer i=1;i < date_list.length();i++) {
                     String date_string = new String();
                     try {
                         date_string = date_list.getString(i);
@@ -682,18 +682,21 @@ public class HabitDetailFragment extends BaseFragment{
 
                     //Log.d(TAG,"date_string"+date_string);
                     blockedDays.add(getCalendarObjectFromString(date_string));
+                    flag = true;
                 }
-                days = blockedDays.toArray(new Calendar[blockedDays.size()]);
+                if (flag) {
+                    days = blockedDays.toArray(new Calendar[blockedDays.size()]);
 
 
-                Calendar[] today;
-                Calendar cal = Calendar.getInstance();
-                List<Calendar> selectedDays = new ArrayList<>();
-                selectedDays.add(cal);
-                today = selectedDays.toArray(new Calendar[selectedDays.size()]);
-                dpd.setSelectableDays(today);
-                dpd.setHighlightedDays(days);
-                dpd.show(getActivity().getFragmentManager(),"Datepickerdialog");
+                    Calendar[] today;
+                    Calendar cal = Calendar.getInstance();
+                    List<Calendar> selectedDays = new ArrayList<>();
+                    selectedDays.add(cal);
+                    today = selectedDays.toArray(new Calendar[selectedDays.size()]);
+                    dpd.setSelectableDays(today);
+                    dpd.setHighlightedDays(days);
+                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+                }
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
@@ -731,7 +734,7 @@ public class HabitDetailFragment extends BaseFragment{
                     e.printStackTrace();
                 }
 
-                holder.setText(R.id.complete_number,date_list.length()+" times" );
+                holder.setText(R.id.complete_number,(date_list.length()-1)+" times" );
 
             }
             @Override

@@ -549,7 +549,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
+        setBottomNavFragment(false);
         setPrevBottomNavFragment(true);
     }
 
@@ -689,7 +689,38 @@ public class PostMissionStepOneFragment extends BaseFragment {
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: create habit");
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
-                showBottomSnackBar("Welcome to CULife !");
+                //showBottomSnackBar("Welcome to CULife !");
+                JSONObject jsonHabit = new JSONObject();
+                try {
+                    jsonHabit = response.getJSONObject("habit");
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+                Integer newCreateHabitID = 0;
+                try {
+                    newCreateHabitID = jsonHabit.getInt("id");
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                JSONObject jsonParams1 = new JSONObject();
+                JSONObject outerJsonParams1 = new JSONObject();
+                try{
+                    jsonParams1.put("habitid",newCreateHabitID);
+                    jsonParams1.put("body","");
+                    jsonParams1.put("score",0);
+                    outerJsonParams1.put("check",jsonParams1);
+                    StringEntity entity1 = new StringEntity(outerJsonParams1.toString());
+                    //Log.d(TAG,"checkcreate"+outerJsonParams1);
+                    callCreateCheckAPI(entity1);}
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 replaceActivity(MainActivity.class, null);
             }
 
@@ -729,6 +760,36 @@ public class PostMissionStepOneFragment extends BaseFragment {
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
                 mView.dismiss();
                 Log.d(Constant.API_REPORT_TAG, "onFailure: update habit");
+                Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
+            }
+        });
+    }
+
+    private void callCreateCheckAPI(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+
+        mView = new CatLoadingView();
+
+        mView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"habits/check_create",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: create check");
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
+                //showBottomSnackBar("Welcome to CULife !");
+                replaceActivity(MainActivity.class, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onFailure: create check");
                 Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
                 Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
             }
