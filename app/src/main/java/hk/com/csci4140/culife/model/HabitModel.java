@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -38,9 +39,9 @@ import java.util.Map;
  */
 
 public class HabitModel {
-
+    private static final String TAG = "HabitModel";
     // about the habit : 关于这个habit的内容
-    public int ID;
+    public Integer ID;
     public String name;    // get up early
     public String description;     // to keep healthy body TODO : Mr. Zheng : can use description to replace content
     public String startDate;   // 2018-05-04 TODO : need to confirm what kind of structure to use
@@ -64,11 +65,7 @@ public class HabitModel {
     public Integer countFavorited;
     public String isSlug;
     public String isUpdated;
-
-
-
-
-
+    public String member;
 
 
 
@@ -101,26 +98,35 @@ public class HabitModel {
         }
     }
 
+    public String getMember(){return member;}
+
     public void initHabitWithJSON(JSONObject response){
         try {
             Integer id = response.getInt("id");
             JSONObject author = response.getJSONObject("author");
+            //Log.d(TAG,"jsonauthor"+author);
             Integer author_id = author.getInt("id");
             String author_username = author.getString("username");
             String author_bio = author.getString("bio");
             String author_image = author.getString("image");
             Boolean author_following = author.getBoolean("following");
-            //String body = response.getString("body");
+            String body = response.getString("body");
             String createdAt = response.getString("createdAt");
             String Tdescription = response.getString("description");
+            String start_date = response.getString("start_date");
+            String end_date = response.getString("end_date");
+            String start_time = response.getString("start_time");
+            String end_time = response.getString("end_time");
+            Integer is_public = response.getInt("is_public");
+            Integer send_notification = response.getInt("send_notification");
             Boolean favorited = response.getBoolean("favorited");
             Integer favoritesCount = response.getInt("favoritesCount");
             String slug = response.getString("slug");
-            //JSONArray tagList = response.getJSONArray("tagList");
+            JSONArray tagList = response.getJSONArray("tagList");
             String title = response.getString("title");
             String updateAt = response.getString("updatedAt");
-            String start_time = response.getString("startTime");
-            String end_time = response.getString("endTime");
+
+            //Log.d(TAG,"initJSON"+start_time);
 
             //Boolean privacy = response.getBoolean("namewhat")//TODO: A private habit or not
             ID = id;

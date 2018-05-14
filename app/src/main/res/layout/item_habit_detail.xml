@@ -24,36 +24,12 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-
-                <TextView
-                    android:id="@+id/complete_percentage_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="本周习惯完成率"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/complete_percentage"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:text="72%"
-                    android:textSize="36sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
                 <TextView
                     android:id="@+id/complete_number_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="累计习惯完成次数"
+                    android:text="You have complished"
                     android:textSize="18sp" />
 
                 <TextView
@@ -114,14 +90,20 @@
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/habit_parteners"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="15dp"
                 android:layout_weight="0"
-                android:text="参与者:"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="0"
+                    android:text="parterner:" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/parteners_logo"
@@ -133,7 +115,7 @@
 
             <TextView
                 android:id="@+id/partner_complete_info"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="15dp"
                 android:layout_weight="0"
@@ -148,14 +130,27 @@
             android:layout_marginBottom="5dp"
             android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/habit_supervisor"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
                 android:layout_weight="0"
-                android:text="监督人:\nJerry Liu"
-                android:textSize="18sp" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                    android:layout_weight="0"
+                    android:text="Superviosr:" />
+
+                <TextView
+                    android:id="@+id/habit_supervisor"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginVertical="5dp"
+                    android:layout_weight="0"
+                    android:text="namehere"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/supervisor_logo"
@@ -174,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
             android:layout_marginRight="100dp"
-            android:text="确认完成"
+            android:text="Confirm"
             android:textSize="18sp" />
 
     </LinearLayout>
