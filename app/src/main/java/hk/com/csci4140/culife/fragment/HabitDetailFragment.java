@@ -177,37 +177,48 @@ public class HabitDetailFragment extends BaseFragment{
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            JSONObject jsonParams = new JSONObject();
+            JSONObject outerJsonParams = new JSONObject();
+            try {
+                SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                String date = sDateFormat.format(new java.util.Date());
+                jsonParams.put("habitid", dummyHabitID);
+                jsonParams.put("body",date);
+
+                outerJsonParams.put("check", jsonParams);
+                StringEntity entity = new StringEntity(outerJsonParams.toString());
+                //Log.d(TAG,"bodyentity"+jsonParams);
+                updateCheck(entity);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
+                mConfirmCompleteBtn.setText("CANSEL");
+                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+            }
             new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("habit is complete")
-                    .setContentText("congradulation on finishing a new task")
+                    .setContentText("Congradulation on finishing a new task! Do you want to write a diary?")
                     .setConfirmText(getString(R.string.warning_confirm))
+                    .setCancelText("Cansel")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
-                                mConfirmCompleteBtn.setText("CANSEL");
-                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                                JSONObject jsonParams = new JSONObject();
-                                JSONObject outerJsonParams = new JSONObject();
-                                try {
-                                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                                    String date = sDateFormat.format(new java.util.Date());
-                                    jsonParams.put("habitid", dummyHabitID);
-                                    jsonParams.put("body",date);
-
-                                    outerJsonParams.put("check", jsonParams);
-                                    StringEntity entity = new StringEntity(outerJsonParams.toString());
-                                    //Log.d(TAG,"bodyentity"+jsonParams);
-                                    updateCheck(entity);
-                                }
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-//                        mConfirmCompleteBtn.setText("确认完成");
+                            Context mContext = null;
+                            PostDiaryFragment diary = new PostDiaryFragment();
+                            diary.habbitIDfordiary = dummyHabitID;
+                            replaceFragment(diary,null);
                             sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        mConfirmCompleteBtn.setText("确认完成");
+                            sweetAlertDialog.dismissWithAnimation();
                         }
                     })
                     .show();
