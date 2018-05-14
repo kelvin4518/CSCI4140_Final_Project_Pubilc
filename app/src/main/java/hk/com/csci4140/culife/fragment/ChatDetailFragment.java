@@ -142,7 +142,7 @@ public class ChatDetailFragment extends BaseFragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child(mDatabaseName);
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference().child("USERID"+UserModel.myID).child(mDatabaseName);
         mDatabaseReference.addChildEventListener(mChildEventListener);
 
         mRecyclerView.setAdapter(

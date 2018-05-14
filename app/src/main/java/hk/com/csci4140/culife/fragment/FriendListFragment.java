@@ -39,12 +39,15 @@ import com.goyourfly.multiple.adapter.menu.MenuBar;
 import com.goyourfly.multiple.adapter.viewholder.DecorateFactory;
 import com.goyourfly.multiple.adapter.viewholder.view.CustomViewFactory;
 import com.goyourfly.multiple.adapter.viewholder.view.RadioBtnFactory;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
 import com.nanchen.wavesidebar.SearchEditText;
 import com.nanchen.wavesidebar.Trans2PinYinUtil;
 import com.nanchen.wavesidebar.WaveSideBarView;
 import com.nanchen.wavesidebar.WaveSideBarView.OnSelectIndexItemListener;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
@@ -68,20 +71,98 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
+import hk.com.csci4140.culife.model.ChatListItemModel;
+import hk.com.csci4140.culife.model.OtherUserModel;
 import hk.com.csci4140.culife.model.UserContactModel;
+import hk.com.csci4140.culife.model.UserModel;
+import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
 import jp.wasabeef.blurry.Blurry;
 
 import com.bumptech.glide.Glide;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 //import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 
 
 
 public class FriendListFragment extends BaseFragment {
+
+
+    private CatLoadingView mCatLoadingView;
+
+    public String fragmentMode;
+    /**
+     * Explain for fragmentMode: see the constant page for detail
+     * */
+    private boolean hasLoadedOnce;
+    private boolean hasLoadedOnce_myFollower;
+    private boolean hasLoadedOnce_iAmFollowing;
+    /**
+     * Explain for hasLoadedOnce:
+     *
+     * if hasn't load friend list from API, then load it
+     * if already loaded friend list, then don't load
+     *
+     * */
+
+    private ArrayList<OtherUserModel> mSourceData = new ArrayList<OtherUserModel>();
+    private ArrayList<OtherUserModel> mSourceData_myFollower = new ArrayList<OtherUserModel>();
+    private ArrayList<OtherUserModel> mSourceData_iAmFollowing = new ArrayList<OtherUserModel>();
+
+    public int mNumberOfItems;
+    /**
+     *
+     * */
+
+    public void initFriendListFragmentFromJSON(JSONObject response){
+        if(fragmentMode == Constant.FRIEND_LIST_FRAGMENT_START_CHAT_MODE){
+            try{
+                JSONArray jsonArray = response.getJSONArray("profiles");
+                for (int i=0;i<jsonArray.length();i++){
+                    JSONObject eachUser = jsonArray.getJSONObject(i);
+                    OtherUserModel otherUserModel = new OtherUserModel();
+                    otherUserModel.id = String.valueOf(eachUser.getInt("id"));
+                    otherUserModel.username = eachUser.getString("username");
+                    otherUserModel.iconLink = eachUser.getString("image");
+                    otherUserModel.selfBio = eachUser.getString("bio");
+                    mSourceData.add(otherUserModel);
+                }
+            }catch (Exception e){
+
+            }
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     private static final String TAG = "FriendListFrag";
@@ -108,8 +189,6 @@ public class FriendListFragment extends BaseFragment {
 
     private List<UserContactModel> mUserContactModels;
 
-
-    public int mNumberOfItems;
 
 
 
@@ -227,19 +306,18 @@ public class FriendListFragment extends BaseFragment {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        ArrayList<String> items = new ArrayList<String>();
-        for (int i = 1; i <= mNumberOfItems; i++) {
-            items.add("Member " + i);
-        }
 
         mRecyclerView.setAdapter(
-                new CommonAdapter<String>(getContext(), R.layout.item_friend_list_with_selection, items) {
+                new CommonAdapter<OtherUserModel>(getContext(), R.layout.item_friend_list_with_selection, mSourceData) {
                     @Override
-                    public void convert(ViewHolder holder, String s, int pos) {
-                        String tempIconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";
-                        Glide.with(getContext()).load(tempIconLink).into((ImageView) holder.itemView.findViewById(R.id.item_friend_select_logo));
-                        holder.setText(R.id.item_friend_select_name, s);
-//                            super.convert( holder,  s, pos);
+                    public void convert(ViewHolder holder, OtherUserModel s, int pos) {
+                        String iconLink = s.iconLink;
+//                        Glide.with(getContext()).
+                        Glide.with(getContext()).
+                                load(iconLink).
+                                into((ImageView) holder.itemView.findViewById(R.id.item_friend_select_logo));
+                        holder.setText(R.id.item_friend_select_name, s.username);
+                        holder.itemView.setOnClickListener(new FriendListFragment.MyClickListener(pos));
                     }
 
                     @Override
@@ -258,6 +336,45 @@ public class FriendListFragment extends BaseFragment {
                 .build();
 
         mRecyclerView.setAdapter(adapter);
+    }
+
+    public class MyClickListener implements View.OnClickListener{
+        int position;
+        public MyClickListener(int my_position){
+            this.position = my_position;
+        }
+        @Override
+        public void onClick(View v) {
+            if(fragmentMode==Constant.FRIEND_LIST_FRAGMENT_START_CHAT_MODE){
+                showBottomSnackBar("to do !");
+                OtherUserModel userSelected = mSourceData.get(position);
+                DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+                Date today = Calendar.getInstance().getTime();
+                String reportDate = df.format(today);
+                try {
+                    JSONObject object = new JSONObject();
+                    object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,userSelected.id);
+                    object.put(Constant.USER_CHAT_LIST_ICON_LINK,userSelected.iconLink);
+                    object.put(Constant.USER_CHAT_LIST_NAME,userSelected.username);
+                    object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"");
+                    object.put(Constant.USER_CHAT_LIST_LAST_DATE,reportDate);
+                    UserModel.addNewChatToChatList(object);
+
+
+                    // TODO : Should let ChatListFragment to call the replace fragment, so that when exit the chat interface, it go back to ChatListFragmet
+                    ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
+                    chatDetailFragment.mDatabaseName = userSelected.id;
+                    replaceFragment(chatDetailFragment,null);
+                }catch (Exception e){
+
+                }
+
+            }else if(fragmentMode==Constant.FRIEND_LIST_FRAGMENT_INVITE_MODE){
+
+            }else{
+
+            }
+        }
     }
 
 

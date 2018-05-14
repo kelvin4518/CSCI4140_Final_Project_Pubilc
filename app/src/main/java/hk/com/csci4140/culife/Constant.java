@@ -9,6 +9,8 @@ public interface Constant {
     String API_REPORT_TAG = "API_REPORT";
     String API_BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
 
+
+    String USERID = "USERID";
     String USERNAME = "username";
     String USER_CHAT_LIST  = "user_chat_list";
     String USER_CHAT_LIST_OTHER_USER_ID  = "chat_other_user_ID";
@@ -16,6 +18,14 @@ public interface Constant {
     String USER_CHAT_LIST_NAME  = "chat_other_user_name";
     String USER_CHAT_LIST_LAST_MESSAGE  = "chat_last_message";
     String USER_CHAT_LIST_LAST_DATE  = "chat_last_date";
+
+
+
+    // FriendListFragment Mode:
+    String FRIEND_LIST_FRAGMENT_INVITE_MODE = "use_friend_list_to_invite_friend_to_habit";
+    String FRIEND_LIST_FRAGMENT_START_CHAT_MODE = "use_friend_list_to_start_a_chat";
+    String FRIEND_LIST_FRAGMENT_VIEW_FRIEND_LIST_MODE = "use_friend_list_to_view_my_friend_and_see_their_profile";
+    Integer HABBIT_ID_Diary = 0;
 
 
     //General String Value

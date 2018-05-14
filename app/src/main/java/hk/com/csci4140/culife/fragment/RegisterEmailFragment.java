@@ -58,6 +58,9 @@ public class RegisterEmailFragment extends BaseFragment {
     // Bind the views using butterKnife
     private static final String TAG = "RegisterEmailFrag";
 
+    @BindView(R.id.register_username)
+    EditText mUsername;
+
     @BindView(R.id.register_via_email)
     EditText mEmailAddress;
 
@@ -99,8 +102,8 @@ public class RegisterEmailFragment extends BaseFragment {
             JSONObject outerJsonParams = new JSONObject();
             try {
 //                jsonParams.put("username", "michael_firebasechat_1");
-                String userNameString = mEmailAddress.getText().toString().split("@")[0];
-                jsonParams.put("username", userNameString);
+                // String userNameString = mEmailAddress.getText().toString().split("@")[0];
+                jsonParams.put("username", mUsername.getText().toString());
                 jsonParams.put("email", mEmailAddress.getText().toString());
                 jsonParams.put("password", mPassword.getText().toString());
                 outerJsonParams.put("user",jsonParams);

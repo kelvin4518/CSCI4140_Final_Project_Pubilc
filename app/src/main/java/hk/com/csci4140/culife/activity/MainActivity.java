@@ -1,9 +1,11 @@
 package hk.com.csci4140.culife.activity;
 
+import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -27,6 +29,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.ChatListFragment;
+import hk.com.csci4140.culife.fragment.DatePickerFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
@@ -116,41 +119,6 @@ public class MainActivity extends BaseActivity {
 
 
 
-    private void callGetHabitListAPI(){
-        AsyncHttpClient client = new AsyncHttpClient();
-        String AuthorizationToken = "Token "+UserModel.token;
-        client.addHeader("Authorization","Token "+UserModel.token);
-//
-
-        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
-        client.get(this,Constant.API_BASE_URL+"habits/created",new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-
-                Log.d("API_REPORT", "onSuccess: get habit list");
-                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
-                showBottomSnackBar("Success get habit list");
-                HomeFragment destFragment = new HomeFragment();
-                destFragment.initHomePageDetail(response);
-                setFragment(destFragment, null);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
-
-                Log.d("API_REPORT", "onFailure: get habit list");
-                Log.d("API_REPORT", "onFailure: status : "+statusCode);
-                Log.d("API_REPORT", "onFailure: response : "+response);
-                showBottomSnackBar("Fail get habit list");
-                HomeFragment destFragment = new HomeFragment();
-                setFragment(destFragment, null);
-            }
-        });
-
-    }
-
-
 
 
     private void callGetHabitListAPI(){
@@ -169,7 +137,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Success get habit list");
                 HomeFragment destFragment = new HomeFragment();
-                destFragment.justPassTheValue(response);
+                //destFragment.justPassTheValue(response);
                 destFragment.initHomePageDetail(response);
                 setFragment(destFragment, null);
             }
@@ -188,7 +156,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        // newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(this.getFragmentManager(), "datePicker");
+    }
     // Bottom Navigation Bar
 
     //Set the bottom navigation bar
@@ -278,7 +250,7 @@ public class MainActivity extends BaseActivity {
                 fragment = null;
                 break;
         }
-        setFragment(fragment, null);
+        replaceFragment(fragment, null);
     }
 
 

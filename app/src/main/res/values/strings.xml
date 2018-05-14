@@ -64,6 +64,7 @@
     <string name="register_phone_hint">Phone number</string>
     <string name="register_email_title">Register with email address</string>
     <string name="register_email_hint">Email address</string>
+    <string name="register_username_hint">Username</string>
     <string name="register_password_hint">Password</string>
     <string name="register_retype_password_hint">Input the password again</string>
     <string name="register_district_hint">District</string>
@@ -205,9 +206,9 @@
     </string-array>
     <string name="search_normal_date_format">%1$s&#032; to &#032;%2$s</string>
     <string name="search_normal_pick_start_date_title">Select the beginning date</string>
-    <string name="search_normal_pick_end_date_title">Select the endding date</string>
-    <string name="search_normal_date_start_after_end">The beginning date must earlier than the ending date</string>
-    <string name="search_normal_date_before_today_warning">The date selected should earlier than today</string>
+    <string name="search_normal_pick_end_date_title">Select the ending date</string>
+    <string name="search_normal_date_start_after_end">The beginning time must be earlier than the ending time</string>
+    <string name="search_normal_date_before_today_warning">The date selected should not be earlier than today</string>
     <string name="search_normal_salary_title">Range of the salary</string>
     <string name="search_normal_salary_default">$100 - $150</string>
     <string name="search_normal_location_title">Location</string>
@@ -247,8 +248,8 @@
         <item>Time</item>
     </string-array>
     <string name="post_habbit_period">Time limit</string>
-    <string name="post_mission_period_start_after_end">The beginning date must earlier than the ending date</string>
-    <string name="post_mission_date_before_today_warning">The date selected should earlier than today</string>
+    <string name="post_mission_period_start_after_end">The beginning time must be earlier than the ending time</string>
+    <string name="post_mission_date_before_today_warning">The date selected should not be earlier than today</string>
     <string name="post_mission_detail_hint">Detail of the job</string>
     <string name="post_mission_interview_title">Interview needed</string>
     <string name="post_mission_salary_title">Salary</string>
