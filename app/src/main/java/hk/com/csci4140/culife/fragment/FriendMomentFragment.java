@@ -42,7 +42,8 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FriendMomentFragment extends BaseFragment {
+public class
+FriendMomentFragment extends BaseFragment {
     //    private RecyclerView mRecyclerView;
     List<FriendMomentModel> mList = new ArrayList<>();
 

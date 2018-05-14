@@ -19,17 +19,29 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import java.text.SimpleDateFormat;
 
 import com.bumptech.glide.Glide;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.melnykov.fab.FloatingActionButton;
 import com.melnykov.fab.ObservableScrollView;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
 
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -47,16 +59,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.OnItemSelected;
+import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.activity.BaseActivity;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
 import hk.com.csci4140.culife.model.HabitModel;
+import hk.com.csci4140.culife.model.memberProfileModel;
+import hk.com.csci4140.culife.model.HomeFragmentModel;
+import hk.com.csci4140.culife.model.UserModel;
 import hk.com.csci4140.culife.utility.Utility;
+import io.reactivex.annotations.Nullable;
 import jp.wasabeef.blurry.Blurry;
 
 import com.bumptech.glide.Glide;
-//import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
-
 
 
 public class HabitDetailFragment extends BaseFragment{
@@ -64,11 +80,15 @@ public class HabitDetailFragment extends BaseFragment{
 
     private static final String TAG = "HabitDetaiFrag";
 
+    public JSONObject member_profiles;
+
+    CatLoadingView mCatLoadingView;
 
     public int dummyHabitID;
     private String mHabitName;
     private String mHabitContent;
 
+    public ArrayList<HabitModel> dummyHabitList;
 
     private String mTitle;
     private String mPrevTitle;
@@ -77,13 +97,15 @@ public class HabitDetailFragment extends BaseFragment{
     //Initial Setting of every fragment
     private void initialSetting() {
         //set Go Back Icon();
-        // setGoBackIcon();
+        //setGoBackIcon();
         getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Go to the previous navigation bar selected item
-                getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+                //getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
+                //super.onBackPressed();
+                getFragmentManager().popBackStack();
             }
         });
 
@@ -92,18 +114,23 @@ public class HabitDetailFragment extends BaseFragment{
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
+        setBottomNavFragment(false);
         setPrevBottomNavFragment(true);
 
         //Use to set the menu icon
         setHasOptionsMenu(true);
     }
 
-
-
     // 顶上的banner ; the top banner
     @BindView(R.id.habit_detail_logo_imageView)
     ImageView mLogoImageView;
+
+    @Nullable
+    @BindView(R.id.supervisor_logo)
+    ImageView mSupervisorView;
+    @Nullable
+    @BindView(R.id.parteners_logo)
+    ImageView mPartenersView;
 
     @BindView(R.id.habit_detail_background_banner)
     ImageView mBackgroundBannerImageView;
@@ -143,6 +170,8 @@ public class HabitDetailFragment extends BaseFragment{
 
     HabitModel mHabit;
 
+    ArrayList<memberProfileModel> memberProfilelist = new ArrayList<memberProfileModel>();
+
     // habit detail confirm complete button
     Button mConfirmCompleteBtn;
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
@@ -155,12 +184,27 @@ public class HabitDetailFragment extends BaseFragment{
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("确认完成")){
-                                mConfirmCompleteBtn.setText("取消");
+                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
+                                mConfirmCompleteBtn.setText("CANSEL");
                                 mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                            } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("取消")){
-                                mConfirmCompleteBtn.setText("确认完成");
-                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
+                                JSONObject jsonParams = new JSONObject();
+                                JSONObject outerJsonParams = new JSONObject();
+                                try {
+                                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                                    String date = sDateFormat.format(new java.util.Date());
+                                    jsonParams.put("habitid", dummyHabitID);
+                                    jsonParams.put("body",date);
+
+                                    outerJsonParams.put("check", jsonParams);
+                                    StringEntity entity = new StringEntity(outerJsonParams.toString());
+                                    //Log.d(TAG,"bodyentity"+jsonParams);
+                                    updateCheck(entity);
+                                }
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
                             }
 //                        mConfirmCompleteBtn.setText("确认完成");
                             sDialog.dismissWithAnimation();
@@ -169,8 +213,6 @@ public class HabitDetailFragment extends BaseFragment{
                     .show();
         }
     };
-
-
 
 
 
@@ -186,37 +228,16 @@ public class HabitDetailFragment extends BaseFragment{
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();
         }
-//        setToolbarTitle(mTitle);
-//
-//        setPrevTitle("习惯名称");
+
 
         //Set the toolbar title of this fragment
-        mTitle = "习惯标题";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();
 
 //        initialSetting();
     }
-
-
-
-
-
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        super.onCreateOptionsMenu(menu, inflater);
-//        //In case the duplicate menu item
-//        try {
-//            for(int i = 0; i < menu.size(); i ++){
-//                menu.getItem(i).setVisible(false);
-//            }
-//        }catch (Exception e){
-//            Log.e(TAG, "onCreateOptionsMenu: " + e.toString());
-//        }
-//
-//        inflater.inflate(R.menu.user_profile_menu, menu);
-//    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -226,7 +247,7 @@ public class HabitDetailFragment extends BaseFragment{
 
 
         try{
-            String tempIconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";
+            String tempIconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";//TODO: Change to data
             fab.attachToRecyclerView(mBottomRecyclerView);
 //            fab.attachToScrollView((ObservableScrollView) mScrollView);
             Glide.with(getContext()).load(tempIconLink).into(mLogoImageView);
@@ -281,47 +302,27 @@ public class HabitDetailFragment extends BaseFragment{
     // Calendar
     @OnClick(R.id.habit_detail_calendar_icon)
     void showCalendar(){
-
-        Calendar now = Calendar.getInstance();
-        com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
-                new com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(com.wdullaer.materialdatetimepicker.date.DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
-
-                    }
-                },
-                now.get(Calendar.YEAR),
-                now.get(Calendar.MONTH),
-                now.get(Calendar.DAY_OF_MONTH)
-        );
-        dpd.setVersion(com.wdullaer.materialdatetimepicker.date.DatePickerDialog.Version.VERSION_2);
-
-
-        Calendar[] days;
-        List<Calendar> blockedDays = new ArrayList<>();
-
-        blockedDays.add(getCalendarObjectFromString("05/23/2018"));
-        blockedDays.add(getCalendarObjectFromString("05/24/2018"));
-        blockedDays.add(getCalendarObjectFromString("05/25/2018"));
-        blockedDays.add(getCalendarObjectFromString("05/21/2018"));
-        blockedDays.add(getCalendarObjectFromString("05/26/2018"));
-        blockedDays.add(getCalendarObjectFromString("05/27/2018"));
-        days = blockedDays.toArray(new Calendar[blockedDays.size()]);
-
-
-        Calendar[] today;
-        Calendar cal = Calendar.getInstance();
-        List<Calendar> selectedDays = new ArrayList<>();
-        selectedDays.add(cal);
-        today = selectedDays.toArray(new Calendar[selectedDays.size()]);
-        dpd.setSelectableDays(today);
-        dpd.setHighlightedDays(days);
-        dpd.show(getActivity().getFragmentManager(),"Datepickerdialog");
+        JSONObject jsonParams = new JSONObject();
+        JSONObject outerJsonParams = new JSONObject();
+        try {
+            SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+            String date = sDateFormat.format(new java.util.Date());
+            jsonParams.put("habitid", dummyHabitID);
+            outerJsonParams.put("check", jsonParams);
+            Log.d(TAG,"habitid"+jsonParams);
+            StringEntity entity = new StringEntity(outerJsonParams.toString());
+            callAPItoGetDate(entity);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
     Calendar getCalendarObjectFromString(String date_str){
         Date date = null;
-        DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy", Locale.US);
+        DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd", Locale.US);
         try {
             date = formatter.parse(date_str);
             Calendar cal = Calendar.getInstance();
@@ -332,7 +333,6 @@ public class HabitDetailFragment extends BaseFragment{
             return null;
         }
     }
-
 
     // TODO : give the real habitModel to the fragment
     @OnClick(R.id.habit_detail_setting_icon)
@@ -346,7 +346,10 @@ public class HabitDetailFragment extends BaseFragment{
         replaceFragment(editFragment, null);
     }
 
-
+    @OnClick(R.id.habit_detail_trophy_icon)
+    void showRank(){
+        Log.d(TAG,"still need to do");//TODO: need to do rank
+    }
 
     @OnClick(R.id.habit_detail_share_icon)
     void showFriendList(){
@@ -358,8 +361,6 @@ public class HabitDetailFragment extends BaseFragment{
             Log.d(TAG, "showFriendList: "+e);
         }
     }
-
-
 
     void recyclerViewCancelScroll(){
 //        mBottomRecyclerView.setNestedScrollingEnabled(false);
@@ -374,22 +375,76 @@ public class HabitDetailFragment extends BaseFragment{
             if(flag==0){
                 mBottomRecyclerView.setHasFixedSize(false);
                 mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
-//            mBottomRecyclerView.setLayoutManager(new CustomLayoutManager(getContext()){
-//                @Override
-//                public boolean canScrollVertically() {
-//                    return false;
-//                }
-//            });
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                final ArrayList<String> items = new ArrayList<String>();
-                for (int i = 1; i <= 1; i++) {
-                    items.add("Detail " + i);
+                final ArrayList<HabitModel> items = new ArrayList<HabitModel>();
+                Log.d(TAG,"yo"+dummyHabitList);
+                for (HabitModel HM:dummyHabitList){
+                    if (HM.ID == dummyHabitID){
+                        HabitModel item = HM;
+                        items.add(item);
+                    }
                 }
                 mBottomRecyclerView.setAdapter(
-                        new CommonAdapter<String>(getContext(), R.layout.item_habit_detail, items) {
+                        new CommonAdapter<HabitModel>(getContext(), R.layout.item_habit_detail, items) {
                             @Override
-                            public void convert(ViewHolder holder, String s, int pos) {
+                            public void convert(ViewHolder holder, HabitModel s, int pos) {
+                                //Log.d(TAG,"latestname"+s.name);
+                                holder.setText(R.id.title, s.name);
+                                holder.setText(R.id.complete_number,"31" + " times");
+                                holder.setText(R.id.content, s.description);
+                                holder.setText(R.id.time_slot, s.startTime +" to "+s.endTime);
+                                holder.setText(R.id.GPS_contraint, "GPS not done here");
+                                holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
+                                //holder.setText(R.id.habit_parteners, "partner");
+                                holder.setText(R.id.habit_supervisor, s.owner);
+                                //Glide.with(getContext()).load(s.userImage).into(mSupervisorView);
+
+                                JSONArray member_list = new JSONArray();
+                                if (member_profiles != null) {
+                                    try {
+                                        member_list = member_profiles.getJSONArray("profiles");
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    for (Integer i = 0; i < member_list.length(); i++) {
+                                        memberProfileModel memberProfile = new memberProfileModel();
+                                        JSONObject jso = new JSONObject();
+                                        try {
+                                            jso = member_list.getJSONObject(i);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                        memberProfile.initMemberProfileWithJSON(jso);
+                                        memberProfilelist.add(memberProfile);
+                                    }
+                                }
+
+                                if (!memberProfilelist.isEmpty()) {
+                                    memberProfileModel element_member = memberProfilelist.get(0);
+                                    //Glide.with(getContext()).load(element_member.image).into(mPartenersView);
+                                    holder.setText(R.id.partner_complete_info, element_member.username + " and other partners");
+                                }
+                                else{
+                                    holder.setText(R.id.partner_complete_info, "No one has joined!");
+                                }
+
+                                JSONObject jsonParams0 = new JSONObject();
+                                JSONObject outerJsonParams0 = new JSONObject();
+                                try {
+                                    jsonParams0.put("habitid", dummyHabitID);
+                                    outerJsonParams0.put("check", jsonParams0);
+                                    StringEntity entity0 = new StringEntity(outerJsonParams0.toString());
+                                    callAPItoCounttime(entity0,holder,s);
+                                }
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
+
+
                             }
 
                             @Override
@@ -406,7 +461,13 @@ public class HabitDetailFragment extends BaseFragment{
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 // TODO : get the total number from API result
-                int totalNumber = 22;
+                int totalNumber;
+                if (member_profiles != null) {
+                    totalNumber = member_profiles.length();
+                }
+                else{
+                    totalNumber = 0;
+                }
 
                 // TODO : need to add the userIDField
                 mSourceData = new ArrayList<Map<String, String>>();
@@ -420,10 +481,6 @@ public class HabitDetailFragment extends BaseFragment{
                 final String icon_key_2 = "column2_icon_link";
                 final String icon_key_3 = "column3_icon_link";
                 final String icon_key_4 = "column4_icon_link";
-                final String id_key_1 = "";
-                final String id_key_2 = "";
-                final String id_key_3 = "";
-                final String id_key_4 = "";
 
 
                 for (int i = 0; i < totalNumber; i++) {
@@ -431,8 +488,8 @@ public class HabitDetailFragment extends BaseFragment{
 
                     // TODO : the id is also needed
                     // TODO : use the result from API
-                    String userName = "Michael";
-                    String iconLink = "https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg";
+                    String userName = memberProfilelist.get(i).username;
+                    String iconLink = memberProfilelist.get(i).image;
 
                     if(column == 1){
                         map.put(name_key_1,userName);
@@ -517,12 +574,6 @@ public class HabitDetailFragment extends BaseFragment{
         recyclerViewCancelScroll();
     }
 
-
-
-
-
-
-
     // the page is dismissed
     @Override
     public void onDestroy(){
@@ -531,10 +582,6 @@ public class HabitDetailFragment extends BaseFragment{
         //Set the title of previous fragment
 //        setToolbarTitle(mPrevTitle);
     }
-
-
-
-
 
     public class CustomLayoutManager extends LinearLayoutManager {
         private boolean isScrollEnabled = true;
@@ -553,5 +600,154 @@ public class HabitDetailFragment extends BaseFragment{
             return isScrollEnabled && super.canScrollVertically();
         }
     }
+
+    public void updateCheck(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.put(getContext(), Constant.API_BASE_URL+"habits/check_update",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: json_response: "+response);
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
+    }
+
+    public void callAPItoGetDate(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL+"habits/check_calendar",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: date_response: "+response);
+                JSONArray date_list = new JSONArray();
+                try {
+                    date_list = response.getJSONArray("check_date");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Calendar now = Calendar.getInstance();
+                com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+                        new com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(com.wdullaer.materialdatetimepicker.date.DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+
+                            }
+                        },
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.setVersion(com.wdullaer.materialdatetimepicker.date.DatePickerDialog.Version.VERSION_2);
+
+                Calendar[] days;
+                List<Calendar> blockedDays = new ArrayList<>();
+                Boolean flag = false;
+                for (Integer i=1;i < date_list.length();i++) {
+                    String date_string = new String();
+                    try {
+                        date_string = date_list.getString(i);
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Log.d(TAG,"date_string"+date_string);
+                    blockedDays.add(getCalendarObjectFromString(date_string));
+                    flag = true;
+                }
+                if (flag) {
+                    days = blockedDays.toArray(new Calendar[blockedDays.size()]);
+
+
+                    Calendar[] today;
+                    Calendar cal = Calendar.getInstance();
+                    List<Calendar> selectedDays = new ArrayList<>();
+                    selectedDays.add(cal);
+                    today = selectedDays.toArray(new Calendar[selectedDays.size()]);
+                    dpd.setSelectableDays(today);
+                    dpd.setHighlightedDays(days);
+                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
+    }
+
+    public void callAPItoCounttime(StringEntity params,final ViewHolder holder, HabitModel s){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        mCatLoadingView = new CatLoadingView();
+
+        mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL+"habits/check_calendar",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+                JSONArray date_list = new JSONArray();
+                try {
+                    date_list = response.getJSONArray("check_date");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                holder.setText(R.id.complete_number,(date_list.length()-1)+" times" );
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
+    }
+
 
 }

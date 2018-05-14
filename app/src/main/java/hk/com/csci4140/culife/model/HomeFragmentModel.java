@@ -1,7 +1,24 @@
 package hk.com.csci4140.culife.model;
 
+import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.roger.catloadinglibrary.CatLoadingView;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+
+import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.entity.ContentType;
+import cz.msebera.android.httpclient.entity.StringEntity;
+import hk.com.csci4140.culife.Constant;
+import hk.com.csci4140.culife.R;
 
 /**
  * Created by maoyuxuan(Michael Mao) on 06/05/2018.
@@ -9,15 +26,15 @@ import org.json.JSONObject;
 
 public class HomeFragmentModel {
 
-    private String title;//内容
+    public String title;//内容
 
-    private String time;
+    public String time;
 
-    private String identity;
+    public String identity;
 
-    private int habit_id;
+    public int habit_id;
 
-    private int id;//该条数据的id
+    public int id;//该条数据的id
 
     public String getTitle() {
         return title;
@@ -77,5 +94,6 @@ public class HomeFragmentModel {
         }
 
     }
+
 
 }

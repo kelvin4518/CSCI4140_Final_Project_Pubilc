@@ -5,6 +5,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
+import android.app.DialogFragment;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.widget.Toast;
+import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -40,7 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.roger.catloadinglibrary.CatLoadingView;
+import com.roger.catloadinglibrary.CatLoading;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -59,6 +61,7 @@ import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.ChatListFragment;
 import hk.com.csci4140.culife.fragment.FriendListFragment;
+import hk.com.csci4140.culife.fragment.DatePickerFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
@@ -498,7 +501,7 @@ public class MainActivity extends BaseActivity {
                 Log.d("API_REPORT", "onSuccess: response: "+response);
                 showBottomSnackBar("Success get habit list");
                 HomeFragment destFragment = new HomeFragment();
-                destFragment.justPassTheValue(response);
+                //destFragment.justPassTheValue(response);
                 destFragment.initHomePageDetail(response);
                 setFragment(destFragment, null);
             }
@@ -517,7 +520,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        // newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(this.getFragmentManager(), "datePicker");
+    }
     // Bottom Navigation Bar
 
     //Set the bottom navigation bar
@@ -607,7 +614,7 @@ public class MainActivity extends BaseActivity {
                 fragment = null;
                 break;
         }
-        setFragment(fragment, null);
+        replaceFragment(fragment, null);
     }
 
 

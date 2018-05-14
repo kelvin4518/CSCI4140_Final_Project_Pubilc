@@ -23,12 +23,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ListView;
 
-import com.baidu.location.BDAbstractLocationListener;
-import com.baidu.location.BDLocation;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
-import com.baidu.location.Poi;
-import com.baidu.mapapi.SDKInitializer;
 import com.bumptech.glide.Glide;
 import com.cazaea.sweetalert.SweetAlertDialog;
 import com.loopj.android.http.AsyncHttpClient;
@@ -42,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -75,9 +70,9 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class HomeFragment extends BaseFragment {
 
-
-    @BindView(R.id.habbit_tablayout)
-    TabLayout mTabLayout;
+    //@BindView(R.id.habbit_tablayout)
+    //
+    // TabLayout mTabLayout;
 
     @BindView(R.id.habbit_list)
     RecyclerView mRecyclerView;
@@ -86,15 +81,18 @@ public class HomeFragment extends BaseFragment {
 
     CatLoadingView mCatLoadingView;
 
+    ArrayList<HomeFragmentModel> hList;
+
     private static final String TAG = "HomeFrag";
     //Title of this fragment
     private String mTitle;
 
-    public static ArrayList<HomeFragmentModel> mList = new ArrayList<HomeFragmentModel>();
-    public static ArrayList<HomeFragmentModel> mList_tmp = new ArrayList<>();
+    ArrayList<HomeFragmentModel> mList;
+    ArrayList<HomeFragmentModel> mList_tmp;
+
     public static int habitID = 0;
 
-    JSONObject HomeResponse;
+    ArrayList<HomeFragmentModel> LList;
 
     Button mConfirmCompleteBtn;
 
@@ -119,7 +117,8 @@ public class HomeFragment extends BaseFragment {
     public void initHomePageDetail(JSONObject response) {
         try {
             mHabitList = getHabitListDetialFromJson(response);
-            Log.d(TAG,"mhabitlist"+mHabitList);
+            //HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
+            //Log.d(TAG,"mhabitLIst"+mHabitList);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -147,8 +146,9 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-    public void justPassTheValue(JSONObject response){
-        HomeResponse = response;
+    public void justPassTheValue(ArrayList<HomeFragmentModel> hList){
+        LList = hList;
+        Log.d(TAG,"pass"+LList);
     }
 
     public class MyClickListener implements View.OnClickListener{
@@ -159,15 +159,12 @@ public class HomeFragment extends BaseFragment {
         }
         @Override
         public void onClick(View v) {
-            //Log.d(TAG, "onClick: "+position);
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
-                //Log.d(TAG,"jsonpart:"+mList_tmp);
                 HomeFragmentModel bean = mList_tmp.get(position);
                 habitID = bean.getHabitId();
                 jsonParams.put("habitid", habitID);
-                //Log.d(TAG,"habitid:"+habitID);
                 outerJsonParams.put("habit",jsonParams);
                 StringEntity entity = new StringEntity(outerJsonParams.toString());
                 callShowSingleHabitDetailAPI(entity);
@@ -179,19 +176,7 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-    private void initialSetting() {
+    public void initialSetting() {
         setToolbarTitle(mTitle);
 
         //Set the bottom navigation visible
@@ -212,7 +197,48 @@ public class HomeFragment extends BaseFragment {
         initialSetting();
 
         callGetProfileAPIToGetID();
+
+        JSONObject jsonParams = new JSONObject();
+        JSONObject outerJsonParams = new JSONObject();
+        try {
+            jsonParams.put("habitid", habitID);
+            outerJsonParams.put("habit", jsonParams);
+            StringEntity entity = new StringEntity(outerJsonParams.toString());
+            //Log.d(TAG,"bodyentity"+jsonParams);
+            callAPItoGetMember(entity);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View mView = inflater.inflate(R.layout.fragment_home, container, false);
+        ButterKnife.bind(this, mView);
+        mList = new ArrayList<HomeFragmentModel>();
+        mList_tmp = new ArrayList<HomeFragmentModel>();
+        initData(); // TODO: add a json object here and initial the data with it
+
+        return mView;
+    }
+
+    /*public void onPause(){
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mList = new ArrayList<HomeFragmentModel>();
+        mList_tmp = new ArrayList<HomeFragmentModel>();
+        if (mList.isEmpty()){
+            initData();
+            Log.d(TAG,"resume"+hList);
+        }
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -251,92 +277,9 @@ public class HomeFragment extends BaseFragment {
         setLoginIcon();
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        SDKInitializer.initialize(getActivity().getApplicationContext());
-        View mView = inflater.inflate(R.layout.fragment_home, container, false);
-        ButterKnife.bind(this, mView);
-        initData(); // TODO: add a json object here and initial the data with it
-                    // Use the model (maybe) or use the initdata function
-        //callShowHabitDetailListAPI();
-
-        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-        for(HomeFragmentModel bean: mList) {
-            String time = bean.getTime();
-            if (time.compareTo("null")!=0) {
-                String[] time_list = time.split(":");
-                Integer Hour = Integer.parseInt(time_list[0]);
-                Integer minute = Integer.parseInt(time_list[1]);
-                if (Hour >= 0 && Hour < 12) {
-                    mList_tmp.add(bean);
-                }
-            }
-            else {
-                mList_tmp.add(bean);
-            }
-        }
-        mList=mList_tmp;
-        mRecyclerView.setHasFixedSize(false);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRecyclerView.setAdapter(
-                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                    @Override
-                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                        holder.setText(R.id.other_habbit_title, s.getTitle());
-                        holder.setText(R.id.time, s.getTime());
-                        holder.setText(R.id.owner, s.getIdentity());
-                        holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                    }
-                    @Override
-                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                        super.onViewHolderCreated(holder, itemView);
-                        ButterKnife.bind(this,itemView);
-                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                    }
-                });
-
-        try {
-            mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-                @Override
-                public void onTabSelected(TabLayout.Tab tab) {
-                    if (tab.getPosition() == 0) {
-                        recyclerViewShowMemberList(0);
-                    } else {
-                        if (tab.getPosition() == 1) {
-                            recyclerViewShowMemberList(1);
-                        } else {
-                            if (tab.getPosition() == 2) {
-                                recyclerViewShowMemberList(2);
-                            } else {
-                                recyclerViewShowMemberList(3);
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onTabUnselected(TabLayout.Tab tab) {
-                }
-
-                @Override
-                public void onTabReselected(TabLayout.Tab tab) {
-
-                }
-            });
-        } catch (Exception e) {
-
-        }
-
-        return mView;
-    }
-
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Log.d(TAG,"HERE");
             new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("habit is complete")
                     .setContentText("congradulation on finishing a new task")
@@ -348,11 +291,7 @@ public class HomeFragment extends BaseFragment {
                                 Log.d(TAG,"CHECK HERE");
                                 mConfirmCompleteBtn.setText("CANSLE");
                                 mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                            } else if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CANSLE")){
-                                Log.d(TAG,"CANCEL HERE");
-                                mConfirmCompleteBtn.setText("CHECK");
-                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.blue_btn_bg_color));
-                            }
+                            } else { }
                         //mConfirmCompleteBtn.setText("确认完成");
                             sDialog.dismissWithAnimation();
                         }
@@ -361,9 +300,10 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
-    void recyclerViewShowMemberList(int flag) {
+    void recyclerViewShowHabitList(int flag) {
         try {
             if (flag == 0) {
+                Log.d(TAG,"recycler"+mList);
                 //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
                 for(HomeFragmentModel bean: mList) {
                     String time = bean.getTime();
@@ -505,7 +445,8 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-    private void initData() {
+    public void initData() {
+        //mList = new ArrayList<HomeFragmentModel>();
         callShowHabitDetailListAPI();
 
         //Local data
@@ -530,8 +471,7 @@ public class HomeFragment extends BaseFragment {
         }*/
     }
     // API : call API and handle result
-
-    private void callShowSingleHabitDetailAPI(StringEntity params){
+    public void callShowSingleHabitDetailAPI(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
         client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
@@ -552,6 +492,8 @@ public class HomeFragment extends BaseFragment {
                 habit.initHabitWithJSON(response);
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.dummyHabitID = habitID;
+                //Log.d(TAG,"mhabitList"+mHabitList);
+                habitDetailFragment.dummyHabitList = mHabitList;
                 replaceFragment(habitDetailFragment,null);
             }
 
@@ -566,7 +508,7 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
-    private void callShowHabitDetailListAPI(){
+    public void callShowHabitDetailListAPI(){
         AsyncHttpClient client = new AsyncHttpClient();
         client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
@@ -578,13 +520,52 @@ public class HomeFragment extends BaseFragment {
         client.get(getContext(),Constant.API_BASE_URL+"habits/created",null, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
                 mCatLoadingView.dismiss();
                 Log.d("API_REPORT", "onSuccess: login");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
                 Log.d("API_REPORT", "onSuccess: response: "+response);
 
                 initHomePageFragment(response);
-                //Log.d(TAG,"CheckThismList"+mList);
+                //hList = mList;
+                for(HomeFragmentModel bean: mList) {
+                    String time = bean.getTime();
+                    if (time.compareTo("null")!=0) {
+                        String[] time_list = time.split(":");
+                        Integer Hour = Integer.parseInt(time_list[0]);
+                        Integer minute = Integer.parseInt(time_list[1]);
+                        if (Hour >= 0 && Hour < 12) {
+                            mList_tmp.add(bean);
+                        }
+                    }
+                    else {
+                        mList_tmp.add(bean);
+                    }
+                }
+                //mList=mList_tmp;
+                mRecyclerView.setHasFixedSize(false);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(
+                        new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                            @Override
+                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                                holder.setText(R.id.other_habbit_title, s.getTitle());
+                                holder.setText(R.id.time, s.getTime());
+                                holder.setText(R.id.owner, s.getIdentity());
+                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+
+                            }
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                ButterKnife.bind(this,itemView);
+                                mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
+                            }
+                        });
+
+                //Log.d(TAG,"initHomePage"+hList);
             }
 
             @Override
@@ -596,14 +577,10 @@ public class HomeFragment extends BaseFragment {
                 showBottomSnackBar(getString(R.string.habbit_pull_fail));
             }
         });
+        //Log.d(TAG,"outsideclient"+mList);
     }
 
-
-
-
-
-
-    private void callGetProfileAPIToGetID(){
+    public void callGetProfileAPIToGetID(){
         if(UserModel.isLogin){
             if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
                 return;
@@ -647,5 +624,36 @@ public class HomeFragment extends BaseFragment {
         }
     }
 
+    public void callAPItoGetMember(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        //mCatLoadingView = new CatLoadingView();
 
+        //mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL+"habits/members",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                //mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: member_response: "+response);
+
+                HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
+                habitDetailFragment.member_profiles = response;
+
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
+    }
 }
