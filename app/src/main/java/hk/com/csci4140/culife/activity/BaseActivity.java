@@ -31,6 +31,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.HomeFragment;
+import hk.com.csci4140.culife.fragment.LoginFragment;
 import hk.com.csci4140.culife.fragment.MessageFragment;
 import hk.com.csci4140.culife.fragment.OtherMissionFragment;
 import hk.com.csci4140.culife.fragment.PostMissionFinishedFragment;
@@ -281,6 +282,9 @@ public class BaseActivity extends AppCompatActivity {
         }else if(f instanceof PostMissionFinishedFragment){
             //Home page current item is 0;
             getBottomNav().setCurrentItem(0);
+        }else if(f instanceof LoginFragment){
+            replaceActivity(MainActivity.class, null);
+            return;
         }
 
 

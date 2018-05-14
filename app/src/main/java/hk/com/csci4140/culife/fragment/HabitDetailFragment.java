@@ -1,11 +1,7 @@
 package hk.com.csci4140.culife.fragment;
 
-import android.app.ActionBar;
-import android.app.DatePickerDialog;
 import android.content.Context;
-import android.media.Image;
 import android.os.Bundle;
-import android.support.design.widget.TabItem;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -14,9 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import org.json.JSONArray;
@@ -30,13 +24,9 @@ import java.text.SimpleDateFormat;
 
 import com.bumptech.glide.Glide;
 import com.cazaea.sweetalert.SweetAlertDialog;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ObservableScrollView;
 import com.roger.catloadinglibrary.CatLoadingView;
 import com.zhy.adapter.recyclerview.CommonAdapter;
 import com.zhy.adapter.recyclerview.base.ViewHolder;
@@ -44,7 +34,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -54,25 +43,15 @@ import java.util.Locale;
 import java.util.Map;
 
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
-import hk.com.csci4140.culife.activity.BaseActivity;
-import hk.com.csci4140.culife.activity.MainActivity;
-import hk.com.csci4140.culife.adapter.ProfileSettingAdapter;
 import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.memberProfileModel;
-import hk.com.csci4140.culife.model.HomeFragmentModel;
 import hk.com.csci4140.culife.model.UserModel;
-import hk.com.csci4140.culife.utility.Utility;
 import io.reactivex.annotations.Nullable;
-import jp.wasabeef.blurry.Blurry;
-
-import com.bumptech.glide.Glide;
 
 
 public class HabitDetailFragment extends BaseFragment{
@@ -177,37 +156,47 @@ public class HabitDetailFragment extends BaseFragment{
     View.OnClickListener mOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            JSONObject jsonParams = new JSONObject();
+            JSONObject outerJsonParams = new JSONObject();
+            try {
+                SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                String date = sDateFormat.format(new java.util.Date());
+                jsonParams.put("habitid", dummyHabitID);
+                jsonParams.put("body",date);
+
+                outerJsonParams.put("check", jsonParams);
+                StringEntity entity = new StringEntity(outerJsonParams.toString());
+                //Log.d(TAG,"bodyentity"+jsonParams);
+                updateCheck(entity);
+            }
+            catch (JSONException e) {
+                e.printStackTrace();
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
+                mConfirmCompleteBtn.setText("CANSEL");
+                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
+            }
             new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("habit is complete")
-                    .setContentText("congradulation on finishing a new task")
+                    .setContentText("Congradulation on finishing a new task! Do you want to write a diary?")
                     .setConfirmText(getString(R.string.warning_confirm))
+                    .setCancelText("Cansel")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-                            if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
-                                mConfirmCompleteBtn.setText("CANSEL");
-                                mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
-                                JSONObject jsonParams = new JSONObject();
-                                JSONObject outerJsonParams = new JSONObject();
-                                try {
-                                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                                    String date = sDateFormat.format(new java.util.Date());
-                                    jsonParams.put("habitid", dummyHabitID);
-                                    jsonParams.put("body",date);
-
-                                    outerJsonParams.put("check", jsonParams);
-                                    StringEntity entity = new StringEntity(outerJsonParams.toString());
-                                    //Log.d(TAG,"bodyentity"+jsonParams);
-                                    updateCheck(entity);
-                                }
-                                catch (JSONException e) {
-                                    e.printStackTrace();
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                }
-                            }
 //                        mConfirmCompleteBtn.setText("确认完成");
+                            //PostDiaryFragment diary = new PostDiaryFragment();
+                            //replaceFragment(diary,null);
                             sDialog.dismissWithAnimation();
+                        }
+                    })
+                    .setCancelClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+//                        mConfirmCompleteBtn.setText("确认完成");
+                            sweetAlertDialog.dismissWithAnimation();
                         }
                     })
                     .show();
@@ -646,7 +635,7 @@ public class HabitDetailFragment extends BaseFragment{
                 mCatLoadingView.dismiss();
                 Log.d("API_REPORT", "onSuccess: login");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: response: "+response);
+                Log.d("API_REPORT", "onSuccess: date_response: "+response);
                 JSONArray date_list = new JSONArray();
                 try {
                     date_list = response.getJSONArray("check_date");
@@ -670,8 +659,8 @@ public class HabitDetailFragment extends BaseFragment{
 
                 Calendar[] days;
                 List<Calendar> blockedDays = new ArrayList<>();
-
-                for (Integer i=0;i < date_list.length();i++) {
+                Boolean flag = false;
+                for (Integer i=1;i < date_list.length();i++) {
                     String date_string = new String();
                     try {
                         date_string = date_list.getString(i);
@@ -682,18 +671,20 @@ public class HabitDetailFragment extends BaseFragment{
 
                     //Log.d(TAG,"date_string"+date_string);
                     blockedDays.add(getCalendarObjectFromString(date_string));
+                    flag = true;
                 }
-                days = blockedDays.toArray(new Calendar[blockedDays.size()]);
+                if (flag) {
+                    days = blockedDays.toArray(new Calendar[blockedDays.size()]);
 
-
-                Calendar[] today;
-                Calendar cal = Calendar.getInstance();
-                List<Calendar> selectedDays = new ArrayList<>();
-                selectedDays.add(cal);
-                today = selectedDays.toArray(new Calendar[selectedDays.size()]);
-                dpd.setSelectableDays(today);
-                dpd.setHighlightedDays(days);
-                dpd.show(getActivity().getFragmentManager(),"Datepickerdialog");
+                    Calendar[] today;
+                    Calendar cal = Calendar.getInstance();
+                    List<Calendar> selectedDays = new ArrayList<>();
+                    selectedDays.add(cal);
+                    today = selectedDays.toArray(new Calendar[selectedDays.size()]);
+                    dpd.setSelectableDays(today);
+                    dpd.setHighlightedDays(days);
+                }
+                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
@@ -731,7 +722,7 @@ public class HabitDetailFragment extends BaseFragment{
                     e.printStackTrace();
                 }
 
-                holder.setText(R.id.complete_number,date_list.length()+" times" );
+                holder.setText(R.id.complete_number,(date_list.length()-1)+" times" );
 
             }
             @Override

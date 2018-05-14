@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -139,6 +140,12 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
     @BindView(R.id.post_mission_one_continue_button)
     Button mConfirmButton;
+
+    @BindView(R.id.create_habit_set_public_switch)
+    Switch mIsPublic;
+
+    @BindView(R.id.create_habit_send_notification_switch)
+    Switch mSendNotification;
 
     private String mTitle;
     private String mPrevTitle;
@@ -542,7 +549,7 @@ public class PostMissionStepOneFragment extends BaseFragment {
         setLoginIconVisible(false);
 
         //Set the bottom navigation visibility
-        setBottomNavFragment(true);
+        setBottomNavFragment(false);
         setPrevBottomNavFragment(true);
     }
 
@@ -629,10 +636,23 @@ public class PostMissionStepOneFragment extends BaseFragment {
             jsonParams.put("body", mHabitContent.getText().toString());
             jsonParams.put("title", mHabitName.getText().toString());
             jsonParams.put("description", mHabitContent.getText().toString());
+            jsonParams.put("start_date", postPeriodStart.getText().toString());
+            jsonParams.put("end_date", postPeriodEnd.getText().toString());
+            if(!("".equals(startTime.getText().toString()))) {
+                jsonParams.put("start_time", startTime.getText().toString());
+            }
+            if(!("".equals(endTime.getText().toString()))) {
+                jsonParams.put("end_time", endTime.getText().toString());
+            }
+            jsonParams.put("is_public", (mIsPublic.isChecked() ? 1 : 0));
+            jsonParams.put("send_notification", (mSendNotification.isChecked() ? 1 : 0));
             if(isEditMode){
                 jsonParams.put("habitid",mHabit.ID);
             }
 
+            Log.d(Constant.API_REPORT_TAG, "midnight: "+postPeriodStart.getText().toString());
+            Log.d(Constant.API_REPORT_TAG, "midnight: "+startTime.getText().toString());
+            Log.d(Constant.API_REPORT_TAG, "midnight: public"+(mIsPublic.isChecked() ? 1 : 0));
 
             outerJsonParams.put("habit",jsonParams);
             StringEntity entity = new StringEntity(outerJsonParams.toString());
@@ -669,7 +689,38 @@ public class PostMissionStepOneFragment extends BaseFragment {
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: create habit");
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
                 Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
-                showBottomSnackBar("Welcome to CULife !");
+                //showBottomSnackBar("Welcome to CULife !");
+                JSONObject jsonHabit = new JSONObject();
+                try {
+                    jsonHabit = response.getJSONObject("habit");
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+                Integer newCreateHabitID = 0;
+                try {
+                    newCreateHabitID = jsonHabit.getInt("id");
+                }
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                JSONObject jsonParams1 = new JSONObject();
+                JSONObject outerJsonParams1 = new JSONObject();
+                try{
+                    jsonParams1.put("habitid",newCreateHabitID);
+                    jsonParams1.put("body","");
+                    jsonParams1.put("score",0);
+                    outerJsonParams1.put("check",jsonParams1);
+                    StringEntity entity1 = new StringEntity(outerJsonParams1.toString());
+                    //Log.d(TAG,"checkcreate"+outerJsonParams1);
+                    callCreateCheckAPI(entity1);}
+                catch (JSONException e){
+                    e.printStackTrace();
+                }
+                catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 replaceActivity(MainActivity.class, null);
             }
 
@@ -709,6 +760,36 @@ public class PostMissionStepOneFragment extends BaseFragment {
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
                 mView.dismiss();
                 Log.d(Constant.API_REPORT_TAG, "onFailure: update habit");
+                Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
+            }
+        });
+    }
+
+    private void callCreateCheckAPI(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+
+        mView = new CatLoadingView();
+
+        mView.show(getFragmentManager(), "");
+
+        client.post(getContext(),Constant.API_BASE_URL+"habits/check_create",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: create check");
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: status : "+statusCode);
+                Log.d(Constant.API_REPORT_TAG, "onSuccess: response: "+response);
+                //showBottomSnackBar("Welcome to CULife !");
+                replaceActivity(MainActivity.class, null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mView.dismiss();
+                Log.d(Constant.API_REPORT_TAG, "onFailure: create check");
                 Log.d(Constant.API_REPORT_TAG, "onFailure: status : "+statusCode);
                 Log.d(Constant.API_REPORT_TAG, "onFailure: response : "+response);
             }
