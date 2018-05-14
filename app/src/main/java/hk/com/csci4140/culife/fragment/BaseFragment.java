@@ -191,7 +191,8 @@ public class BaseFragment extends Fragment {
                 @Override
                 public void onClick(View view) {
                     //Goto user profile fragment
-                    replaceFragment(new UserProfileFragment(), null);
+//                    setFragment(new UserProfileFragment(), null);
+                    getBottomNav().setCurrentItem(3);
                 }
             });
         }

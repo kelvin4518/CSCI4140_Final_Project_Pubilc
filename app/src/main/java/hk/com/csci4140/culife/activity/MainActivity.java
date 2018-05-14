@@ -421,7 +421,8 @@ public class MainActivity extends BaseActivity {
             setBottomNav();
 
             //Check if the user has login, if not, show the policy fragment
-            Fragment initFragment = UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
+            Fragment initFragment;
+                    //UserModel.isLogin ? new HomeFragment() : new PolicyFragment();
             // michael added, to disable the terms and conditions page when starting the app
 
 
@@ -430,7 +431,7 @@ public class MainActivity extends BaseActivity {
             boolean hasBottomNav = UserModel.isLogin;
             //Set if the fragment has bottom navigation bar
             setBottomNavFragment(hasBottomNav);
-//            setFragment(initFragment, null);
+            setFragment(initFragment, null);
             JSONObject jsonParams = new JSONObject();
 //            callGetHabitListAPI();
             if(UserModel.myID == null || UserModel.myID == ""){
@@ -614,7 +615,7 @@ public class MainActivity extends BaseActivity {
                 fragment = null;
                 break;
         }
-        replaceFragment(fragment, null);
+        setFragment(fragment, null);
     }
 
 

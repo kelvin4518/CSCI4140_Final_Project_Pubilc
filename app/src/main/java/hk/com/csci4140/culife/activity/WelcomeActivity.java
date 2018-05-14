@@ -107,7 +107,13 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void run() {
                 //After 2 second, go to MainActivity
-                replaceActivity(MainActivity.class, null);
+                if(UserModel.isLogin){
+                    replaceActivity(MainActivity.class, null);
+                }
+                else{
+                    replaceActivity(LoginActivity.class, null);
+                }
+
             }
         }, 2000);
     }

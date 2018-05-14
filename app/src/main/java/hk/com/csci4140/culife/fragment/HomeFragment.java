@@ -159,6 +159,7 @@ public class HomeFragment extends BaseFragment {
         }
         @Override
         public void onClick(View v) {
+//            showBottomSnackBar(mList_tmp.get(position).getHabitId() + "");
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
@@ -223,6 +224,12 @@ public class HomeFragment extends BaseFragment {
         initData(); // TODO: add a json object here and initial the data with it
 
         return mView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
     }
 
     /*public void onPause(){
@@ -493,7 +500,10 @@ public class HomeFragment extends BaseFragment {
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.dummyHabitID = habitID;
                 //Log.d(TAG,"mhabitList"+mHabitList);
-                habitDetailFragment.dummyHabitList = mHabitList;
+                ArrayList<HabitModel> tem_HabitList = new ArrayList<>();
+                tem_HabitList.add(habit);
+//                habitDetailFragment.dummyHabitList = mHabitList;
+                habitDetailFragment.dummyHabitList = tem_HabitList;
                 replaceFragment(habitDetailFragment,null);
             }
 
@@ -549,11 +559,31 @@ public class HomeFragment extends BaseFragment {
                 mRecyclerView.setAdapter(
                         new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
                             @Override
-                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                            public void convert(ViewHolder holder, HomeFragmentModel s,final int pos) {
                                 holder.setText(R.id.other_habbit_title, s.getTitle());
                                 holder.setText(R.id.time, s.getTime());
                                 holder.setText(R.id.owner, s.getIdentity());
-                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+//                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        JSONObject jsonParams = new JSONObject();
+                                        JSONObject outerJsonParams = new JSONObject();
+                                        try {
+                                            HomeFragmentModel bean = mList_tmp.get(pos);
+                                            habitID = bean.getHabitId();
+
+                                            jsonParams.put("habitid", habitID + "");
+                                            outerJsonParams.put("habit",jsonParams);
+                                            StringEntity entity = new StringEntity(outerJsonParams.toString());
+                                            callShowSingleHabitDetailAPI(entity);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
 
                             }
                             @Override
