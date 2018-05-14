@@ -653,5 +653,4 @@ public class HomeFragment extends BaseFragment {
         });
         //Log.d(TAG,"outsideclient"+mList);
     }
-
 }

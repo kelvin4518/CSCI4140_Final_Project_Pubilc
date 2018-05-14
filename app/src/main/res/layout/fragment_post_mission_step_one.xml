@@ -239,38 +239,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="0dp"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_weight="1"
-                        android:text="朋友可见"/>
-                    <Switch
-                        android:id="@+id/create_habit_set_friend_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="0dp"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="0dp"
-                        android:layout_weight="1"
-                        android:text="私密(仅自己可见)"/>
-                    <Switch
-                        android:id="@+id/create_habit_set_private_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="0dp"/>
-                </LinearLayout>
 
             </LinearLayout>
 
@@ -312,15 +280,38 @@
                         android:text="" />
                 </LinearLayout>
 
-                <TextView
+                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="开始日期"/>
 
-                <TextView
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择"
+                    android:onClick="showDatePickerDialog" />
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="结束如期"/>
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="结束日期"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="选择"
+                    android:onClick="showDatePickerDialog" />
+                </LinearLayout>
 
             </LinearLayout>
 
@@ -333,7 +324,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@android:drawable/edit_text"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
 
                 <LinearLayout
@@ -391,7 +382,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:background="@android:drawable/edit_text"
-                android:visibility="gone"
+                android:visibility="visible"
                 >
 
                 <LinearLayout
@@ -400,6 +391,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="@dimen/spacing_small"
                     android:paddingBottom="@dimen/spacing_small"
+                    android:visibility="gone"
                     >
 
                     <TextView
@@ -442,7 +434,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="start|center_vertical"
-                        android:text="@string/post_habbit_period"
+                        android:text="起始日期"
                         android:textColor="#6a4080"
                         android:textSize="@dimen/text_size_normal"
                         android:textStyle="bold" />

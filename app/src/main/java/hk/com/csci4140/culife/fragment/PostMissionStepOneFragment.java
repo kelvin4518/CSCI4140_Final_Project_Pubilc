@@ -1,6 +1,7 @@
 package hk.com.csci4140.culife.fragment;
 
 import android.app.DatePickerDialog;
+import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -602,6 +603,8 @@ public class PostMissionStepOneFragment extends BaseFragment {
             mConfirmButton.setText("修改");
         }
     }
+
+
 
 
 

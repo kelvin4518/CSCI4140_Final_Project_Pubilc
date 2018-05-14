@@ -1,9 +1,11 @@
 package hk.com.csci4140.culife.activity;
 
+import android.app.DialogFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.View;
 
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigation;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
@@ -27,6 +29,7 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.ChatListFragment;
+import hk.com.csci4140.culife.fragment.DatePickerFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
@@ -153,7 +156,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        // newFragment.show(getSupportFragmentManager(), "datePicker");
+        newFragment.show(this.getFragmentManager(), "datePicker");
+    }
     // Bottom Navigation Bar
 
     //Set the bottom navigation bar
@@ -243,7 +250,7 @@ public class MainActivity extends BaseActivity {
                 fragment = null;
                 break;
         }
-        setFragment(fragment, null);
+        replaceFragment(fragment, null);
     }
 
 
