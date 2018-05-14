@@ -42,14 +42,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonArray;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.roger.catloadinglibrary.CatLoading;
+
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.roger.catloadinglibrary.CatLoadingView;
-
+//import com.roger.catloadinglibrary.CatLoading;
 import org.json.JSONObject;
 
 import butterknife.BindView;
