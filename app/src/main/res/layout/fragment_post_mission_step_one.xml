@@ -318,7 +318,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="43dp"
+                    android:layout_height="40dp"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/spacing_normal"
                     android:paddingTop="@dimen/spacing_normal">
@@ -404,19 +404,12 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@android:color/darker_gray"
-                    />
-
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/spacing_small"
+                    android:layout_height="40dp"
+                    android:orientation="horizontal"
                     android:paddingBottom="@dimen/spacing_small"
-                    >
+                    android:paddingTop="@dimen/spacing_small">
 
                     <TextView
                         android:layout_width="0dp"
@@ -429,13 +422,12 @@
                         android:textStyle="bold" />
 
                     <Spinner
-                        android:visibility="gone"
                         android:id="@+id/post_mission_one_period_spinner"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="4"
                         android:gravity="end|center_vertical"
-                        />
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/post_mission_one_period_start_time"

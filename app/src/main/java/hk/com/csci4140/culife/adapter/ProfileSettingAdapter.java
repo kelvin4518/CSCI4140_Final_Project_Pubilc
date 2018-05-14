@@ -25,6 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.fragment.SetProfileFragment;
+import hk.com.csci4140.culife.fragment.BaseFragment;
 import hk.com.csci4140.culife.model.EditProfileOptionModel;
 /**
  * Created by maoyuxuan(Michael Mao) on 06/05/2018.
@@ -43,8 +45,8 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
 
     // define the custom view holder
     final static class ProfileSettingViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_profile_setting_logo)
-        ImageView mLogo;
+        //@BindView(R.id.item_profile_setting_logo)
+        //ImageView mLogo;
 
         @BindView(R.id.item_profile_setting_content)
         TextView mContent;
@@ -91,7 +93,7 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
     public void onBindViewHolder(final ProfileSettingAdapter.ProfileSettingViewHolder holder, final int position) {
         holder.mViewHolderPosition = position;
         holder.mContent.setText(settingList.get(position));
-        holder.mLogo.setImageResource(settingLogoList.get(position));
+        //holder.mLogo.setImageResource(settingLogoList.get(position));
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +102,7 @@ public class ProfileSettingAdapter extends RecyclerView.Adapter<ProfileSettingAd
                 if(holder.mViewHolderPosition==0){
                     message = "1 st row";
                 }else if(holder.mViewHolderPosition==1){
-                    message = "2 nd row";
+                    SetProfileFragment setprofile = new SetProfileFragment();
                 }
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
             }

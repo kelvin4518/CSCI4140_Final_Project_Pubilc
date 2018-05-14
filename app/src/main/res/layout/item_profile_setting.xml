@@ -18,23 +18,14 @@
         android:visibility="gone"
         android:text="Button" />
 
-    <ImageView
-        android:id="@+id/item_profile_setting_logo"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="@dimen/spacing_normal"
-        android:src="@mipmap/ic_profile_image_placeholder" />
-
     <TextView
         android:id="@+id/item_profile_setting_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
+        android:layout_alignStart="@+id/null"
         android:layout_centerVertical="true"
-        android:textSize="20dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textSize="20dp" />
 
     <View
         android:layout_width="match_parent"

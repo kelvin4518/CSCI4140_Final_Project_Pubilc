@@ -29,38 +29,98 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
                 android:layout_weight="0"
-                android:gravity="center_vertical"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/user_profile_user_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:text="TextView"
-                    android:textSize="20dp" />
+                <Space
+                    android:layout_width="250dp"
+                    android:layout_height="20dp" />
 
-                <TextView
-                    android:id="@+id/user_profile_phone"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:inputType="phone" />
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="0"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/user_profile_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:ems="10"
-                    android:enabled="false"
-                    android:inputType="textEmailAddress" />
+                    <LinearLayout
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView5"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="User Name:"
+                            android:textColor="@color/aurora_hint_color_input"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/user_profile_user_name"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:textSize="20dp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="250dp"
+                        android:layout_height="40dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView6"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="User ID:"
+                            android:textColor="@color/aurora_hint_color_input"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/user_profile_phone"
+                            android:layout_width="150dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:enabled="false"
+                            android:inputType="phone" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="250dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView7"
+                            android:layout_width="250dp"
+                            android:layout_height="20dp"
+                            android:layout_weight="1"
+                            android:text="Introduce yourself"
+                            android:textColor="@color/aurora_hint_color_input"
+                            android:textStyle="italic" />
+
+                        <TextView
+                            android:id="@+id/user_profile_email"
+                            android:layout_width="250dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            android:ems="10"
+                            android:enabled="false"
+                            android:inputType="textEmailAddress" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </LinearLayout>
+
         </LinearLayout>
 
     </android.support.v7.widget.CardView>

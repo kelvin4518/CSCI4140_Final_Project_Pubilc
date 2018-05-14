@@ -1,28 +1,16 @@
 package hk.com.csci4140.culife.adapter;
 
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.support.design.widget.TabLayout;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import hk.com.csci4140.culife.R;
-import hk.com.csci4140.culife.fragment.HabitDetailFragment;
-import hk.com.csci4140.culife.fragment.SettingFragment;
 import hk.com.csci4140.culife.model.HomeFragmentModel;
 
 

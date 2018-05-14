@@ -157,6 +157,7 @@ public class HomeFragment extends BaseFragment {
         public MyClickListener(int my_position){
             this.position = my_position;
         }
+
         @Override
         public void onClick(View v) {
             JSONObject jsonParams = new JSONObject();
@@ -300,150 +301,6 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
-    void recyclerViewShowHabitList(int flag) {
-        try {
-            if (flag == 0) {
-                Log.d(TAG,"recycler"+mList);
-                //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                for(HomeFragmentModel bean: mList) {
-                    String time = bean.getTime();
-                    String[] time_list = time.split(":");
-                    Integer Hour = Integer.parseInt(time_list[0]);
-                    Integer minute = Integer.parseInt(time_list[1]);
-                    if (Hour >=0 && Hour <12) {
-                        mList_tmp.add(bean);
-                    }
-                }
-
-                mRecyclerView.setHasFixedSize(false);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mRecyclerView.setAdapter(
-                        new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                            @Override
-                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                holder.setText(R.id.other_habbit_title, s.getTitle());
-                                holder.setText(R.id.time, s.getTime());
-                                holder.setText(R.id.owner, s.getIdentity());
-                                holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                            }
-                            @Override
-                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                super.onViewHolderCreated(holder, itemView);
-                                ButterKnife.bind(this,itemView);
-                                mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                            }
-                        });
-            } else {
-                if (flag == 1) {
-                    //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                    for(HomeFragmentModel bean: mList) {
-                        String time = bean.getTime();
-                        String[] time_list = time.split(":");
-                        Integer Hour = Integer.parseInt(time_list[0]);
-                        Integer minute = Integer.parseInt(time_list[1]);
-                        if (Hour >=12 && Hour <17) {
-                            mList_tmp.add(bean);
-                        }
-                    }
-
-                    mRecyclerView.setHasFixedSize(false);
-                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    mRecyclerView.setAdapter(
-                            new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                @Override
-                                public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                    holder.setText(R.id.other_habbit_title, s.getTitle());
-                                    holder.setText(R.id.time, s.getTime());
-                                    holder.setText(R.id.owner, s.getIdentity());
-                                    holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                }
-                                @Override
-                                public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                    super.onViewHolderCreated(holder, itemView);
-                                    ButterKnife.bind(this,itemView);
-                                    mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                    itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                }
-                            });
-                } else {
-                    if (flag == 2) {
-                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                        for(HomeFragmentModel bean: mList) {
-                            String time = bean.getTime();
-                            String[] time_list = time.split(":");
-                            Integer Hour = Integer.parseInt(time_list[0]);
-                            Integer minute = Integer.parseInt(time_list[1]);
-                            if (Hour >=17 && Hour <24) {
-                                mList_tmp.add(bean);
-                            }
-                        }
-
-                        mRecyclerView.setHasFixedSize(false);
-                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        mRecyclerView.setAdapter(
-                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                    @Override
-                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                        holder.setText(R.id.other_habbit_title, s.getTitle());
-                                        holder.setText(R.id.time, s.getTime());
-                                        holder.setText(R.id.owner, s.getIdentity());
-                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                    }
-                                    @Override
-                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                        super.onViewHolderCreated(holder, itemView);
-                                        ButterKnife.bind(this,itemView);
-                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                    }
-                                });
-                    } else {
-                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                        for(HomeFragmentModel bean: mList) {
-                            String time = bean.getTime();
-                            String[] time_list = time.split(":");
-                            Integer Hour = Integer.parseInt(time_list[0]);
-                            Integer minute = Integer.parseInt(time_list[1]);
-                            mList_tmp.add(bean);
-                        }
-
-                        mRecyclerView.setHasFixedSize(false);
-                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        mRecyclerView.setAdapter(
-                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                    @Override
-                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                        holder.setText(R.id.other_habbit_title, s.getTitle());
-                                        holder.setText(R.id.time, s.getTime());
-                                        holder.setText(R.id.owner, s.getIdentity());
-                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                    }
-                                    @Override
-                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                        super.onViewHolderCreated(holder, itemView);
-                                        ButterKnife.bind(this,itemView);
-                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                    }
-                                });
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "onCreateView: fail: " + e);
-        }
-        //recyclerViewCancelScroll();
-    }
-
 
     public void initData() {
         //mList = new ArrayList<HomeFragmentModel>();
@@ -559,6 +416,7 @@ public class HomeFragment extends BaseFragment {
                                 super.onViewHolderCreated(holder, itemView);
                                 ButterKnife.bind(this,itemView);
                                 mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+
                                 itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
                             }
                         });
@@ -653,4 +511,5 @@ public class HomeFragment extends BaseFragment {
         });
         //Log.d(TAG,"outsideclient"+mList);
     }
+
 }
