@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -139,6 +140,12 @@ public class PostMissionStepOneFragment extends BaseFragment {
 
     @BindView(R.id.post_mission_one_continue_button)
     Button mConfirmButton;
+
+    @BindView(R.id.create_habit_set_public_switch)
+    Switch mIsPublic;
+
+    @BindView(R.id.create_habit_send_notification_switch)
+    Switch mSendNotification;
 
     private String mTitle;
     private String mPrevTitle;
@@ -629,10 +636,23 @@ public class PostMissionStepOneFragment extends BaseFragment {
             jsonParams.put("body", mHabitContent.getText().toString());
             jsonParams.put("title", mHabitName.getText().toString());
             jsonParams.put("description", mHabitContent.getText().toString());
+            jsonParams.put("start_date", postPeriodStart.getText().toString());
+            jsonParams.put("end_date", postPeriodEnd.getText().toString());
+            if(!("".equals(startTime.getText().toString()))) {
+                jsonParams.put("start_time", startTime.getText().toString());
+            }
+            if(!("".equals(endTime.getText().toString()))) {
+                jsonParams.put("end_time", endTime.getText().toString());
+            }
+            jsonParams.put("is_public", (mIsPublic.isChecked() ? 1 : 0));
+            jsonParams.put("send_notification", (mSendNotification.isChecked() ? 1 : 0));
             if(isEditMode){
                 jsonParams.put("habitid",mHabit.ID);
             }
 
+            Log.d(Constant.API_REPORT_TAG, "midnight: "+postPeriodStart.getText().toString());
+            Log.d(Constant.API_REPORT_TAG, "midnight: "+startTime.getText().toString());
+            Log.d(Constant.API_REPORT_TAG, "midnight: public"+(mIsPublic.isChecked() ? 1 : 0));
 
             outerJsonParams.put("habit",jsonParams);
             StringEntity entity = new StringEntity(outerJsonParams.toString());
