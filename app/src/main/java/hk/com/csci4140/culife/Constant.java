@@ -25,7 +25,7 @@ public interface Constant {
     String FRIEND_LIST_FRAGMENT_INVITE_MODE = "use_friend_list_to_invite_friend_to_habit";
     String FRIEND_LIST_FRAGMENT_START_CHAT_MODE = "use_friend_list_to_start_a_chat";
     String FRIEND_LIST_FRAGMENT_VIEW_FRIEND_LIST_MODE = "use_friend_list_to_view_my_friend_and_see_their_profile";
-
+    Integer HABBIT_ID_Diary = 0;
 
 
     //General String Value

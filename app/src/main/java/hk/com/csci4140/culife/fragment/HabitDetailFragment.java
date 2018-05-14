@@ -51,6 +51,7 @@ import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.model.HabitModel;
 import hk.com.csci4140.culife.model.memberProfileModel;
 import hk.com.csci4140.culife.model.UserModel;
+import hk.com.csci4140.culife.utility.SessionManager;
 import io.reactivex.annotations.Nullable;
 
 
@@ -81,9 +82,6 @@ public class HabitDetailFragment extends BaseFragment{
         getToolbar().setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Go to the previous navigation bar selected item
-                //getBottomNav().setCurrentItem(((MainActivity) getActivity()).getPreviousItem());
-                //super.onBackPressed();
                 getFragmentManager().popBackStack();
             }
         });
@@ -186,9 +184,10 @@ public class HabitDetailFragment extends BaseFragment{
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
-//                        mConfirmCompleteBtn.setText("确认完成");
-                            //PostDiaryFragment diary = new PostDiaryFragment();
-                            //replaceFragment(diary,null);
+                            Context mContext = null;
+                            PostDiaryFragment diary = new PostDiaryFragment();
+                            diary.habbitIDfordiary = dummyHabitID;
+                            replaceFragment(diary,null);
                             sDialog.dismissWithAnimation();
                         }
                     })
