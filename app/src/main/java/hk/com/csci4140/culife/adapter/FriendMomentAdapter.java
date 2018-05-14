@@ -102,7 +102,7 @@ public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapte
             });
 
             holder.content.setMaxLines(Integer.MAX_VALUE);//设置文本的最大行数，为整数的最大数值
-            holder.content.setText(mList.get(position).getContent());
+            holder.content.setText(mList.get(position).getDescription());
         } else {
             //如果之前已经初始化过了，则使用保存的状态。
             switch (state) {
@@ -120,7 +120,7 @@ public class FriendMomentAdapter extends RecyclerView.Adapter<FriendMomentAdapte
                     holder.expandOrFold.setText("收起");
                     break;
             }
-            holder.content.setText(mList.get(position).getContent());
+            holder.content.setText(mList.get(position).getDescription());
         }
 
         //全文和收起的点击事件

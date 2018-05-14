@@ -257,7 +257,7 @@ public class FriendListFragment extends BaseFragment {
 //        setPrevTitle("习惯名称");
 
         //Set the toolbar title of this fragment
-        mTitle = "习惯标题";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();

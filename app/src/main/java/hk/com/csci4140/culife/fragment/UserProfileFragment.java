@@ -100,7 +100,7 @@ public class UserProfileFragment extends BaseFragment {
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();
         }
-        mTitle = "个人资料";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();

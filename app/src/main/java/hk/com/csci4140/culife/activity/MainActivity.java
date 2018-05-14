@@ -62,6 +62,7 @@ import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.fragment.ChatListFragment;
 import hk.com.csci4140.culife.fragment.FriendListFragment;
 import hk.com.csci4140.culife.fragment.DatePickerFragment;
+import hk.com.csci4140.culife.fragment.FriendMomentFragment;
 import hk.com.csci4140.culife.fragment.HabitDetailFragment;
 import hk.com.csci4140.culife.fragment.HomeFragment;
 import hk.com.csci4140.culife.fragment.PolicyFragment;
@@ -535,14 +536,14 @@ public class MainActivity extends BaseActivity {
         AHBottomNavigationItem item1 = new AHBottomNavigationItem(R.string.nav_home, R.drawable.ic_menu_camera, R.color.colorPrimary);
         AHBottomNavigationItem item2 = new AHBottomNavigationItem(R.string.nav_range, R.drawable.ic_menu_send, R.color.colorPrimary);
         AHBottomNavigationItem item3 = new AHBottomNavigationItem(R.string.nav_add, R.drawable.ic_action_add, R.color.colorPrimary);
-        //AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.nav_message, R.drawable.ic_menu_gallery, R.color.colorPrimary);
+        AHBottomNavigationItem item4 = new AHBottomNavigationItem(R.string.nav_message, R.drawable.ic_menu_gallery, R.color.colorPrimary);
         AHBottomNavigationItem item5 = new AHBottomNavigationItem(R.string.nav_other_mission, R.drawable.ic_menu_manage, R.color.colorPrimary);
 
         // Add items
         bottomNavigation.addItem(item1);
         bottomNavigation.addItem(item2);
         bottomNavigation.addItem(item3);
-        //bottomNavigation.addItem(item4);
+        bottomNavigation.addItem(item4);
         bottomNavigation.addItem(item5);
 
         // Set background color
@@ -598,17 +599,20 @@ public class MainActivity extends BaseActivity {
                 break;
             case 1:
                 //fragment = new HomeFragment();
-                //fragment = new FriendMomentFragment();
-                fragment = mChatListFragment;
+                fragment = new FriendMomentFragment();
+                // fragment = mChatListFragment;
                 break;
             case 2:
-                 fragment = new PostMissionStepOneFragment();
+                //fragment = mChatListFragment;
                 //fragment = new ();
+                fragment = new PostMissionStepOneFragment();
                 break;
             case 3:
-                //fragment = new HabitDetailFragment();
-                //break;
-            //case 4:
+                // fragment = new PostMissionStepOneFragment();
+                fragment = mChatListFragment;
+                break;
+
+            case 4:
                 fragment = new UserProfileFragment();
                 break;
             default:

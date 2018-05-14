@@ -339,7 +339,7 @@ public class ChatListFragment extends BaseFragment {
             mPrevTitle = getPrevTitle();
         }
 
-        mTitle = "习惯标题";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();
