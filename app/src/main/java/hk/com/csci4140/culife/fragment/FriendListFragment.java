@@ -247,7 +247,7 @@ public class FriendListFragment extends BaseFragment {
 
         //Set the title of this fragment, and set the prev title
         if (mTitle == null) {
-            mTitle = getString(R.string.user_profile_fragment_title);
+            mTitle = "CULife";
         }
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();
@@ -257,7 +257,7 @@ public class FriendListFragment extends BaseFragment {
 //        setPrevTitle("习惯名称");
 
         //Set the toolbar title of this fragment
-        mTitle = "习惯标题";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();
@@ -358,12 +358,13 @@ public class FriendListFragment extends BaseFragment {
                     object.put(Constant.USER_CHAT_LIST_NAME,userSelected.username);
                     object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"");
                     object.put(Constant.USER_CHAT_LIST_LAST_DATE,reportDate);
-                    UserModel.addNewChatToChatList(object);
+                    UserModel.addNewChatToChatList(getContext(),object);
 
 
                     // TODO : Should let ChatListFragment to call the replace fragment, so that when exit the chat interface, it go back to ChatListFragmet
                     ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
-                    chatDetailFragment.mDatabaseName = userSelected.id;
+                    // chatDetailFragment.mDatabaseName = userSelected.id;
+                    chatDetailFragment.mOtherUserID = userSelected.id;
                     replaceFragment(chatDetailFragment,null);
                 }catch (Exception e){
 

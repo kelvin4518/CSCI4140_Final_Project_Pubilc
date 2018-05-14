@@ -259,15 +259,14 @@ public class BaseActivity extends AppCompatActivity {
     //Override the onBackPressed
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
-            super.onBackPressed();
-            return;
-        }
+
+
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.content);
         //Press Back of Post Mission Step One Fragment
         if(f instanceof PostMissionStepOneFragment){
             getBottomNav().setCurrentItem(((MainActivity)this).getPreviousItem());
+//            clearFragmentCallbackStack();
             return;
         }
         else if (f instanceof RegisterFinishedFragment){
@@ -282,10 +281,18 @@ public class BaseActivity extends AppCompatActivity {
         }else if(f instanceof PostMissionFinishedFragment){
             //Home page current item is 0;
             getBottomNav().setCurrentItem(0);
-        }else if(f instanceof LoginFragment){
-            replaceActivity(MainActivity.class, null);
+        }
+//        else if(f instanceof LoginFragment){
+//            replaceActivity(MainActivity.class, null);
+//            return;
+//        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() != 0) {
+            super.onBackPressed();
             return;
         }
+
+
 
 
         ActivityManager activityManager = (ActivityManager) getSystemService( ACTIVITY_SERVICE );

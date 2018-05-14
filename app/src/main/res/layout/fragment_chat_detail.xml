@@ -8,7 +8,12 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/white">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+    </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/chat_detail_message_reclyerView"
@@ -25,28 +30,30 @@
         android:id="@+id/listFooter"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:minHeight="50dp"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
         android:gravity="bottom">
 
         <EditText
             android:id="@+id/chat_detail_message_input"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:hint="hint message"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimary"
+            android:textColorHint="@color/themeMainBackgroundGrey"
+            android:hint="input message"
             android:imeActionLabel="send"
-            android:imeOptions="actionUnspecified"
-            android:inputType="textCapSentences|textAutoCorrect"
-            android:maxLines="1"
-            android:gravity="center_horizontal"/>
+            android:imeOptions="actionUnspecified"/>
+
 
         <ImageButton
             android:id="@+id/chat_detail_sendButton"
             android:padding="10dp"
-            android:background="@drawable/blue_background"
+            android:background="@drawable/circle_white_background_small"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_send"

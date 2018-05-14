@@ -121,7 +121,7 @@ public class EditProfileFragment extends BaseFragment {
         if(mTitle == null){
             if(getPrevTitle().equals(getString(R.string.register_finished_title))){
                 //If previous fragment is Register Finished fragment, then the title should be "create profile"
-                mTitle = getString(R.string.edit_profile_title);
+                mTitle = "CULife";
                 prevFragment = PrevFragment.FINISHED_REGISTER;
             }
             else {

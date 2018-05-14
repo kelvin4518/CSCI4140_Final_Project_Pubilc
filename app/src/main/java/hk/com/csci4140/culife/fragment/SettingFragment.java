@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
+import hk.com.csci4140.culife.activity.LoginActivity;
 import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.http.HttpMethod;
 import hk.com.csci4140.culife.model.LoginModel;
@@ -298,9 +299,10 @@ public class SettingFragment extends BaseFragment {
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
                         UserModel.logout(getContext());
                         sweetAlertDialog.cancel();
-                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        Intent intent = new Intent(getActivity(), LoginActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
+//                        startActivity(intent);
+                        replaceActivity(LoginActivity.class, null);
                     }
                 })
                 .show();

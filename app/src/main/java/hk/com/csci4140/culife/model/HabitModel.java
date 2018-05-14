@@ -102,6 +102,7 @@ public class HabitModel {
 
     public void initHabitWithJSON(JSONObject response){
         try {
+            response = response.getJSONObject("habit");
             Integer id = response.getInt("id");
             JSONObject author = response.getJSONObject("author");
             //Log.d(TAG,"jsonauthor"+author);
@@ -165,6 +166,7 @@ public class HabitModel {
             userFollowing = author_following;
         }
         catch(JSONException e) {
+            Log.i("august", e.toString());
             e.printStackTrace();
         }
 

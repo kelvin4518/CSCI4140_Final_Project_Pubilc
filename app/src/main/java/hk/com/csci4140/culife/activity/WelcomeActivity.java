@@ -22,6 +22,7 @@ import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.R;
 import hk.com.csci4140.culife.model.UserChatModel;
 import hk.com.csci4140.culife.model.UserModel;
+import hk.com.csci4140.culife.utility.SessionManager;
 import hk.com.csci4140.culife.utility.Utility;
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.OnPermissionDenied;
@@ -52,12 +53,14 @@ public class WelcomeActivity extends BaseActivity {
 
         try {
 //            JSONObject object = new JSONObject();
-//            object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,"10");
+//            object.put(Constant.USER_CHAT_LIST_OTHER_USER_ID,"9");
 //            object.put(Constant.USER_CHAT_LIST_ICON_LINK,"https://avatars0.githubusercontent.com/u/9919?s=280&v=4");
 //            object.put(Constant.USER_CHAT_LIST_NAME,"username!");
 //            object.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,"some message");
 //            object.put(Constant.USER_CHAT_LIST_LAST_DATE,"04/05/2018");
+//            Log.d("TEST ADD", "here 1 ");
 //            UserModel.addNewChatToChatList(object);
+//            Log.d("TEST ADD", "here 2 ");
         }catch (Exception e){
 
         }
@@ -71,6 +74,8 @@ public class WelcomeActivity extends BaseActivity {
             UserModel.logout(WelcomeActivity.this);
         }
 
+
+        SessionManager.putString(WelcomeActivity.this,Constant.USER_CHATTING_DATABASE,"");
 
 
         // initialize the UserChatModel
@@ -102,7 +107,13 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void run() {
                 //After 2 second, go to MainActivity
-                replaceActivity(MainActivity.class, null);
+                if(UserModel.isLogin){
+                    replaceActivity(MainActivity.class, null);
+                }
+                else{
+                    replaceActivity(LoginActivity.class, null);
+                }
+
             }
         }, 2000);
     }

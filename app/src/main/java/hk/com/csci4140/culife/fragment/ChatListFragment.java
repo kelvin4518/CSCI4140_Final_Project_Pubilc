@@ -129,8 +129,8 @@ public class ChatListFragment extends BaseFragment {
     };
 
 
-    public void setSourceData(ArrayList<ChatListItemModel> sourceData) {
-        mSourceData = sourceData;
+    public void setSourceData() {
+        mSourceData = new ArrayList<ChatListItemModel>();
         // fake something for now
 
 
@@ -138,6 +138,7 @@ public class ChatListFragment extends BaseFragment {
 
             try{
                 JSONObject object = UserModel.myChatList.getJSONObject(i);
+                Log.d(TAG, "setSourceData: wtfwiththelist: "+object);
 
                 ChatListItemModel chatListItemModel = new ChatListItemModel();
                 chatListItemModel.otherUserID = object.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID);
@@ -146,6 +147,14 @@ public class ChatListFragment extends BaseFragment {
                 chatListItemModel.lastChatTime = object.getString(Constant.USER_CHAT_LIST_LAST_DATE);
                 chatListItemModel.lastChatMessage = object.getString(Constant.USER_CHAT_LIST_LAST_MESSAGE);
                 chatListItemModel.correspondingChatDatabaseName = chatListItemModel.otherUserID;
+
+                try {
+                    chatListItemModel.isNotRead = object.getString(Constant.USER_CHAT_IS_NOT_READ);
+                }catch (Exception e){
+                    chatListItemModel.isNotRead = "false";
+                }
+
+
                 Log.d(TAG, "setSourceData: databaseName: "+chatListItemModel.correspondingChatDatabaseName);
                 mSourceData.add(chatListItemModel);
             }catch (Exception e){
@@ -155,12 +164,14 @@ public class ChatListFragment extends BaseFragment {
         }
     }
 
-    void putDataToRecylerView(){
+    public void putDataToRecylerView(){
 
         // iterate the mSourceData
         mRecyclerView.setHasFixedSize(false);
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        Log.d(TAG, "putDataToRecylerView: !!!RecyclerViewIsRecivingData!!! : "+mSourceData);
 
         mRecyclerView.setAdapter(
                 new CommonAdapter<ChatListItemModel>(getContext(), R.layout.item_chat_list, mSourceData) {
@@ -171,6 +182,11 @@ public class ChatListFragment extends BaseFragment {
                         holder.setText(R.id.item_chat_list_chat_title, eachSourceData.chattingToTitle);
                         holder.setText(R.id.item_chat_list_last_message_time, eachSourceData.lastChatTime);
                         holder.setText(R.id.item_chat_list_last_chat_message, eachSourceData.lastChatMessage);
+//                        if(eachSourceData.isNotRead.equals("true")){
+//                            holder.setVisible(R.id.item_chat_list_is_not_read,true);
+//                        }else{
+//                            holder.setVisible(R.id.item_chat_list_is_not_read,false);
+//                        }
                         holder.itemView.setOnClickListener(new ChatListFragment.MyClickListener(pos));
                     }
 
@@ -189,9 +205,10 @@ public class ChatListFragment extends BaseFragment {
         }
         @Override
         public void onClick(View v) {
+//            UserModel.
             ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
             ChatListItemModel model = mSourceData.get(position);
-            chatDetailFragment.mDatabaseName = model.correspondingChatDatabaseName;
+            chatDetailFragment.mOtherUserID = model.otherUserID;
             replaceFragment(chatDetailFragment,null);
         }
     }
@@ -272,6 +289,16 @@ public class ChatListFragment extends BaseFragment {
     }
 
 
+
+
+
+
+
+
+
+
+
+
     //Initial Setting of every fragment
     private void initialSetting() {
         getToolbar().setNavigationIcon(R.drawable.ic_action_go_back);
@@ -306,18 +333,18 @@ public class ChatListFragment extends BaseFragment {
 
         //Set the title of this fragment, and set the prev title
         if (mTitle == null) {
-            mTitle = getString(R.string.user_profile_fragment_title);
+            mTitle = "CULife";
         }
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();
         }
 
-        mTitle = "习惯标题";
+        mTitle = "CULife";
         setToolbarTitle(mTitle);
 
         initialSetting();
         initialDatabaseReferenceObject();
-//        setSourceData(new ArrayList<ChatListItemModel>());
+        setSourceData();
     }
 
     @Override
@@ -338,7 +365,10 @@ public class ChatListFragment extends BaseFragment {
 
     @Override
     public void onResume(){
-        setSourceData(new ArrayList<ChatListItemModel>());
+        // setSourceData();
+        // TODO : notify the change here
+        // mRecyclerView.getAdapter().notifyDataSetChanged();
+        // putDataToRecylerView();
         super.onResume();
     }
 

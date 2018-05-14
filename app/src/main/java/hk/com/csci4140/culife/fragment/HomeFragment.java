@@ -159,6 +159,7 @@ public class HomeFragment extends BaseFragment {
         }
         @Override
         public void onClick(View v) {
+//            showBottomSnackBar(mList_tmp.get(position).getHabitId() + "");
             JSONObject jsonParams = new JSONObject();
             JSONObject outerJsonParams = new JSONObject();
             try {
@@ -223,6 +224,12 @@ public class HomeFragment extends BaseFragment {
         initData(); // TODO: add a json object here and initial the data with it
 
         return mView;
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
     }
 
     /*public void onPause(){
@@ -300,150 +307,6 @@ public class HomeFragment extends BaseFragment {
         }
     };
 
-    void recyclerViewShowHabitList(int flag) {
-        try {
-            if (flag == 0) {
-                Log.d(TAG,"recycler"+mList);
-                //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                for(HomeFragmentModel bean: mList) {
-                    String time = bean.getTime();
-                    String[] time_list = time.split(":");
-                    Integer Hour = Integer.parseInt(time_list[0]);
-                    Integer minute = Integer.parseInt(time_list[1]);
-                    if (Hour >=0 && Hour <12) {
-                        mList_tmp.add(bean);
-                    }
-                }
-
-                mRecyclerView.setHasFixedSize(false);
-                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                mRecyclerView.setAdapter(
-                        new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                            @Override
-                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                holder.setText(R.id.other_habbit_title, s.getTitle());
-                                holder.setText(R.id.time, s.getTime());
-                                holder.setText(R.id.owner, s.getIdentity());
-                                holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                            }
-                            @Override
-                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                super.onViewHolderCreated(holder, itemView);
-                                ButterKnife.bind(this,itemView);
-                                mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                            }
-                        });
-            } else {
-                if (flag == 1) {
-                    //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                    for(HomeFragmentModel bean: mList) {
-                        String time = bean.getTime();
-                        String[] time_list = time.split(":");
-                        Integer Hour = Integer.parseInt(time_list[0]);
-                        Integer minute = Integer.parseInt(time_list[1]);
-                        if (Hour >=12 && Hour <17) {
-                            mList_tmp.add(bean);
-                        }
-                    }
-
-                    mRecyclerView.setHasFixedSize(false);
-                    mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                    mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    mRecyclerView.setAdapter(
-                            new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                @Override
-                                public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                    holder.setText(R.id.other_habbit_title, s.getTitle());
-                                    holder.setText(R.id.time, s.getTime());
-                                    holder.setText(R.id.owner, s.getIdentity());
-                                    holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                }
-                                @Override
-                                public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                    super.onViewHolderCreated(holder, itemView);
-                                    ButterKnife.bind(this,itemView);
-                                    mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                    itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                }
-                            });
-                } else {
-                    if (flag == 2) {
-                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                        for(HomeFragmentModel bean: mList) {
-                            String time = bean.getTime();
-                            String[] time_list = time.split(":");
-                            Integer Hour = Integer.parseInt(time_list[0]);
-                            Integer minute = Integer.parseInt(time_list[1]);
-                            if (Hour >=17 && Hour <24) {
-                                mList_tmp.add(bean);
-                            }
-                        }
-
-                        mRecyclerView.setHasFixedSize(false);
-                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        mRecyclerView.setAdapter(
-                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                    @Override
-                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                        holder.setText(R.id.other_habbit_title, s.getTitle());
-                                        holder.setText(R.id.time, s.getTime());
-                                        holder.setText(R.id.owner, s.getIdentity());
-                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                    }
-                                    @Override
-                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                        super.onViewHolderCreated(holder, itemView);
-                                        ButterKnife.bind(this,itemView);
-                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                    }
-                                });
-                    } else {
-                        //List<HomeFragmentModel> mList_tmp = new ArrayList<>();
-                        for(HomeFragmentModel bean: mList) {
-                            String time = bean.getTime();
-                            String[] time_list = time.split(":");
-                            Integer Hour = Integer.parseInt(time_list[0]);
-                            Integer minute = Integer.parseInt(time_list[1]);
-                            mList_tmp.add(bean);
-                        }
-
-                        mRecyclerView.setHasFixedSize(false);
-                        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                        mRecyclerView.setAdapter(
-                                new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
-                                    @Override
-                                    public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
-                                        holder.setText(R.id.other_habbit_title, s.getTitle());
-                                        holder.setText(R.id.time, s.getTime());
-                                        holder.setText(R.id.owner, s.getIdentity());
-                                        holder.itemView.setOnClickListener(new MyClickListener(pos));
-
-                                    }
-                                    @Override
-                                    public void onViewHolderCreated(ViewHolder holder, View itemView) {
-                                        super.onViewHolderCreated(holder, itemView);
-                                        ButterKnife.bind(this,itemView);
-                                        mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
-                                        itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
-                                    }
-                                });
-                    }
-                }
-            }
-        } catch (Exception e) {
-            Log.d(TAG, "onCreateView: fail: " + e);
-        }
-        //recyclerViewCancelScroll();
-    }
-
 
     public void initData() {
         //mList = new ArrayList<HomeFragmentModel>();
@@ -473,6 +336,7 @@ public class HomeFragment extends BaseFragment {
     // API : call API and handle result
     public void callShowSingleHabitDetailAPI(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
         client.addHeader("Authorization","Token "+UserModel.token);
         mCatLoadingView = new CatLoadingView();
@@ -492,7 +356,24 @@ public class HomeFragment extends BaseFragment {
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.dummyHabitID = habitID;
                 //Log.d(TAG,"mhabitList"+mHabitList);
-                habitDetailFragment.dummyHabitList = mHabitList;
+                ArrayList<HabitModel> tem_HabitList = new ArrayList<>();
+                tem_HabitList.add(habit);
+//                habitDetailFragment.dummyHabitList = mHabitList;
+                habitDetailFragment.dummyHabitList = tem_HabitList;
+                JSONObject jsonParams = new JSONObject();
+                JSONObject outerJsonParams = new JSONObject();
+                try {
+                    jsonParams.put("habitid", habitID);
+                    outerJsonParams.put("habit", jsonParams);
+                    StringEntity entity = new StringEntity(outerJsonParams.toString());
+                    //Log.d(TAG,"bodyentity"+jsonParams);
+                    callAPItoGetMember(entity);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 replaceFragment(habitDetailFragment,null);
             }
 
@@ -509,6 +390,7 @@ public class HomeFragment extends BaseFragment {
 
     public void callShowHabitDetailListAPI(){
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
         client.addHeader("Authorization","Token "+UserModel.token);
         mCatLoadingView = new CatLoadingView();
@@ -547,11 +429,112 @@ public class HomeFragment extends BaseFragment {
                 mRecyclerView.setAdapter(
                         new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
                             @Override
-                            public void convert(ViewHolder holder, HomeFragmentModel s, int pos) {
+                            public void convert(ViewHolder holder, HomeFragmentModel s,final int pos) {
                                 holder.setText(R.id.other_habbit_title, s.getTitle());
                                 holder.setText(R.id.time, s.getTime());
                                 holder.setText(R.id.owner, s.getIdentity());
-                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+//                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        JSONObject jsonParams = new JSONObject();
+                                        JSONObject outerJsonParams = new JSONObject();
+                                        try {
+                                            HomeFragmentModel bean = mList_tmp.get(pos);
+                                            habitID = bean.getHabitId();
+
+                                            jsonParams.put("habitid", habitID + "");
+                                            outerJsonParams.put("habit",jsonParams);
+                                            StringEntity entity = new StringEntity(outerJsonParams.toString());
+                                            callShowSingleHabitDetailAPI(entity);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+
+                            }
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                ButterKnife.bind(this,itemView);
+                                mConfirmCompleteBtn = itemView.findViewById(R.id.checkoutHabit);
+                                itemView.findViewById(R.id.checkoutHabit).setOnClickListener(mOnClickListener);
+                            }
+                        });
+
+                //Log.d(TAG,"initHomePage"+hList);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+
+        client.get(getContext(),Constant.API_BASE_URL+"habits/registered",null, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
+
+                initHomePageFragment(response);
+                //hList = mList;
+                for(HomeFragmentModel bean: mList) {
+                    String time = bean.getTime();
+                    if (time.compareTo("null")!=0) {
+                        String[] time_list = time.split(":");
+                        Integer Hour = Integer.parseInt(time_list[0]);
+                        Integer minute = Integer.parseInt(time_list[1]);
+                        if (Hour >= 0 && Hour < 12) {
+                            mList_tmp.add(bean);
+                        }
+                    }
+                    else {
+                        mList_tmp.add(bean);
+                    }
+                }
+                //mList=mList_tmp;
+                mRecyclerView.setHasFixedSize(false);
+                mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                mRecyclerView.setAdapter(
+                        new CommonAdapter<HomeFragmentModel>(getContext(), R.layout.find_habbit_list, mList_tmp) {
+                            @Override
+                            public void convert(ViewHolder holder, HomeFragmentModel s,final int pos) {
+                                holder.setText(R.id.other_habbit_title, s.getTitle());
+                                holder.setText(R.id.time, s.getTime());
+                                holder.setText(R.id.owner, s.getIdentity());
+//                                holder.itemView.setOnClickListener(new MyClickListener(pos));
+                                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        JSONObject jsonParams = new JSONObject();
+                                        JSONObject outerJsonParams = new JSONObject();
+                                        try {
+                                            HomeFragmentModel bean = mList_tmp.get(pos);
+                                            habitID = bean.getHabitId();
+
+                                            jsonParams.put("habitid", habitID + "");
+                                            outerJsonParams.put("habit",jsonParams);
+                                            StringEntity entity = new StringEntity(outerJsonParams.toString());
+                                            callShowSingleHabitDetailAPI(entity);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        } catch (UnsupportedEncodingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
 
                             }
                             @Override
@@ -584,6 +567,7 @@ public class HomeFragment extends BaseFragment {
                 return;
             }
             AsyncHttpClient client = new AsyncHttpClient();
+            client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
             String AuthorizationToken = "Token "+UserModel.token;
             client.addHeader("Authorization","Token "+UserModel.token);
 //            mCatLoadingView = new CatLoadingView();
@@ -640,7 +624,7 @@ public class HomeFragment extends BaseFragment {
 
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.member_profiles = response;
-
+                //replaceFragment(habitDetailFragment,null);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
