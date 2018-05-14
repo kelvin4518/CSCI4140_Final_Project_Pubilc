@@ -19,6 +19,7 @@ import java.util.Map;
 
 import hk.com.csci4140.culife.Constant;
 import hk.com.csci4140.culife.activity.LoginActivity;
+import hk.com.csci4140.culife.activity.MainActivity;
 import hk.com.csci4140.culife.utility.SessionManager;
 
 /**
@@ -44,7 +45,7 @@ public class UserModel {
     public static String myID;
     public static JSONArray myChatList;
 
-    private String TAG = "USERMODEL";
+    public static String TAG = "USERMODEL";
 
 
 
@@ -242,27 +243,137 @@ public class UserModel {
 
 
 
-    public static void addNewChatToChatList(JSONObject chatInfo){
+    public static boolean isMovingExistingChatToTop(Context mContext,int otherUserID, String mostRecentMessage){
+        /**
+         * 思路：
+         * 1. 找出是否存在这个user
+         * 2. 如果存在，则移动
+         * 3. 如果不存在，则创建
+         *
+         * */
+
+        Log.d(TAG, "moveChatToTopForOtherUser: begin");
+
         ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
+        boolean alreadyExist = false;
+        int position = 0;
         try{
-            boolean alreadyExist = false;
 
-            for (int i =0;i<myChatList.length();i++){
-                JSONObject temp = myChatList.getJSONObject(i);
-                if(temp.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID) == chatInfo.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID)){
-                    alreadyExist = true;
-                    break;
+            for (int i =0;i<chatInfoList.size();i++){
+
+                // convert the string to json object
+                try {
+                    JSONObject alreadyHaveJSONObject = new JSONObject(chatInfoList.get(i));
+                    if(alreadyHaveJSONObject.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID).equals(String.valueOf(otherUserID))){
+                        Log.d(TAG, "moveChatToTopForOtherUser: the id is the same");
+                        alreadyExist = true;
+                        position = i;
+                         break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            }
-
-            if(!alreadyExist){
-                String mapString = chatInfo.toString();
-                chatInfoList.add(mapString);
             }
         }catch (Exception e){
 
         }
-        SessionManager.putArrayList(chatInfoList,Constant.USER_CHAT_LIST);
+
+        if(alreadyExist){
+            Log.d(TAG, "moveChatToTopForOtherUser: already exist and move to top");
+            moveChatToTopForPosition(mContext,position,mostRecentMessage,String.valueOf(otherUserID));
+            return true;
+        }else{
+            Log.d(TAG, "moveChatToTopForOtherUser: create new chat");
+            // get data and add
+            return false;
+        }
+
+    }
+
+    public static void moveChatToTopForPosition(Context mContext,int position, String mostRecentMessage, String otherUserID){
+        /**
+         * 思路：
+         * 1. 拿出这个item，加到新的arraylist
+         * 2. 遍历arraylist，加到新的arraylist，不要position的item
+         * 3. 储存新的arraylist，init
+         *
+         * */
+
+        // 1.
+        ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
+        ArrayList<String> newChatInfoList = new ArrayList<String>();
+
+        try{
+            JSONObject jsonObject = new JSONObject(chatInfoList.get(position));
+            jsonObject.put(Constant.USER_CHAT_LIST_LAST_MESSAGE,mostRecentMessage);
+            String theIDOfUserThatIsChattingTo = SessionManager.getString(mContext,Constant.USER_CHATTING_DATABASE);
+            if(!theIDOfUserThatIsChattingTo.equals(otherUserID)){
+                jsonObject.put(Constant.USER_CHAT_IS_NOT_READ,"true");
+            }
+            newChatInfoList.add(jsonObject.toString());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        // 2.
+        for (int i =0;i<chatInfoList.size();i++){
+            if(i!=position){
+                newChatInfoList.add(chatInfoList.get(i));
+            }
+        }
+
+        // 3.
+        SessionManager.putArrayList(newChatInfoList,Constant.USER_CHAT_LIST);
+        initModel(mContext);
+
+    }
+
+
+
+    public static void addNewChatToChatList(Context mContext,JSONObject chatInfo){
+        /**
+         * 检查思路：
+         * 1. 从sessionManager里面拿到现有的string list
+         * 2. 对string list的每个string进行分析，将他们转成一个JSONObject, 方便与传输进来的JSONObject比较
+         * 3. 检查相应的field,确认有没有重复
+         *
+         * 注意1：不要直接使用myChatList，因为如果多次点的是一个新的用户，则myChatList中尚无记录(现在只是存在session里)，所以会导致筛选无效
+         * 注意2：在判定string是否相等时，使用equals,不要使用==
+         *
+         * */
+
+        ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
+        ArrayList<String> newChatInfoList = new ArrayList<String>();
+        newChatInfoList.add(chatInfo.toString());
+        try{
+            boolean alreadyExist = false;
+
+            for (int i =0;i<chatInfoList.size();i++){
+                newChatInfoList.add(chatInfoList.get(i));
+
+                // convert the string to json object
+                try {
+                    JSONObject alreadyHaveJSONObject = new JSONObject(chatInfoList.get(i));
+                    if(alreadyHaveJSONObject.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID).equals(chatInfo.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID))){
+                        alreadyExist = true;
+                        // break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+            Log.d("TEST ADD", "boolean : "+alreadyExist);
+            if(!alreadyExist){
+                SessionManager.putArrayList(newChatInfoList,Constant.USER_CHAT_LIST);
+                initModel(mContext);
+            }
+        }catch (Exception e){
+
+        }
+
     }
 
     public static void formatMyChatListFromStringList(ArrayList<String> stringArrayList){
@@ -295,4 +406,11 @@ public class UserModel {
             return myID;
         }
     }
+
+
+
+
+
+
+
 }

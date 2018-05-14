@@ -10,6 +10,17 @@ public interface Constant {
     String API_BASE_URL = "http://ec2-54-251-167-117.ap-southeast-1.compute.amazonaws.com:8000/api/";
 
 
+
+    String USER_GPS_INFO = "GPS_INFO";
+    String GPS_RECORDING_DATE = "RECORDING_DATE";
+    String GPS_TIME = "GPS_TIME";
+    String GPS_LAT = "GPS_LAT";
+    String GPS_LNG = "GPS_LNG";
+
+
+
+
+
     String USERID = "USERID";
     String USERNAME = "username";
     String USER_CHAT_LIST  = "user_chat_list";
@@ -18,6 +29,15 @@ public interface Constant {
     String USER_CHAT_LIST_NAME  = "chat_other_user_name";
     String USER_CHAT_LIST_LAST_MESSAGE  = "chat_last_message";
     String USER_CHAT_LIST_LAST_DATE  = "chat_last_date";
+    String USER_CHAT_IS_NOT_READ = "chat_is_not_read";
+
+    String USER_CHATTING_DATABASE = "chat_current_using_database";
+    /**
+     * associated with read / unread
+     * set to "" when welcome
+     * set to <OtherUserID> when chat with other user
+     * set to "" when exit
+     * */
 
 
 

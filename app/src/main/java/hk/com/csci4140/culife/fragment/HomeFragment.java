@@ -473,6 +473,7 @@ public class HomeFragment extends BaseFragment {
     // API : call API and handle result
     public void callShowSingleHabitDetailAPI(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
         client.addHeader("Authorization","Token "+UserModel.token);
         mCatLoadingView = new CatLoadingView();
@@ -509,6 +510,7 @@ public class HomeFragment extends BaseFragment {
 
     public void callShowHabitDetailListAPI(){
         AsyncHttpClient client = new AsyncHttpClient();
+        client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
         String AuthorizationToken = "Token "+UserModel.token;
         client.addHeader("Authorization","Token "+UserModel.token);
         mCatLoadingView = new CatLoadingView();
@@ -584,6 +586,7 @@ public class HomeFragment extends BaseFragment {
                 return;
             }
             AsyncHttpClient client = new AsyncHttpClient();
+            client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
             String AuthorizationToken = "Token "+UserModel.token;
             client.addHeader("Authorization","Token "+UserModel.token);
 //            mCatLoadingView = new CatLoadingView();
