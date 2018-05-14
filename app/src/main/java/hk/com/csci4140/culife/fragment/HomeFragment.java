@@ -504,6 +504,20 @@ public class HomeFragment extends BaseFragment {
                 tem_HabitList.add(habit);
 //                habitDetailFragment.dummyHabitList = mHabitList;
                 habitDetailFragment.dummyHabitList = tem_HabitList;
+                JSONObject jsonParams = new JSONObject();
+                JSONObject outerJsonParams = new JSONObject();
+                try {
+                    jsonParams.put("habitid", habitID);
+                    outerJsonParams.put("habit", jsonParams);
+                    StringEntity entity = new StringEntity(outerJsonParams.toString());
+                    //Log.d(TAG,"bodyentity"+jsonParams);
+                    callAPItoGetMember(entity);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 replaceFragment(habitDetailFragment,null);
             }
 
@@ -673,7 +687,7 @@ public class HomeFragment extends BaseFragment {
 
                 HabitDetailFragment habitDetailFragment = new HabitDetailFragment();
                 habitDetailFragment.member_profiles = response;
-
+                //replaceFragment(habitDetailFragment,null);
             }
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {

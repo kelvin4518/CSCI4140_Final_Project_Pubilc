@@ -292,6 +292,7 @@ public class HabitDetailFragment extends BaseFragment{
     @Override
     public void onStart(){
         initialSetting();
+
         super.onStart();
     }
 
@@ -379,6 +380,7 @@ public class HabitDetailFragment extends BaseFragment{
 
                 final ArrayList<HabitModel> items = new ArrayList<HabitModel>();
                 Log.d(TAG,"yo"+dummyHabitList);
+                //Log.d(TAG,"yo"+member_profiles);
                 for (HabitModel HM:dummyHabitList){
                     if (HM.ID == dummyHabitID){
                         HabitModel item = HM;
@@ -400,7 +402,7 @@ public class HabitDetailFragment extends BaseFragment{
                                 holder.setText(R.id.habit_supervisor, s.owner);
                                 //Glide.with(getContext()).load(s.userImage).into(mSupervisorView);
 
-                                JSONArray member_list = new JSONArray();
+                                /*JSONArray member_list = new JSONArray();
                                 if (member_profiles != null) {
                                     try {
                                         member_list = member_profiles.getJSONArray("profiles");
@@ -428,7 +430,7 @@ public class HabitDetailFragment extends BaseFragment{
                                 }
                                 else{
                                     holder.setText(R.id.partner_complete_info, "No one has joined!");
-                                }
+                                }*/
 
                                 JSONObject jsonParams0 = new JSONObject();
                                 JSONObject outerJsonParams0 = new JSONObject();
@@ -456,6 +458,70 @@ public class HabitDetailFragment extends BaseFragment{
                             }
                         });
             }else{
+                memberProfilelist.clear();
+                JSONObject jsonParams = new JSONObject();
+                JSONObject outerJsonParams = new JSONObject();
+                try {
+                    jsonParams.put("habitid", dummyHabitID);
+                    outerJsonParams.put("habit", jsonParams);
+                    StringEntity entity = new StringEntity(outerJsonParams.toString());
+                    //Log.d(TAG,"bodyentity"+jsonParams);
+                    callAPItoGetMember(entity);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }catch (Exception e){
+            Log.d(TAG, "onCreateView: fail: "+e);
+        }
+        recyclerViewCancelScroll();
+    }
+
+    public void callAPItoGetMember(StringEntity params){
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token "+ UserModel.token;
+        client.addHeader("Authorization","Token "+UserModel.token);
+        //mCatLoadingView = new CatLoadingView();
+
+        //mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL+"habits/members",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                //mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: member_response: "+response);
+
+
+                member_profiles = response;
+                Log.d(TAG,"Members: "+member_profiles);
+                JSONArray member_list = new JSONArray();
+                if (member_profiles != null) {
+                    try {
+                        member_list = member_profiles.getJSONArray("profiles");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (Integer i = 0; i < member_list.length(); i++) {
+                        memberProfileModel memberProfile = new memberProfileModel();
+                        JSONObject jso = new JSONObject();
+                        try {
+                            jso = member_list.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        memberProfile.initMemberProfileWithJSON(jso);
+                        memberProfilelist.add(memberProfile);
+                    }
+                }
+
                 mBottomRecyclerView.setHasFixedSize(false);
                 mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -463,7 +529,8 @@ public class HabitDetailFragment extends BaseFragment{
                 // TODO : get the total number from API result
                 int totalNumber;
                 if (member_profiles != null) {
-                    totalNumber = member_profiles.length();
+                    //totalNumber = member_profiles.length();
+                    totalNumber = memberProfilelist.size();
                 }
                 else{
                     totalNumber = 0;
@@ -567,11 +634,18 @@ public class HabitDetailFragment extends BaseFragment{
                                 //AutoUtil.autoSize(itemView)
                             }
                         });
+                //replaceFragment(habitDetailFragment,null);
             }
-        }catch (Exception e){
-            Log.d(TAG, "onCreateView: fail: "+e);
-        }
-        recyclerViewCancelScroll();
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
     }
 
     // the page is dismissed
