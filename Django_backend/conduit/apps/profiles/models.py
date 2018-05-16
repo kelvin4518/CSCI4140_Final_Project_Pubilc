@@ -21,7 +21,8 @@ class Profile(TimestampedModel):
     # avatar. Similar to `bio`, this field is not required. It may be blank.
     #image = models.FileField(blank=False, null=False)
     # image = models.URLField(blank=True)
-    image = models.FileField(blank=False, null=False)
+    image = models.FileField(blank=True, null=True)
+
 
     # This is an example of a Many-To-Many relationship where both sides of the
     # relationship are of the same model. In this case, the model is `Profile`.

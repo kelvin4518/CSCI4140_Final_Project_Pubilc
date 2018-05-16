@@ -138,7 +138,6 @@ public class ChatListFragment extends BaseFragment {
 
             try{
                 JSONObject object = UserModel.myChatList.getJSONObject(i);
-                Log.d(TAG, "setSourceData: wtfwiththelist: "+object);
 
                 ChatListItemModel chatListItemModel = new ChatListItemModel();
                 chatListItemModel.otherUserID = object.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID);
@@ -182,11 +181,11 @@ public class ChatListFragment extends BaseFragment {
                         holder.setText(R.id.item_chat_list_chat_title, eachSourceData.chattingToTitle);
                         holder.setText(R.id.item_chat_list_last_message_time, eachSourceData.lastChatTime);
                         holder.setText(R.id.item_chat_list_last_chat_message, eachSourceData.lastChatMessage);
-//                        if(eachSourceData.isNotRead.equals("true")){
-//                            holder.setVisible(R.id.item_chat_list_is_not_read,true);
-//                        }else{
-//                            holder.setVisible(R.id.item_chat_list_is_not_read,false);
-//                        }
+                        if(eachSourceData.isNotRead.equals("true")){
+                            holder.setVisible(R.id.item_chat_list_is_not_read,true);
+                        }else{
+                            holder.setVisible(R.id.item_chat_list_is_not_read,false);
+                        }
                         holder.itemView.setOnClickListener(new ChatListFragment.MyClickListener(pos));
                     }
 
@@ -205,7 +204,15 @@ public class ChatListFragment extends BaseFragment {
         }
         @Override
         public void onClick(View v) {
-//            UserModel.
+            Log.d(TAG, "onClick: chatlistfragment!!");
+            try {
+                ChatListItemModel chatListItemModel = mSourceData.get(position);
+                UserModel.markReadForID(getContext(),chatListItemModel.otherUserID);
+            }catch (Exception e){
+            }
+
+
+
             ChatDetailFragment chatDetailFragment = new ChatDetailFragment();
             ChatListItemModel model = mSourceData.get(position);
             chatDetailFragment.mOtherUserID = model.otherUserID;
@@ -259,7 +266,7 @@ public class ChatListFragment extends BaseFragment {
         mCatLoadingView.show(getFragmentManager(), "");
 
         client.get(getContext(),
-                Constant.API_BASE_URL+"profiles/"+UserModel.myUserName+"/followees",
+                Constant.API_BASE_URL+"profiles/followees",
                 null,
                 ContentType.APPLICATION_JSON.getMimeType(),
                 new JsonHttpResponseHandler(){
@@ -365,10 +372,14 @@ public class ChatListFragment extends BaseFragment {
 
     @Override
     public void onResume(){
-        // setSourceData();
         // TODO : notify the change here
         // mRecyclerView.getAdapter().notifyDataSetChanged();
-        // putDataToRecylerView();
+        try{
+            setSourceData();
+            putDataToRecylerView();
+        }catch (Exception e){
+
+        }
         super.onResume();
     }
 

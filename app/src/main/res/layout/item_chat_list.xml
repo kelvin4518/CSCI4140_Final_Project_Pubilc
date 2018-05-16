@@ -67,7 +67,7 @@
                     android:textSize="12dp"
                     android:textColor="@color/red"
                     android:visibility="gone"
-                    android:text="(未读)" />
+                    android:text="(未读) " />
 
                 <TextView
                     android:id="@+id/item_chat_list_last_chat_message"

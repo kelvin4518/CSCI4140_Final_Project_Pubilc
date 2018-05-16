@@ -346,7 +346,6 @@ public class FriendListFragment extends BaseFragment {
         @Override
         public void onClick(View v) {
             if(fragmentMode==Constant.FRIEND_LIST_FRAGMENT_START_CHAT_MODE){
-                showBottomSnackBar("to do !");
                 OtherUserModel userSelected = mSourceData.get(position);
                 DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
                 Date today = Calendar.getInstance().getTime();

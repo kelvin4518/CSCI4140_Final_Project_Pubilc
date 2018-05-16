@@ -277,7 +277,15 @@ public class ChatDetailFragment extends BaseFragment {
         super.onResume();
     }
 
+    @Override
+    public void onPause(){
+        try {
+            UserModel.markReadForID(getContext(),mOtherUserID);
+        }catch (Exception e){
+        }
 
+        super.onPause();
+    }
 
 
 

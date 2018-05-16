@@ -50,28 +50,6 @@ public class UserModel {
 
 
     public static void initModel(Context mContext){
-        Log.d("USERMODEL", "initModel isLogin: "+isLogin);
-        Log.d("USERMODEL", "initModel isRemember: "+isRemember);
-        Log.d("USERMODEL", "initModel token: "+token);
-        Log.d("USERMODEL", "initModel iconUrl: "+iconUrl);
-        Log.d("USERMODEL", "initModel region: "+region);
-        Log.d("USERMODEL", "initModel showLocation: "+showLocation);
-        Log.d("USERMODEL", "initModel myChatName: "+myChatName);
-        Log.d("USERMODEL", "initModel myUserName: "+myUserName);
-        Log.d("USERMODEL", "initModel myID: "+myID);
-        Log.d("USERMODEL", "initModel myChatList: "+myChatList);
-
-
-        Log.d("USERMODEL", "session initModel isLogin: "+SessionManager.getBoolean(mContext, Constant.IS_LOGIN));
-        Log.d("USERMODEL", "session initModel isRemember: "+SessionManager.getBoolean(mContext, Constant.IS_REMEMBER));
-        Log.d("USERMODEL", "session initModel token: "+SessionManager.getString(mContext, Constant.TOKEN));
-        Log.d("USERMODEL", "session initModel iconUrl: "+SessionManager.getString(mContext, Constant.ICON_URL));
-        Log.d("USERMODEL", "session initModel region: "+SessionManager.getInt(mContext, Constant.REGION));
-        Log.d("USERMODEL", "session initModel showLocation: "+SessionManager.getInt(mContext, Constant.SHOW_LOCATION));
-        Log.d("USERMODEL", "session initModel myChatName: "+SessionManager.getString(mContext,Constant.USERNAME));
-        Log.d("USERMODEL", "session initModel myUserName: "+SessionManager.getString(mContext,Constant.USERNAME));
-        Log.d("USERMODEL", "session initModel myID: "+SessionManager.getString(mContext,Constant.USERID));
-        Log.d("USERMODEL", "session initModel myChatList: "+SessionManager.getArrayList(Constant.USER_CHAT_LIST));
 
 
 
@@ -192,7 +170,11 @@ public class UserModel {
         SessionManager.putString(mContext, Constant.USERID, "");
         ArrayList<String> emptyList = new ArrayList<String>();
         SessionManager.putArrayList(emptyList,Constant.USER_CHAT_LIST);
+        try{
+            SessionManager.putArrayList(emptyList,Constant.USER_GPS_INFO);
+        }catch (Exception e){
 
+        }
 //        public static JSONArray myChatList;
 
 
@@ -408,6 +390,49 @@ public class UserModel {
     }
 
 
+    public static void markReadForID(Context mContext,String otherUserID) {
+
+
+        /**
+         * 检查思路：
+         * 1. 从sessionManager里面拿到现有的string list
+         * 2. 对string list的每个string进行分析，将他们转成一个JSONObject, 方便与传输进来的JSONObject比较
+         * 3. 检查相应的field,确认有没有重复
+         *
+         * 注意1：不要直接使用myChatList，因为如果多次点的是一个新的用户，则myChatList中尚无记录(现在只是存在session里)，所以会导致筛选无效
+         * 注意2：在判定string是否相等时，使用equals,不要使用==
+         *
+         * */
+
+        ArrayList<String> chatInfoList = SessionManager.getArrayList(Constant.USER_CHAT_LIST);
+        ArrayList<String> newChatInfoList = new ArrayList<String>();
+        try{
+            for (int i =0;i<chatInfoList.size();i++){
+
+                String stringToBeAdded = chatInfoList.get(i);
+
+                try {
+                    JSONObject alreadyHaveJSONObject = new JSONObject(chatInfoList.get(i));
+                    Log.d(TAG, "markReadForID: IS Try "+otherUserID);
+                    if(alreadyHaveJSONObject.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID).equals(otherUserID)){
+                        Log.d(TAG, "markReadForID: IS YES "+otherUserID);
+                        alreadyHaveJSONObject.put(Constant.USER_CHAT_IS_NOT_READ,"false");
+                        stringToBeAdded = alreadyHaveJSONObject.toString();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                newChatInfoList.add(stringToBeAdded);
+            }
+        }catch (Exception e){
+
+        }
+
+        SessionManager.putArrayList(newChatInfoList,Constant.USER_CHAT_LIST);
+        initModel(mContext);
+
+    }
 
 
 

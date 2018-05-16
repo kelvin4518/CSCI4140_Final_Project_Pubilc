@@ -215,7 +215,7 @@ public class MainActivity extends BaseActivity {
         client.addHeader("Authorization","Token "+UserModel.token);
 
         client.get(MainActivity.this,
-                Constant.API_BASE_URL+"profiles/"+UserModel.myUserName+"/followers",
+                Constant.API_BASE_URL+"profiles/followers",
                 null,
                 ContentType.APPLICATION_JSON.getMimeType(),
                 new JsonHttpResponseHandler(){
@@ -247,7 +247,7 @@ public class MainActivity extends BaseActivity {
         client.addHeader("Authorization","Token "+UserModel.token);
 
         client.get(MainActivity.this,
-                Constant.API_BASE_URL+"profiles/"+UserModel.myUserName+"/followees",
+                Constant.API_BASE_URL+"profiles/followees",
                 null,
                 ContentType.APPLICATION_JSON.getMimeType(),
                 new JsonHttpResponseHandler(){
@@ -399,12 +399,12 @@ public class MainActivity extends BaseActivity {
 
         Log.d(TAG, "onCreate: user token : "+UserModel.token);
 
+//        if(UserModel.isLogin){
+//            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
+//                initializeDatabaseAndListener();
+//            }
+//        }
 
-        if(UserModel.isLogin){
-            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
-                initializeDatabaseAndListener();
-            }
-        }
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         startLocationTracking();
@@ -453,7 +453,7 @@ public class MainActivity extends BaseActivity {
 //
 
         client.setMaxRetriesAndTimeout(0,AsyncHttpClient.DEFAULT_SOCKET_TIMEOUT);
-        client.get(this,Constant.API_BASE_URL+"profiles/"+UserModel.myUserName,new JsonHttpResponseHandler(){
+        client.get(this,Constant.API_BASE_URL+"profiles",new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 
@@ -488,6 +488,22 @@ public class MainActivity extends BaseActivity {
 
 
     private void callGetHabitListAPI(){
+
+        /**
+         *
+         * I put it here to ensure that the listener is always created
+         *
+         * */
+        if(UserModel.isLogin){
+            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
+                initializeDatabaseAndListener();
+            }
+        }
+
+
+
+
+
         AsyncHttpClient client = new AsyncHttpClient();
         String AuthorizationToken = "Token "+UserModel.token;
         client.addHeader("Authorization","Token "+UserModel.token);
@@ -609,11 +625,12 @@ public class MainActivity extends BaseActivity {
                 break;
             case 3:
                 // fragment = new PostMissionStepOneFragment();
-                fragment = new UserProfileFragment();;
+                fragment = mChatListFragment;
                 break;
 
             case 4:
-                fragment = mChatListFragment;
+                fragment = new UserProfileFragment();
+
                 break;
             default:
                 fragment = null;
@@ -685,8 +702,8 @@ public class MainActivity extends BaseActivity {
         mLocationRequest = new LocationRequest();
 //        mLocationRequest.setInterval(1000*60*10);
 //        mLocationRequest.setFastestInterval(50000);
-        mLocationRequest.setInterval(5000);
-        mLocationRequest.setFastestInterval(100);
+        mLocationRequest.setInterval(500000);
+        mLocationRequest.setFastestInterval(500000);
         mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 

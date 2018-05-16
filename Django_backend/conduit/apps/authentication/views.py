@@ -69,7 +69,6 @@ class UserRetrieveUpdateAPIView(RetrieveUpdateAPIView):
 
             'profile': {
                 'bio': user_data.get('bio', request.user.profile.bio),
-                'image': user_data.get('image', request.user.profile.image)
             }
         }
 
