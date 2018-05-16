@@ -5,8 +5,10 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.db.models import Q
 
 from .models import Profile
+
 from .renderers import ProfileJSONRenderer
 from .serializers import ProfileSerializer
 
@@ -17,11 +19,13 @@ class ProfileRetrieveAPIView(RetrieveAPIView):
     renderer_classes = (ProfileJSONRenderer,)
     serializer_class = ProfileSerializer
 
-    def retrieve(self, request, username, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         # Try to retrieve the requested profile and throw an exception if the
         # profile could not be found.
+        #user = request.data.get('user', {});
+        #userid = user["id"]
         try:
-            profile = self.queryset.get(user__username=username)
+            profile = self.queryset.get(user=self.request.user)
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username does not exist.')
 
@@ -60,11 +64,12 @@ class ProfileFollowAPIView(APIView):
     renderer_classes = (ProfileJSONRenderer,)
     serializer_class = ProfileSerializer
 
-    def delete(self, request, username=None):
+    def delete(self, request):
         follower = self.request.user.profile
-
+        user = request.data.get('user', {});
+        userid = user["id"]
         try:
-            followee = Profile.objects.get(user__username=username)
+            followee = Profile.objects.get(user__id=userid)
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username was not found.')
 
@@ -76,11 +81,12 @@ class ProfileFollowAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def post(self, request, username=None):
+    def post(self, request):
         follower = self.request.user.profile
-
+        user = request.data.get('user', {});
+        userid = user["id"]
         try:
-            followee = Profile.objects.get(user__username=username)
+            followee = Profile.objects.get(user__id=userid)
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username was not found.')
 
@@ -102,8 +108,8 @@ class ProfileRetrieveFollowersAPIView(RetrieveAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
 
-    def retrieve(self, request, username, *args, **kwargs):
-        queryset = self.queryset.filter(follows__user__username=username)
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(follows__user=self.request.user)
         followers = self.paginate_queryset(queryset)
 
         serializer = self.serializer_class(followers, many=True, context={
@@ -120,8 +126,8 @@ class ProfileRetrieveFolloweesAPIView(RetrieveAPIView):
     serializer_class = ProfileSerializer
     queryset = Profile.objects.all()
 
-    def retrieve(self, request, username, *args, **kwargs):
-        queryset = self.queryset.filter(followed_by__user__username=username)
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.queryset.filter(followed_by__user=self.request.user)
         followees = self.paginate_queryset(queryset)
 
         serializer = self.serializer_class(followees, many=True, context={
@@ -141,6 +147,45 @@ class ArticlesMembersAPIView(RetrieveAPIView):
         habitid = habit["habitid"]
         
         queryset = self.queryset.filter(favorites__id=habitid)
+        followees = self.paginate_queryset(queryset)
+
+        serializer = self.serializer_class(followees, many=True, context={
+            'request': request
+        })
+
+        return self.get_paginated_response(serializer.data)
+        
+class ArticlesAuthorAPIView(RetrieveAPIView):
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = (ProfileJSONRenderer,)
+    serializer_class = ProfileSerializer
+    def post(self, request):
+        serializer_context = {'request': request}
+        habit = request.data.get('habit', {});
+        habitid = habit["habitid"]
+        
+        
+        queryset = self.queryset.filter(articles__id=habitid)
+        followees = self.paginate_queryset(queryset)
+
+        serializer = self.serializer_class(followees, many=True, context={
+            'request': request
+        })
+
+        return self.get_paginated_response(serializer.data)
+        
+class ArticlesRankAPIView(RetrieveAPIView):
+    queryset = Profile.objects.all()
+    permission_classes = (IsAuthenticated,)
+    renderer_classes = (ProfileJSONRenderer,)
+    serializer_class = ProfileSerializer
+    def post(self, request):
+        serializer_context = {'request': request}
+        habit = request.data.get('rank', {});
+        habitid = habit["habitid"]
+        
+        queryset = self.queryset.filter(comments__article__id=habitid).order_by('-comments__score')
         followees = self.paginate_queryset(queryset)
 
         serializer = self.serializer_class(followees, many=True, context={

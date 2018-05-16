@@ -5,7 +5,8 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     ArticleViewSet, ArticlesCreateAPIView,ArticlesUpdateAPIView,ArticlesDeleteAPIView,ArticlesShowAPIView, ArticlesFavoriteAPIView, ArticlesCreatedAPIView,
     ArticlesRegisteredAPIView, CommentsListCreateAPIView,CommentsListUpdateAPIView,CommentsRankAPIView,CommentsListShowAPIView, CommentsDestroyAPIView, TagListAPIView,
-    ArticlesFeedAPIView, BlogsListCreateAPIView,BlogsListShowAPIView,BlogsListDeleteAPIView,BlogsListLikeAPIView, ArticlesOthersCreatedAPIView, ArticlesOthersRegisteredAPIView
+    ArticlesFeedAPIView, BlogsListCreateAPIView,BlogsListShowAPIView,BlogsListDeleteAPIView,BlogsListLikeAPIView, ArticlesOthersCreatedAPIView, 
+    ArticlesOthersRegisteredAPIView, CommentsListIsAPIView
 
 )
 
@@ -31,6 +32,7 @@ urlpatterns = [
     url(r'^habits/favorite/?$', ArticlesFavoriteAPIView.as_view()),
 
     url(r'^habits/check_create/?$', CommentsListCreateAPIView.as_view()),
+    url(r'^habits/ischeck/?$', CommentsListIsAPIView.as_view({'post': 'show'})),
     url(r'^habits/check_update/?$', CommentsListUpdateAPIView.as_view()),
     url(r'^habits/check_calendar/?$', CommentsListShowAPIView.as_view({'post': 'show'})),
     url(r'^habits/rank/?$', CommentsRankAPIView.as_view({'post': 'list'})),

@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Article, Comment, Tag, Blog
-from .renderers import ArticleJSONRenderer, CommentJSONRenderer, BlogJSONRenderer
+from .renderers import ArticleJSONRenderer, CommentJSONRenderer, BlogJSONRenderer,ProfileJSONRenderer
 from .serializers import ArticleSerializer, CommentSerializer, BlogSerializer, TagSerializer
 from django.http import JsonResponse
 from django.db.models import Q
@@ -246,6 +246,36 @@ class CommentsListUpdateAPIView(generics.UpdateAPIView):
         else:
             return JsonResponse({'check':'Already Checked!'},status=200)
 
+class CommentsListIsAPIView(mixins.CreateModelMixin, 
+                     mixins.ListModelMixin,
+                     mixins.RetrieveModelMixin,
+                     viewsets.GenericViewSet):
+    lookup_field = 'article__slug'
+    lookup_url_kwarg = 'article_slug'
+    permission_classes = (IsAuthenticatedOrReadOnly,)
+    queryset = Comment.objects.select_related(
+        'article', 'article__author', 'article__author__user',
+        'author', 'author__user'
+    )
+    renderer_classes = (CommentJSONRenderer,)
+    serializer_class = CommentSerializer
+
+    def show(self, request, article_slug=None):
+        data = request.data.get('check', {})
+        context = {'author': request.user.profile}
+        habitid = data["habitid"]
+        
+        try:
+            context['article'] = Article.objects.get(id=habitid)
+        except Article.DoesNotExist:
+            raise NotFound('An article with this slug does not exist.')
+
+        serializer_instance = Comment.objects.filter(article__id=habitid).get(author=request.user.profile)
+        if data["body"] not in serializer_instance.body: 
+            return JsonResponse({'check':'Uncheck'},status=200)
+        else:
+            return JsonResponse({'check':'Checked'},status=200)
+            
 class CommentsListShowAPIView(mixins.CreateModelMixin, 
                      mixins.ListModelMixin,
                      mixins.RetrieveModelMixin,
@@ -268,7 +298,8 @@ class CommentsListShowAPIView(mixins.CreateModelMixin,
         serializer_instance = Comment.objects.filter(article__id=habitid).get(author=request.user.profile)
         check_date = serializer_instance.body
         checks = check_date.split(',')
-        return JsonResponse({'check_date':checks},status=200)
+        
+        return JsonResponse({'check_num':len(checks), 'check_date':checks},status=200)
         # serializer_context = {'request': request}
 
         # serializer = self.serializer_class(
@@ -289,7 +320,7 @@ class CommentsRankAPIView(mixins.CreateModelMixin,
         'article', 'article__author', 'article__author__user',
         'author', 'author__user'
     )
-    renderer_classes = (CommentJSONRenderer,)
+    renderer_classes = (ProfileJSONRenderer,)
     serializer_class = CommentSerializer
 
     def filter_queryset(self, queryset):
@@ -420,6 +451,8 @@ class ArticlesRegisteredAPIView(generics.ListAPIView):
         return Article.objects.filter(
             # author__in=self.request.user.profile.follows.all()
             favorited_by=self.request.user.profile
+        ).exclude(
+            author=self.request.user.profile
         )
 
     def list(self, request):
@@ -440,10 +473,7 @@ class ArticlesFeedAPIView(generics.ListAPIView):
     serializer_class = ArticleSerializer
 
     def get_queryset(self):
-        return Article.objects.filter(
-            Q(author__in=self.request.user.profile.follows.all()) |
-            Q(favorited_by__in=self.request.user.profile.follows.all())
-        ).exclude(
+        return Article.objects.all().exclude(
             favorited_by=self.request.user.profile
         ).exclude(
             author=self.request.user.profile    
@@ -470,10 +500,10 @@ class BlogsListCreateAPIView(generics.ListCreateAPIView):
     )
     renderer_classes = (BlogJSONRenderer,)
     serializer_class = BlogSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    #parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, article_slug=None):
-        data = request.data
+        data = request.data.get('blog', {})
         context = {'author': request.user.profile}
         habitid = data["habitid"]
         
@@ -482,7 +512,7 @@ class BlogsListCreateAPIView(generics.ListCreateAPIView):
         except Article.DoesNotExist:
             raise NotFound('An article with this slug does not exist.')
 
-        serializer = self.serializer_class(data=data, context=context)
+        serializer = self.serializer_class(data=data, context=context, partial=True)
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -499,10 +529,10 @@ class BlogsListShowAPIView(mixins.CreateModelMixin,
     )
     renderer_classes = (BlogJSONRenderer,)
     serializer_class = BlogSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    #parser_classes = (MultiPartParser, FormParser)
 
     def show(self, request, article_slug=None):
-        data = request.data
+        data = request.data.get('blog', {})
         habitid = data["habitid"]
         serializer_context = {'request': request}
         
@@ -528,9 +558,10 @@ class BlogsListDeleteAPIView(mixins.CreateModelMixin,
     )
     renderer_classes = (BlogJSONRenderer,)
     serializer_class = BlogSerializer
-    parser_classes = (MultiPartParser, FormParser)
+    #parser_classes = (MultiPartParser, FormParser)
+    
     def delete(self, request):
-        data = request.data
+        data = request.data.get('blog', {})
         habitid = data["habitid"]
         serializer_context = {'request': request}
         
