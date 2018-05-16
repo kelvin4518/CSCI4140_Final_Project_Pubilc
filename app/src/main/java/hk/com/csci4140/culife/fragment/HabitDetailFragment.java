@@ -196,14 +196,14 @@ public class HabitDetailFragment extends BaseFragment{
                 e.printStackTrace();
             }
             if(mConfirmCompleteBtn.getText().toString().equalsIgnoreCase("CONFIRM")){
-                mConfirmCompleteBtn.setText("CANSEL");
+                mConfirmCompleteBtn.setText("CANCEL");
                 mConfirmCompleteBtn.setBackgroundColor(getResources().getColor(R.color.greyDim));
             }
             new SweetAlertDialog(getContext(), SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("habit is complete")
                     .setContentText("Congradulation on finishing a new task! Do you want to write a diary?")
                     .setConfirmText(getString(R.string.warning_confirm))
-                    .setCancelText("Cansel")
+                    .setCancelText("Cancel")
                     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                         @Override
                         public void onClick(SweetAlertDialog sDialog) {
@@ -360,7 +360,22 @@ public class HabitDetailFragment extends BaseFragment{
 
     @OnClick(R.id.habit_detail_trophy_icon)
     void showRank(){
-        Log.d(TAG,"still need to do");//TODO: need to do rank
+        memberProfilelist.clear();
+        JSONObject jsonParams = new JSONObject();
+        JSONObject outerJsonParams = new JSONObject();
+        try {
+            jsonParams.put("habitid", dummyHabitID);
+            outerJsonParams.put("rank", jsonParams);
+            Log.d(TAG,"habitid"+jsonParams);
+            StringEntity entity = new StringEntity(outerJsonParams.toString());
+            callAPItoGetRank(entity);
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @OnClick(R.id.habit_detail_share_icon)
@@ -500,6 +515,162 @@ public class HabitDetailFragment extends BaseFragment{
 
         //mCatLoadingView.show(getFragmentManager(), "");
 
+        client.post(getContext(), Constant.API_BASE_URL+"habits/author",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                //mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: member_response: "+response);
+
+
+                member_profiles = response;
+                Log.d(TAG,"Members: "+member_profiles);
+                JSONArray member_list = new JSONArray();
+                if (member_profiles != null) {
+                    try {
+                        member_list = member_profiles.getJSONArray("profiles");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (Integer i = 0; i < member_list.length(); i++) {
+                        memberProfileModel memberProfile = new memberProfileModel();
+                        JSONObject jso = new JSONObject();
+                        try {
+                            jso = member_list.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        memberProfile.initMemberProfileWithJSON(jso);
+                        memberProfilelist.add(memberProfile);
+                    }
+                }
+
+                mBottomRecyclerView.setHasFixedSize(false);
+                mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                // TODO : get the total number from API result
+                int totalNumber;
+                if (member_profiles != null) {
+                    //totalNumber = member_profiles.length();
+                    totalNumber = memberProfilelist.size();
+                }
+                else{
+                    totalNumber = 0;
+                }
+
+                // TODO : need to add the userIDField
+                mSourceData = new ArrayList<Map<String, String>>();
+                Map <String,String> map =  new HashMap<String,String>();
+
+                final String name_key_1 = "column1_username";
+                final String name_key_2 = "column2_username";
+                final String name_key_3 = "column3_username";
+                final String name_key_4 = "column4_username";
+                final String icon_key_1 = "column1_icon_link";
+                final String icon_key_2 = "column2_icon_link";
+                final String icon_key_3 = "column3_icon_link";
+                final String icon_key_4 = "column4_icon_link";
+
+
+                for (int i = 0; i < totalNumber; i++) {
+                    int column = (i+1)%4;
+
+                    // TODO : the id is also needed
+                    // TODO : use the result from API
+                    String userName = memberProfilelist.get(i).username;
+                    String iconLink = memberProfilelist.get(i).image;
+
+                    if(column == 1){
+                        map.put(name_key_1,userName);
+                        map.put(icon_key_1,iconLink);
+                    }else if(column == 2){
+                        map.put(name_key_2,userName);
+                        map.put(icon_key_2,iconLink);
+                    }else if(column == 3){
+                        map.put(name_key_3,userName);
+                        map.put(icon_key_3,iconLink);
+                    }else{
+                        map.put(name_key_4,userName);
+                        map.put(icon_key_4,iconLink);
+                        mSourceData.add(map);
+                        map = new HashMap<String,String>();
+                    }
+
+                    if(column!=0 && i==totalNumber-1){
+                        mSourceData.add(map);
+                    }
+                }
+
+//                Log.d(TAG, "recyclerViewShowMemberList: Array! : "+mSourceData);
+
+
+                mBottomRecyclerView.setAdapter(
+                        new CommonAdapter<Map<String, String>>(getContext(), R.layout.item_habit_detail_member_list_row, mSourceData) {
+                            @Override
+                            public void convert(ViewHolder holder, Map m, int pos) {
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_1)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, (String)m.get(name_key_1));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_2)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, (String)m.get(name_key_2));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_3)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, (String)m.get(name_key_3));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, "");
+                                }
+
+                                try{
+                                    Glide.with(getContext()).load((String)m.get(icon_key_4)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, (String)m.get(name_key_4));
+                                }catch (Exception e){
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, "");
+                                }
+
+                            }
+
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                //AutoUtil.autoSize(itemView)
+                            }
+                        });
+                //replaceFragment(habitDetailFragment,null);
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
         client.post(getContext(), Constant.API_BASE_URL+"habits/members",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -659,6 +830,171 @@ public class HabitDetailFragment extends BaseFragment{
         //Log.d(TAG,"outsideclient"+mList);
     }
 
+    public void callAPItoGetRank(StringEntity params) {
+        AsyncHttpClient client = new AsyncHttpClient();
+        String AuthorizationToken = "Token " + UserModel.token;
+        client.addHeader("Authorization", "Token " + UserModel.token);
+        //mCatLoadingView = new CatLoadingView();
+
+        //mCatLoadingView.show(getFragmentManager(), "");
+
+        client.post(getContext(), Constant.API_BASE_URL + "habits/ranks", params, ContentType.APPLICATION_JSON.getMimeType(), new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                //mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : " + statusCode);
+                Log.d("API_REPORT", "onSuccess: rank_members: " + response);
+
+
+                member_profiles = response;
+                Log.d(TAG, "Members: " + member_profiles);
+                JSONArray member_list = new JSONArray();
+                if (member_profiles != null) {
+                    try {
+                        member_list = member_profiles.getJSONArray("profiles");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    for (Integer i = 0; i < member_list.length(); i++) {
+                        memberProfileModel memberProfile = new memberProfileModel();
+                        JSONObject jso = new JSONObject();
+                        try {
+                            jso = member_list.getJSONObject(i);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        memberProfile.initMemberProfileWithJSON(jso);
+                        memberProfilelist.add(memberProfile);
+                    }
+                }
+
+                mBottomRecyclerView.setHasFixedSize(false);
+                mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+                // TODO : get the total number from API result
+                int totalNumber;
+                if (member_profiles != null) {
+                    //totalNumber = member_profiles.length();
+                    totalNumber = memberProfilelist.size();
+                } else {
+                    totalNumber = 0;
+                }
+
+                // TODO : need to add the userIDField
+                mSourceData = new ArrayList<Map<String, String>>();
+                Map<String, String> map = new HashMap<String, String>();
+
+                final String name_key_1 = "column1_username";
+                final String name_key_2 = "column2_username";
+                final String name_key_3 = "column3_username";
+                final String name_key_4 = "column4_username";
+                final String icon_key_1 = "column1_icon_link";
+                final String icon_key_2 = "column2_icon_link";
+                final String icon_key_3 = "column3_icon_link";
+                final String icon_key_4 = "column4_icon_link";
+
+
+                for (int i = 0; i < totalNumber; i++) {
+                    int column = (i + 1) % 4;
+
+                    // TODO : the id is also needed
+                    // TODO : use the result from API
+                    String userName = memberProfilelist.get(i).username;
+                    String iconLink = memberProfilelist.get(i).image;
+
+                    if (column == 1) {
+                        map.put(name_key_1, userName);
+                        map.put(icon_key_1, iconLink);
+                    } else if (column == 2) {
+                        map.put(name_key_2, userName);
+                        map.put(icon_key_2, iconLink);
+                    } else if (column == 3) {
+                        map.put(name_key_3, userName);
+                        map.put(icon_key_3, iconLink);
+                    } else {
+                        map.put(name_key_4, userName);
+                        map.put(icon_key_4, iconLink);
+                        mSourceData.add(map);
+                        map = new HashMap<String, String>();
+                    }
+
+                    if (column != 0 && i == totalNumber - 1) {
+                        mSourceData.add(map);
+                    }
+                }
+
+//                Log.d(TAG, "recyclerViewShowMemberList: Array! : "+mSourceData);
+
+
+                mBottomRecyclerView.setAdapter(
+                        new CommonAdapter<Map<String, String>>(getContext(), R.layout.item_habit_detail_member_list_row, mSourceData) {
+                            @Override
+                            public void convert(ViewHolder holder, Map m, int pos) {
+                                try {
+                                    Glide.with(getContext()).load((String) m.get(icon_key_1)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, (String) m.get(name_key_1));
+                                } catch (Exception e) {
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_1));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_1, "");
+                                }
+
+                                try {
+                                    Glide.with(getContext()).load((String) m.get(icon_key_2)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, (String) m.get(name_key_2));
+                                } catch (Exception e) {
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_2));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_2, "");
+                                }
+
+                                try {
+                                    Glide.with(getContext()).load((String) m.get(icon_key_3)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, (String) m.get(name_key_3));
+                                } catch (Exception e) {
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_3));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_3, "");
+                                }
+
+                                try {
+                                    Glide.with(getContext()).load((String) m.get(icon_key_4)).
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, (String) m.get(name_key_4));
+                                } catch (Exception e) {
+                                    Glide.with(getContext()).load("").
+                                            into((ImageView) holder.itemView.findViewById(R.id.item_habit_detail_member_list_icon_4));
+                                    holder.setText(R.id.item_habit_detail_member_list_name_4, "");
+                                }
+
+                            }
+
+                            @Override
+                            public void onViewHolderCreated(ViewHolder holder, View itemView) {
+                                super.onViewHolderCreated(holder, itemView);
+                                //AutoUtil.autoSize(itemView)
+                            }
+                        });
+                //replaceFragment(habitDetailFragment,null);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : " + statusCode);
+                Log.d("API_REPORT", "onFailure: response : " + response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+    }
     // the page is dismissed
     @Override
     public void onDestroy(){
