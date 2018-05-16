@@ -10,8 +10,10 @@ class Article(TimestampedModel):
     body = models.TextField()
     start_date = models.DateField(blank=True,default="2018-01-01")
     end_date = models.DateField(blank=True,default="2018-01-01")
+
     start_time = models.TimeField(blank=True,default="00:00")
     end_time = models.TimeField(blank=True,default="23:59")
+
     is_public = models.IntegerField(default=1)
     send_notification = models.IntegerField(default=1)
     

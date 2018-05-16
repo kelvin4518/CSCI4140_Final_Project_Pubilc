@@ -397,8 +397,9 @@ public class FriendHabitDetailFragment extends BaseFragment {
                                 holder.setText(R.id.complete_number,"31" + " times");
                                 holder.setText(R.id.content, s.description);
                                 holder.setText(R.id.time_slot, s.startTime +" to "+s.endTime);
-                                holder.setText(R.id.GPS_contraint, "GPS not done here");
-                                holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
+
+                                //holder.setText(R.id.GPS_contraint, "GPS not done here");
+                                //holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
                                 //holder.setText(R.id.habit_parteners, "partner");
                                 holder.setText(R.id.habit_supervisor, s.owner);
                                 //Glide.with(getContext()).load(s.userImage).into(mSupervisorView);
@@ -551,15 +552,14 @@ public class FriendHabitDetailFragment extends BaseFragment {
                         memberProfilelist.add(memberProfile);
                     }
                 }
-
                 mBottomRecyclerView.setHasFixedSize(false);
                 mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
                 // TODO : get the total number from API result
                 int totalNumber;
-                if (member_profiles != null) {
-                    //totalNumber = member_profiles.length();
+                if (memberProfilelist != null) {
+
                     totalNumber = memberProfilelist.size();
                 }
                 else{
@@ -764,6 +764,7 @@ public class FriendHabitDetailFragment extends BaseFragment {
                         mSourceData.add(map);
                     }
                 }
+              
 
 //                Log.d(TAG, "recyclerViewShowMemberList: Array! : "+mSourceData);
 
@@ -820,6 +821,7 @@ public class FriendHabitDetailFragment extends BaseFragment {
                                 //AutoUtil.autoSize(itemView)
                             }
                         });
+
                 //replaceFragment(habitDetailFragment,null);
             }
             @Override
@@ -993,7 +995,6 @@ public class FriendHabitDetailFragment extends BaseFragment {
                     Log.i("august", e.toString());
                     e.printStackTrace();
                 }
-
                 holder.setText(R.id.complete_number,(date_list.length()-1)+" times" );
 
             }

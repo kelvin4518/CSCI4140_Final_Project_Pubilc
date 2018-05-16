@@ -8,6 +8,7 @@ from .views import (
     ArticlesFeedAPIView, BlogsListCreateAPIView,BlogsListShowAPIView,BlogsListDeleteAPIView,BlogsListLikeAPIView, ArticlesOthersCreatedAPIView, 
     ArticlesOthersRegisteredAPIView, CommentsListIsAPIView
 
+
 )
 
 router = DefaultRouter(trailing_slash=False)
@@ -33,6 +34,7 @@ urlpatterns = [
 
     url(r'^habits/check_create/?$', CommentsListCreateAPIView.as_view()),
     url(r'^habits/ischeck/?$', CommentsListIsAPIView.as_view({'post': 'show'})),
+
     url(r'^habits/check_update/?$', CommentsListUpdateAPIView.as_view()),
     url(r'^habits/check_calendar/?$', CommentsListShowAPIView.as_view({'post': 'show'})),
     url(r'^habits/rank/?$', CommentsRankAPIView.as_view({'post': 'list'})),

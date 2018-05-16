@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Article, Comment, Tag, Blog
-from .renderers import ArticleJSONRenderer, CommentJSONRenderer, BlogJSONRenderer,ProfileJSONRenderer
+from .renderers import ArticleJSONRenderer, CommentJSONRenderer, BlogJSONRenderer, ProfileJSONRenderer
 from .serializers import ArticleSerializer, CommentSerializer, BlogSerializer, TagSerializer
 from django.http import JsonResponse
 from django.db.models import Q
@@ -246,6 +246,7 @@ class CommentsListUpdateAPIView(generics.UpdateAPIView):
         else:
             return JsonResponse({'check':'Already Checked!'},status=200)
 
+
 class CommentsListIsAPIView(mixins.CreateModelMixin, 
                      mixins.ListModelMixin,
                      mixins.RetrieveModelMixin,
@@ -300,6 +301,7 @@ class CommentsListShowAPIView(mixins.CreateModelMixin,
         checks = check_date.split(',')
         
         return JsonResponse({'check_num':len(checks), 'check_date':checks},status=200)
+
         # serializer_context = {'request': request}
 
         # serializer = self.serializer_class(
@@ -321,6 +323,7 @@ class CommentsRankAPIView(mixins.CreateModelMixin,
         'author', 'author__user'
     )
     renderer_classes = (ProfileJSONRenderer,)
+
     serializer_class = CommentSerializer
 
     def filter_queryset(self, queryset):
@@ -500,6 +503,7 @@ class BlogsListCreateAPIView(generics.ListCreateAPIView):
     )
     renderer_classes = (BlogJSONRenderer,)
     serializer_class = BlogSerializer
+
     #parser_classes = (MultiPartParser, FormParser)
 
     def create(self, request, article_slug=None):
@@ -513,6 +517,7 @@ class BlogsListCreateAPIView(generics.ListCreateAPIView):
             raise NotFound('An article with this slug does not exist.')
 
         serializer = self.serializer_class(data=data, context=context, partial=True)
+
         serializer.is_valid(raise_exception=True)
         serializer.save()
 
@@ -533,6 +538,7 @@ class BlogsListShowAPIView(mixins.CreateModelMixin,
 
     def show(self, request, article_slug=None):
         data = request.data.get('blog', {})
+
         habitid = data["habitid"]
         serializer_context = {'request': request}
         
@@ -562,6 +568,7 @@ class BlogsListDeleteAPIView(mixins.CreateModelMixin,
     
     def delete(self, request):
         data = request.data.get('blog', {})
+
         habitid = data["habitid"]
         serializer_context = {'request': request}
         

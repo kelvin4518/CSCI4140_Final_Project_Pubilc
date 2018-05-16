@@ -243,7 +243,7 @@ public class ChatDetailFragment extends BaseFragment {
 
         //Set the title of this fragment, and set the prev title
         if (mTitle == null) {
-            mTitle = getString(R.string.user_profile_fragment_title);
+            mTitle = "CULife";
         }
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();

@@ -1,6 +1,6 @@
 from django.conf.urls import url
-
 from .views import ProfileRetrieveAPIView, ProfileFollowAPIView, ProfileRetrieveFollowersAPIView, ProfileRetrieveFolloweesAPIView, ArticlesMembersAPIView, ProfileUpdateAPIView, ArticlesAuthorAPIView,ArticlesRankAPIView
+
 
 
 app_name = 'profiles'

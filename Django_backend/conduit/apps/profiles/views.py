@@ -26,6 +26,7 @@ class ProfileRetrieveAPIView(RetrieveAPIView):
         #userid = user["id"]
         try:
             profile = self.queryset.get(user=self.request.user)
+
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username does not exist.')
 
@@ -70,6 +71,7 @@ class ProfileFollowAPIView(APIView):
         userid = user["id"]
         try:
             followee = Profile.objects.get(user__id=userid)
+
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username was not found.')
 
@@ -81,12 +83,14 @@ class ProfileFollowAPIView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
     def post(self, request):
         follower = self.request.user.profile
         user = request.data.get('user', {});
         userid = user["id"]
         try:
             followee = Profile.objects.get(user__id=userid)
+
         except Profile.DoesNotExist:
             raise NotFound('A profile with this username was not found.')
 
@@ -110,6 +114,7 @@ class ProfileRetrieveFollowersAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         queryset = self.queryset.filter(follows__user=self.request.user)
+
         followers = self.paginate_queryset(queryset)
 
         serializer = self.serializer_class(followers, many=True, context={
@@ -128,6 +133,7 @@ class ProfileRetrieveFolloweesAPIView(RetrieveAPIView):
 
     def retrieve(self, request, *args, **kwargs):
         queryset = self.queryset.filter(followed_by__user=self.request.user)
+
         followees = self.paginate_queryset(queryset)
 
         serializer = self.serializer_class(followees, many=True, context={
@@ -193,4 +199,3 @@ class ArticlesRankAPIView(RetrieveAPIView):
         })
 
         return self.get_paginated_response(serializer.data)
-        

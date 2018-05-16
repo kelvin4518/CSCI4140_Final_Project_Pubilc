@@ -64,7 +64,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Username" />
+                        android:text="Username"
+                        android:textColor="@color/aurora_conv_divider" />
 
 
                     <LinearLayout
@@ -77,29 +78,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="daling"
+                            android:textColor="@color/aurora_conv_divider"
                             android:textSize="12dp" />
 
-                        <Button
-                            android:id="@+id/habit_detail_is_followed_button"
-                            android:layout_width="50dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="20dp"
-                            android:background="@color/grey"
-                            android:text="已关注"
-                            android:textColor="@color/white"
-                            android:textSize="12dp" />
-
-                        <Button
-                            android:id="@+id/habit_detail_add_contact"
-                            android:layout_width="50dp"
-                            android:layout_height="20dp"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginLeft="5dp"
-                            android:background="@color/greenLime"
-                            android:text="加好友"
-                            android:textColor="@color/white"
-                            android:textSize="12dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -173,20 +154,20 @@
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                         android:id="@+id/habit_detail_setting_icon"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
-                        android:src="@drawable/ic_habit_detail_setting"
-                        app:civ_border_width="2dp"
-                        app:civ_border_color="#0F4471"/>
+                        android:src="@drawable/ic_habit_detail_blog"
+                        app:civ_border_color="#0F4471"
+                        app:civ_border_width="2dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Setting"
+                        android:text="Blogs"
+
                         android:textSize="10dp" />
                 </LinearLayout>
 

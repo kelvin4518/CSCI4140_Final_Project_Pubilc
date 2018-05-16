@@ -37,51 +37,78 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
-                    android:text="31次"
                     android:textSize="36sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/title"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
-            android:text="习惯：每天早起"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="描述：早起才能做完project"
-            android:textSize="18sp" />
+            <TextView
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Title:"
+                android:textColor="@color/aurora_hint_color_input"
+                android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/time_slot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="时段：全天 / 早上7点 / 上午6点 - 上午7点"
-            android:textSize="18sp" />
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-        <TextView
-            android:id="@+id/GPS_contraint"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="地点：宿舍（含有GPS信息）"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/GPS_auto_complete"
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Description:"
+                android:textColor="@color/aurora_hint_color_input"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="使用GPS自动检测：是"
-            android:textSize="18sp" />
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="25dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Time slot:"
+                android:textColor="@color/aurora_hint_color_input"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/time_slot"
+                android:layout_width="250dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_weight="1"
+                android:textSize="18sp" />
+        </LinearLayout>
 
 
         <LinearLayout
@@ -101,7 +128,9 @@
                     android:layout_width="80dp"
                     android:layout_height="20dp"
                     android:layout_weight="0"
-                    android:text="parterner:" />
+                    android:text="parterner:"
+                    android:textColor="@color/aurora_hint_color_input"
+                    android:textStyle="italic" />
 
             </LinearLayout>
 
@@ -119,7 +148,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="15dp"
                 android:layout_weight="0"
-                android:text="  Kelvin和其他31人已经完成该习惯"
                 android:textSize="10sp" />
 
         </LinearLayout>
@@ -140,16 +168,10 @@
                     android:layout_width="80dp"
                     android:layout_height="20dp"
                     android:layout_weight="0"
-                    android:text="Superviosr:" />
+                    android:text="Superviosr:"
+                    android:textColor="@color/aurora_hint_color_input"
+                    android:textStyle="italic" />
 
-                <TextView
-                    android:id="@+id/habit_supervisor"
-                    android:layout_width="80dp"
-                    android:layout_height="30dp"
-                    android:layout_marginVertical="5dp"
-                    android:layout_weight="0"
-                    android:text="namehere"
-                    android:textSize="18sp" />
             </LinearLayout>
 
             <ImageView
@@ -159,6 +181,14 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="0"
                 app:srcCompat="@mipmap/ic_profile_image_placeholder" />
+
+            <TextView
+                android:id="@+id/habit_supervisor"
+                android:layout_width="80dp"
+                android:layout_height="30dp"
+                android:layout_marginVertical="5dp"
+                android:layout_weight="0"
+                android:textSize="18sp" />
 
         </LinearLayout>
 

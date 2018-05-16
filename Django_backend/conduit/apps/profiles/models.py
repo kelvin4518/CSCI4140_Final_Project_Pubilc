@@ -23,6 +23,7 @@ class Profile(TimestampedModel):
     # image = models.URLField(blank=True)
     image = models.FileField(blank=True, null=True)
 
+
     # This is an example of a Many-To-Many relationship where both sides of the
     # relationship are of the same model. In this case, the model is `Profile`.
     # As mentioned in the text, this relationship will be one-way. Just because

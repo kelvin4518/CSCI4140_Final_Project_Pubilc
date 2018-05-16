@@ -50,28 +50,6 @@ public class UserModel {
 
 
     public static void initModel(Context mContext){
-//        Log.d("USERMODEL", "initModel isLogin: "+isLogin);
-//        Log.d("USERMODEL", "initModel isRemember: "+isRemember);
-//        Log.d("USERMODEL", "initModel token: "+token);
-//        Log.d("USERMODEL", "initModel iconUrl: "+iconUrl);
-//        Log.d("USERMODEL", "initModel region: "+region);
-//        Log.d("USERMODEL", "initModel showLocation: "+showLocation);
-//        Log.d("USERMODEL", "initModel myChatName: "+myChatName);
-//        Log.d("USERMODEL", "initModel myUserName: "+myUserName);
-//        Log.d("USERMODEL", "initModel myID: "+myID);
-//        Log.d("USERMODEL", "initModel myChatList: "+myChatList);
-//
-//
-//        Log.d("USERMODEL", "session initModel isLogin: "+SessionManager.getBoolean(mContext, Constant.IS_LOGIN));
-//        Log.d("USERMODEL", "session initModel isRemember: "+SessionManager.getBoolean(mContext, Constant.IS_REMEMBER));
-//        Log.d("USERMODEL", "session initModel token: "+SessionManager.getString(mContext, Constant.TOKEN));
-//        Log.d("USERMODEL", "session initModel iconUrl: "+SessionManager.getString(mContext, Constant.ICON_URL));
-//        Log.d("USERMODEL", "session initModel region: "+SessionManager.getInt(mContext, Constant.REGION));
-//        Log.d("USERMODEL", "session initModel showLocation: "+SessionManager.getInt(mContext, Constant.SHOW_LOCATION));
-//        Log.d("USERMODEL", "session initModel myChatName: "+SessionManager.getString(mContext,Constant.USERNAME));
-//        Log.d("USERMODEL", "session initModel myUserName: "+SessionManager.getString(mContext,Constant.USERNAME));
-//        Log.d("USERMODEL", "session initModel myID: "+SessionManager.getString(mContext,Constant.USERID));
-//        Log.d("USERMODEL", "session initModel myChatList: "+SessionManager.getArrayList(Constant.USER_CHAT_LIST));
 
 
 
@@ -455,8 +433,6 @@ public class UserModel {
         initModel(mContext);
 
     }
-
-
 
 
 

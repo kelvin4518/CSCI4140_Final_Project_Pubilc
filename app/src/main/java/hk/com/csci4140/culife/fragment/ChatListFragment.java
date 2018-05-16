@@ -138,7 +138,6 @@ public class ChatListFragment extends BaseFragment {
 
             try{
                 JSONObject object = UserModel.myChatList.getJSONObject(i);
-                //Log.d(TAG, "setSourceData: wtfwiththelist: "+object);
 
                 ChatListItemModel chatListItemModel = new ChatListItemModel();
                 chatListItemModel.otherUserID = object.getString(Constant.USER_CHAT_LIST_OTHER_USER_ID);
@@ -341,7 +340,7 @@ public class ChatListFragment extends BaseFragment {
 
         //Set the title of this fragment, and set the prev title
         if (mTitle == null) {
-            mTitle = getString(R.string.user_profile_fragment_title);
+            mTitle = "CULife";
         }
         if (mPrevTitle == null) {
             mPrevTitle = getPrevTitle();

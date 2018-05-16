@@ -346,16 +346,11 @@ public class HabitDetailFragment extends BaseFragment{
         }
     }
 
-    // TODO : give the real habitModel to the fragment
     @OnClick(R.id.habit_detail_setting_icon)
     void navigateToSetting(){
-        PostMissionStepOneFragment editFragment = new PostMissionStepOneFragment();
-        mHabit = new HabitModel();
-        mHabit.ID = 28;
-        mHabit.name = "我给你一个假的";
-        mHabit.description = "假的description";
-        editFragment.initEditMode(mHabit);
-        replaceFragment(editFragment, null);
+        ShowBlogFragment showblog = new ShowBlogFragment();
+        showblog.blog_habit_id = dummyHabitID;
+        replaceFragment(showblog, null);
     }
 
     @OnClick(R.id.habit_detail_trophy_icon)
@@ -419,44 +414,13 @@ public class HabitDetailFragment extends BaseFragment{
                             public void convert(ViewHolder holder, HabitModel s, int pos) {
                                 //Log.d(TAG,"latestname"+s.name);
                                 holder.setText(R.id.title, s.name);
-                                holder.setText(R.id.complete_number,"31" + " times");
+                                //holder.setText(R.id.complete_number,"31" + " times");
                                 holder.setText(R.id.content, s.description);
                                 holder.setText(R.id.time_slot, s.startTime +" to "+s.endTime);
-                                holder.setText(R.id.GPS_contraint, "GPS not done here");
-                                holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
+                                //holder.setText(R.id.GPS_contraint, "GPS not done here");
+                                //holder.setText(R.id.GPS_auto_complete, "GPS allowed or not(not done here)");
                                 //holder.setText(R.id.habit_parteners, "partner");
                                 holder.setText(R.id.habit_supervisor, s.owner);
-                                //Glide.with(getContext()).load(s.userImage).into(mSupervisorView);
-
-                                /*JSONArray member_list = new JSONArray();
-                                if (member_profiles != null) {
-                                    try {
-                                        member_list = member_profiles.getJSONArray("profiles");
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
-
-                                    for (Integer i = 0; i < member_list.length(); i++) {
-                                        memberProfileModel memberProfile = new memberProfileModel();
-                                        JSONObject jso = new JSONObject();
-                                        try {
-                                            jso = member_list.getJSONObject(i);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        memberProfile.initMemberProfileWithJSON(jso);
-                                        memberProfilelist.add(memberProfile);
-                                    }
-                                }
-
-                                if (!memberProfilelist.isEmpty()) {
-                                    memberProfileModel element_member = memberProfilelist.get(0);
-                                    //Glide.with(getContext()).load(element_member.image).into(mPartenersView);
-                                    holder.setText(R.id.partner_complete_info, element_member.username + " and other partners");
-                                }
-                                else{
-                                    holder.setText(R.id.partner_complete_info, "No one has joined!");
-                                }*/
 
                                 JSONObject jsonParams0 = new JSONObject();
                                 JSONObject outerJsonParams0 = new JSONObject();
@@ -481,6 +445,24 @@ public class HabitDetailFragment extends BaseFragment{
                                 ButterKnife.bind(this,itemView);
                                 mConfirmCompleteBtn = itemView.findViewById(R.id.confirm_complete);
                                 itemView.findViewById(R.id.confirm_complete).setOnClickListener(mOnClickListener);
+                                JSONObject jsonParams = new JSONObject();
+                                JSONObject outerJsonParams = new JSONObject();
+                                try {
+                                    SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy/MM/dd");
+                                    String date = sDateFormat.format(new java.util.Date());
+                                    jsonParams.put("habitid", dummyHabitID);
+                                    jsonParams.put("body",date);
+
+                                    outerJsonParams.put("check", jsonParams);
+                                    StringEntity entity = new StringEntity(outerJsonParams.toString());
+                                    //Log.d(TAG,"bodyentity"+jsonParams);
+                                    //checkifChecked(entity,mConfirmCompleteBtn);
+                                }
+                                catch (JSONException e) {
+                                    e.printStackTrace();
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         });
             }else{
@@ -552,7 +534,6 @@ public class HabitDetailFragment extends BaseFragment{
                 mBottomRecyclerView.setItemAnimator(new DefaultItemAnimator());
                 mBottomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-                // TODO : get the total number from API result
                 int totalNumber;
                 if (member_profiles != null) {
                     //totalNumber = member_profiles.length();
@@ -578,9 +559,6 @@ public class HabitDetailFragment extends BaseFragment{
 
                 for (int i = 0; i < totalNumber; i++) {
                     int column = (i+1)%4;
-
-                    // TODO : the id is also needed
-                    // TODO : use the result from API
                     String userName = memberProfilelist.get(i).username;
                     String iconLink = memberProfilelist.get(i).image;
 
@@ -1007,20 +985,79 @@ public class HabitDetailFragment extends BaseFragment{
     public class CustomLayoutManager extends LinearLayoutManager {
         private boolean isScrollEnabled = true;
 
-        public CustomLayoutManager(Context context) {
-            super(context);
-        }
+        mCatLoadingView.show(getFragmentManager(), "");
 
-        public void setScrollEnabled(boolean flag) {
-            this.isScrollEnabled = flag;
-        }
+        client.post(getContext(), Constant.API_BASE_URL+"habits/check_calendar",params, ContentType.APPLICATION_JSON.getMimeType(),new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                //ArrayList<HomeFragmentModel> localmList = new ArrayList<HomeFragmentModel>();
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onSuccess: login");
+                Log.d("API_REPORT", "onSuccess: status : "+statusCode);
+                Log.d("API_REPORT", "onSuccess: date_response: "+response);
+                JSONArray date_list = new JSONArray();
+                try {
+                    date_list = response.getJSONArray("check_date");
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Calendar now = Calendar.getInstance();
+                com.wdullaer.materialdatetimepicker.date.DatePickerDialog dpd = com.wdullaer.materialdatetimepicker.date.DatePickerDialog.newInstance(
+                        new com.wdullaer.materialdatetimepicker.date.DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(com.wdullaer.materialdatetimepicker.date.DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
 
-        @Override
-        public boolean canScrollVertically() {
-            //Similarly you can customize "canScrollHorizontally()" for managing horizontal scroll
-            return isScrollEnabled && super.canScrollVertically();
-        }
+                            }
+                        },
+                        now.get(Calendar.YEAR),
+                        now.get(Calendar.MONTH),
+                        now.get(Calendar.DAY_OF_MONTH)
+                );
+                dpd.setVersion(com.wdullaer.materialdatetimepicker.date.DatePickerDialog.Version.VERSION_2);
+
+                Calendar[] days;
+                List<Calendar> blockedDays = new ArrayList<>();
+                Boolean flag = false;
+                for (Integer i=1;i < date_list.length();i++) {
+                    String date_string = new String();
+                    try {
+                        date_string = date_list.getString(i);
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    //Log.d(TAG,"date_string"+date_string);
+                    blockedDays.add(getCalendarObjectFromString(date_string));
+                    flag = true;
+                }
+                if (flag) {
+                    days = blockedDays.toArray(new Calendar[blockedDays.size()]);
+
+
+                    Calendar[] today;
+                    Calendar cal = Calendar.getInstance();
+                    List<Calendar> selectedDays = new ArrayList<>();
+                    selectedDays.add(cal);
+                    today = selectedDays.toArray(new Calendar[selectedDays.size()]);
+                    dpd.setSelectableDays(today);
+                    dpd.setHighlightedDays(days);
+                    dpd.show(getActivity().getFragmentManager(), "Datepickerdialog");
+                }
+            }
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable e, JSONObject response) {
+                mCatLoadingView.dismiss();
+                Log.d("API_REPORT", "onFailure: login");
+                Log.d("API_REPORT", "onFailure: status : "+statusCode);
+                Log.d("API_REPORT", "onFailure: response : "+response);
+                showBottomSnackBar(getString(R.string.habbit_pull_fail));
+            }
+        });
+        //Log.d(TAG,"outsideclient"+mList);
     }
+
 
     public void updateCheck(StringEntity params){
         AsyncHttpClient client = new AsyncHttpClient();
@@ -1067,7 +1104,7 @@ public class HabitDetailFragment extends BaseFragment{
                 mCatLoadingView.dismiss();
                 Log.d("API_REPORT", "onSuccess: login");
                 Log.d("API_REPORT", "onSuccess: status : "+statusCode);
-                Log.d("API_REPORT", "onSuccess: date_response: "+response);
+                Log.d("API_REPORT", "onSuccess: response: "+response);
                 JSONArray date_list = new JSONArray();
                 try {
                     date_list = response.getJSONArray("check_date");

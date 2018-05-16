@@ -399,12 +399,12 @@ public class MainActivity extends BaseActivity {
 
         Log.d(TAG, "onCreate: user token : "+UserModel.token);
 
-
 //        if(UserModel.isLogin){
 //            if(UserModel.myID!=null && UserModel.myID!="" && UserModel.myID!="0"){
 //                initializeDatabaseAndListener();
 //            }
 //        }
+
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         startLocationTracking();
@@ -630,6 +630,7 @@ public class MainActivity extends BaseActivity {
 
             case 4:
                 fragment = new UserProfileFragment();
+
                 break;
             default:
                 fragment = null;

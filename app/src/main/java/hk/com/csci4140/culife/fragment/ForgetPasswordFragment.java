@@ -43,7 +43,7 @@ public class ForgetPasswordFragment extends BaseFragment {
 
         //Set the title of this fragment, and set the prev title
         if(mTitle == null) {
-            mTitle = getString(R.string.forget_password_title);
+            mTitle = "CULife";
         }
         if(mPrevTitle == null){
             mPrevTitle = getPrevTitle();
